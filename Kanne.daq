@@ -1,0 +1,6 @@
+# configuration files for Kamiokanne 
+
+DeviceFile:    config/PMpulse.yaml
+BMfile:        config/BMconfig.yaml
+PFfile:        config/PFKanne.yaml
+

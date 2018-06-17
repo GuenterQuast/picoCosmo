@@ -1,0 +1,44 @@
+# Configuration file for PulseFilter with Kamiokanne
+
+# output files 
+#logFile: Null   # store all pulses, Null to disable
+logFile2: dpFilt # store double-pulse parameters
+
+rawFile:  dpRaw  # store raw wave-forms
+pictFile: dpFigs # save pictures of double-pulses
+
+# pulse parameters
+#         ____
+#        /    \  
+#     _ /_ _ _ \_ _
+#                 
+#      r   on  f 
+#                 
+
+# pulse shape(s) for channels
+#    if only one given, it is used for all channels
+pulseShape:
+ - pheight: -0.035
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+
+# pulse shape for trigger signal
+#   optional - if not given, uses pulseShape
+trgPulseShape:
+ - pheight: -0.045
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+
+modules: [RMeter, Display, Hists]
+
+histograms:
+ - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
+  # min max Nbins ymax    title              lin/log
+ - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
+ - [0., 15.,  45, 7.5, "Tau (µs)", 1]
+# - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
+
+doublePulse: True  # switch to control double-pulse search
+

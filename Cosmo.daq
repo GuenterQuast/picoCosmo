@@ -1,0 +1,7 @@
+# configuration files for CosMO Panlels
+
+DeviceFile:     config/SiPMpulse.yaml
+BMfile:         config/BMconfig.yaml
+PFfile:         config/PFcosmo.yaml
+
+

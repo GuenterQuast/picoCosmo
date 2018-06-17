@@ -1,0 +1,35 @@
+# Configuration file for PulseFilter
+
+# output files 
+#logFile: pFilt   # store all pulses, Null to disable
+logFile2: dpFilt  # store double-pulse parameters
+
+rawFile:  dpRaw    # store raw wave-forms
+pictFile: dpFigs   # save pictures of double pulses
+
+# pulse parameters
+#         ____
+#        /    \  
+#     _ /_ _ _ \_ _
+#                 
+#      r   on  f 
+#                 
+
+# shape for all pulses
+pulseShape:
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+
+modules: [RMeter, Display, Hists]
+
+histograms:
+  # min max Nbins ymax    title              lin/log
+ - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
+ - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
+ - [0., 15.,  45, 7.5, "Tau (µs)", 1]
+ - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
+
+doublePulse: True  # switch to control double-pulse search
+
