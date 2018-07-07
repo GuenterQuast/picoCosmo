@@ -48,34 +48,44 @@ This code relies on
 
 The code also runs on a Raspberry Pi. 
 
+
 ## Program Execution
 
-The program may be started on the command line (`runCosmo.py`) or via a graphical interface (`CosmoGui.py`).
-Both are controlled by an input file in `.yaml` format, specifying
-configuration of the the PicoScope device, the Buffer Manager and the pulse filter:
+To run `picoCosmo` from the graphical interface, create the subdirecotry
+ `picoCosmo` in your home directory, where modified configurations and
+ output are stored: 
 
-   ./runCosmo xxx.daq
+     cd 
+     mkdir picoCosmo
 
-     - Cosmo.daq : configuration for Cosmo-Panels
-     - Kanne.daq : configuration for Kamiokanne
-These files contain the names of the files containing the actual
-configurations for the PicoScope device, the Buffer Manager and the
-Pulse Filter.
+Now you are ready to execute the graphical interface of `picoCosmo`:
 
-The graphical interface can also be initialized with such a 
-configuration file:
+    <picoCosmo install directory>/CosmoGui.py
+    
 
-   ./CosmoGui xxx.daq
+Alternatively you may change to the `picoCosmo` installation directory 
 
-Alternatively, the configuration file can be selected and edited in the graphical interface.
+    cd  <picoCosmo install directory>
+   
+and start `./runCosmo.py`  from the command line.
 
-The graphical interface allows to inspect and modify the configuration,
-to select a working directory for the output files and to start a new run. Configuration and output files are stored in a newly created sub-directory
+Both scripts are controlled by an input file in `.yaml` format, `./runCosmo xxx.daq`, 
+which specifies the configuration:
+
+  - Cosmo.daq : configuration for Cosmo-Panels
+  - Kanne.daq : configuration for Kamiokanne
+
+These files contain the names of files for the configurations of the
+PicoScope device, the Buffer Manager and the Pulse Filter.
+
+The graphical interface allows to inspect and modify the configurations,
+to select a working directory for the output files and to start a new run. 
+Configuration and output files are stored in a newly created sub-directory
 `<Run Tag>_<date>/` in the selected working directory, where a 
 specific `<Run Tag>` can be defined by the user.
 
 
-##Installation
+## Installation
 
   - Install the PicoTech Software Development Kit from
     <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
@@ -86,37 +96,39 @@ specific `<Run Tag>` can be defined by the user.
   - Download all files from this project
     <https://github.com/GuenterQuast/picoCosmo>.
 
-For your convenience, the sub-directory `whl/` contains
-compatible versions of `picoscope` from package
-`pico-python` and `picodaqa` from package `picoDAQ` as
-python-wheels, which you may install via 
-*pip install package-<vers\>-<tags\>.whl*.
+For your convenience, the sub-directory *whl/* contains compatible versions of
+ *picoscope* from package *pico-python* and 
+ *picodaqa* from package *picoDAQ* as
+ python-wheels, which you may install via  `pip install package-<vers\>-<tags\>.whl`.
+
 
 ## Configuration and program execution
 
 As stated above, data Acquisition and Analysis is started using the
-graphical interface by typing `./CosmoGui.py xxx.daq`, or optionally,
-by directly starting the pyhton script for run execution with the
-command `./runCosmo xxxx.daq`.
+graphical interface by typing `<picoCosmo installation directroy>/CosmoGui.py xxx.daq`.
+If no configuration is given, the file *default.daq* is used.
+Optionally, a run can also be started by directly executing 
+`./runCosmo xxx.daq` from the *picocCosmo* installation directory.
 
 After run start, control is performed via the main window of the
-BufferManager, which contains the options `Pause`, `Resume`,
-`Stop` and `EndRun`. In stopped state, all windows remain open
+BufferManager, which contains the options *Pause*, *Resume*,
+*Stop* and *EndRun*. In stopped state, all windows remain open
 and graphs may be saved and log-output inspected. In End-state,
 all processes are stopped, and consequently all windows disappear.
 Resume running from Stop-state is presently not foreseen.
 
-Helper script, plotDoublePulses.py and makeFigs.py, allow to read
-stored raw waveforms in text or zip format from the double-pulse
-search and display resp. store them as images in `.png` format.
+The helper scripts, *plotDoublePulses.py* and *makeFigs.py*, allow 
+to read stored raw waveforms in text or zip format from the double-pulse
+search and display resp. store them as images in *.png* format.
 
-The configuration for the `runCosmo.py` is defined in several '.yaml'
-files contained in sub-directory `config/`. The files used for
-a specific configuration are listed in files of type `.daq`,
-e.g. `Kanne.daq` for Kamiokanne and `Cosmo.daq` for a run with
+The configuration for *runCosmo.py* is defined in several *.yaml*
+files contained in sub-directory *config/**. The files used for
+a specific configuration are listed in files of type *.daq* ,
+e.g. *Kanne.daq* for Kamiokanne and *Cosmo.daq* for a run with
 the CosMo panels.
 
-The  `.yaml` files specify configurations for the oscilloscope, the BufferManager and the Pulse Filter. Here is the example to run with Kamiokanne:
+The  *.yaml* files specify configurations for the oscilloscope, the BufferManager
+and the Pulse Filter. Here is the example to run with Kamiokanne:
 
     # file Kanne.daq
     # --------------------
@@ -220,16 +232,57 @@ here:
 
 ## Example output
 
-The directory `./output` contains the results from a long run of almost
+The directory *./output* contains the results from a long run of almost
 20 days with the Kamiokanne detector and a one-day run with the CosMO
-panels. The compressed file `rawDP_<date>.dat.zip` contains the 
-raw wave forms of identified double-pulses in `yaml`-format. The
-scripts `plotDoublePulses.py` and `makeFigs.py` can be used to read
-the zipped file and to produce graphical displays or images in `.png` 
+panels. The compressed file *rawDP_<date>.dat.zip* contains the 
+raw wave forms of identified double-pulses in *yaml*-format. The
+scripts *plotDoublePulses.py* and *makeFigs.py* can be used to read
+the zipped file and to produce graphical displays or images in *.png* 
 format of the waveforms.
 
 The parameters of events containing double-pulses are stored in file
-dpKanne2_180403.dat. An unbinned log-likelihood fit of measured
-lifetimes between 1.5 µs and 15. µs with the script `fit_dpData.py`
-yields the result shown in figure `life-ofMU_<date>.png`.
+*dpKanne2_180403.dat*. An unbinned log-likelihood fit of measured
+lifetimes between 1.5 µs and 15. µs with the script *fit_dpData.py*
+yields the result shown in figure *life-ofMU_<date>.png*.
 
+## Running on Raspberry Pi
+
+`picoCosmo` also runs on the very popular Rasbperry Pi single board computer.
+After setting up your Raspberry Pi, the following steps should be taken to update and
+install all necessary packages:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo pip3 install --upgrade numpy
+sudo pip3 install scipy
+sudo pip3 install matplotlib
+sudo pip3 install pyyaml
+sudo apt-get install pyqt5-dev
+sudo apt-get install pyqt5-tools
+
+sudo apt-get install at-spi2-core
+
+# the following needs PicoTech drivers for picoScope usb devices
+#    see https://www.picotech.com/support/topic14649.html
+
+# get picoCosmo code and dependencies
+mkdir git
+cd git
+git pull https://github.com/GuenterQuast/picoCosmo
+cd picoCosmo/whl
+sudo pip3 install *.whl
+``` 
+
+Create the subdirectory  `picoCosmo` in the home directory, where all the output and  
+modified configuration files will be stored:
+  
+     cd 
+     mkdir picoCosmo
+     
+     
+Now you are ready to execute the graphical interface of `picoCosmo`:
+
+    <picoCosmo install directory >/CosmoGui.py
+    
