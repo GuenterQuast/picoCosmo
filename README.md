@@ -11,11 +11,11 @@ USB oscilloscope with two or four channels.
 
 
 Data is read from the PicoScope device via a Buffer Manager, see project
-`picoDAQ` (<https://github.com/GuenterQuast/picoDAQ>),
+*picoDAQ* (<https://github.com/GuenterQuast/picoDAQ>),
 which records waveforms and distributes them to
 consumer processes. The consumers either provide real-time displays of a
-sub-set of the data or perform data analysis. `piocoCosmo` is a specialised
-and extended version of the script `runDAQ.py` from project `picoDAQ`.
+sub-set of the data or perform data analysis. *PiocoCosmo* is a specialised
+and extended version of the script *runDAQ.py* from project *picoDAQ*.
  
 The analysis proceeds in three steps. First, the trigger is validated by
 cross-correlation with a signal template located around the trigger time.
@@ -27,7 +27,7 @@ in or near the detector.
 The software provides real-time displays of waveforms, detector signals and
 rates. Optionally, parameters of identified pulses or of double-pulses are
 written to files in CSV format. In addition, raw waveforms or pictures in
-`.png` format of identified double pulses can optionally be stored for
+*.png* format of identified double pulses can optionally be stored for
 off-line analysis or for an instructive analysis "by hand" based on the
 waveform pictures. From this information, the mean muon lifetime in the
 muon rest frame (2.2 µs) can be derived. 
@@ -51,26 +51,26 @@ The code also runs on a Raspberry Pi.
 
 ## Program Execution
 
-To run `picoCosmo` from the graphical interface, create the subdirecotry
- `picoCosmo` in your home directory, where modified configurations and
+To run *picoCosmo* from the graphical interface, create the subdirecotry
+ *picoCosmo* in your home directory, where modified configurations and
  output are stored: 
 
      cd 
      mkdir picoCosmo
 
-Now you are ready to execute the graphical interface of `picoCosmo`:
+Now you are ready to execute the graphical interface of *picoCosmo*:
 
     <picoCosmo install directory>/CosmoGui.py
     
 
-Alternatively you may change to the `picoCosmo` installation directory 
+Alternatively you may change to the *picoCosmo* installation directory 
 
     cd  <picoCosmo install directory>
    
-and start `./runCosmo.py`  from the command line.
+and start *./runCosmo.py*  from the command line.
 
-Both scripts are controlled by an input file in `.yaml` format, `./runCosmo xxx.daq`, 
-which specifies the configuration:
+Both scripts are controlled by an input file in *.daq*` format, which specifies the
+configuration:
 
   - Cosmo.daq : configuration for Cosmo-Panels
   - Kanne.daq : configuration for Kamiokanne
@@ -81,15 +81,15 @@ PicoScope device, the Buffer Manager and the Pulse Filter.
 The graphical interface allows to inspect and modify the configurations,
 to select a working directory for the output files and to start a new run. 
 Configuration and output files are stored in a newly created sub-directory
-`<Run Tag>_<date>/` in the selected working directory, where a 
-specific `<Run Tag>` can be defined by the user.
+*<Run Tag>_<date>/* in the selected working directory, where a 
+specific *<Run Tag>* can be defined by the user.
 
 
 ## Installation
 
   - Install the PicoTech Software Development Kit from
     <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - Install the `pico-pyhton` package from
+  - Install the *pico-pyhton* package from
     <https://github.com/colinoflynn/pico-python>.
   - Install the picoDAQ package, vers. >= 0.7.2 from
     <https://github.com/GuenterQuast/picoDAQ>.
@@ -247,7 +247,7 @@ yields the result shown in figure *life-ofMU_<date>.png*.
 
 ## Running on Raspberry Pi
 
-`picoCosmo` also runs on the very popular Rasbperry Pi single board computer.
+*picoCosmo* also runs on the very popular Rasbperry Pi single board computer.
 After setting up your Raspberry Pi, the following steps should be taken to update and
 install all necessary packages:
 
