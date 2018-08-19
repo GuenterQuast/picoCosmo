@@ -237,49 +237,44 @@ class Ui_CosmoWindow(object):
 
 # --> implementation starts here --> 
 
-        self.Window = CosmoWindow
+    def init(self, Window, DAQconfFile):
+      self.Window = Window
+
+# set display options, fonts etc.
+      self.setOptions()
 
 # set help 
-        self.setHelp_EN()
-
-# set font for plainTextEdit to monospace
-        monofont = QtGui.QFont()
-        monofont.setStyleHint(QtGui.QFont.TypeWriter)
-        monofont.setFamily("unexistentfont")        
-        self.pTE_OsciConfig.setFont(monofont)
-        self.pTE_BMconfig.setFont(monofont)
-        self.pTE_PFconfig.setFont(monofont)
+      self.setHelp_EN()
 
 # find user home directory and create directory 'picoCosmo' 
-        self.homedir = os.getenv('HOME')
-        self.ConfDir = self.homedir + '/picoCosmo' 
-        if not os.path.exists(self.ConfDir): 
-          os.makedirs(self.ConfDir)
+      self.homedir = os.getenv('HOME')
+      self.ConfDir = self.homedir + '/picoCosmo' 
+      if not os.path.exists(self.ConfDir): 
+        os.makedirs(self.ConfDir)
 
 # set initial working Directory
-        self.WDname = self.ConfDir 
-        self.lE_WorkDir.setText(self.WDname)
+      self.WDname = self.ConfDir 
+      self.lE_WorkDir.setText(self.WDname)
 
 # define actions
-        self.pB_abort.clicked.connect(QtCore.QCoreApplication.instance().quit) 
-        self.rB_EditMode.clicked.connect(self.actionEditConfig) 
-        self.pB_StartRun.clicked.connect(self.actionStartRun) 
-        self.pB_FileSelect.clicked.connect(self.selectConfigFile)
-        self.pB_WDselect.clicked.connect(self.selectWD)
-        self.pB_Help.clicked.connect(self.setHelp_EN)
-        self.pB_Hilfe.clicked.connect(self.setHelp_DE)
-        self.pB_SaveDefault.clicked.connect(self.saveDefaultConfig)
+      self.pB_abort.clicked.connect(QtCore.QCoreApplication.instance().quit) 
+      self.rB_EditMode.clicked.connect(self.actionEditConfig) 
+      self.pB_StartRun.clicked.connect(self.actionStartRun) 
+      self.pB_FileSelect.clicked.connect(self.selectConfigFile)
+      self.pB_WDselect.clicked.connect(self.selectWD)
+      self.pB_Help.clicked.connect(self.setHelp_EN)
+      self.pB_Hilfe.clicked.connect(self.setHelp_DE)
+      self.pB_SaveDefault.clicked.connect(self.saveDefaultConfig)
 
-    def setHelp_DE(self):
-      self.TE_Help.setText(open('doc/Hilfe.html', 'r').read() ) 
-
-    def setHelp_EN(self):
-      self.TE_Help.setText(open('doc/help.html', 'r').read() )
+# initialization dependent on DAQ config file
+      self.initDAQ(DAQconfFile)
 
     def initDAQ(self, DAQconfFile):
       # initialize DAQ from config files - need absolute path
       path = os.path.dirname(DAQconfFile)
       if path == '': path = '.'
+      self.cwd = path 
+
       try:
         with open(DAQconfFile) as f:
           DAQconfdict=yaml.load(f)
@@ -314,6 +309,21 @@ class Ui_CosmoWindow(object):
       self.pTE_PFconfig.setPlainText(open(path + '/' + PFfile, 'r').read() )
 
 # - end iniDAQ
+
+    def setOptions(self):
+# set font for plainTextEdit to monospace
+      monofont = QtGui.QFont()
+      monofont.setStyleHint(QtGui.QFont.TypeWriter)
+      monofont.setFamily("unexistentfont")        
+      self.pTE_OsciConfig.setFont(monofont)
+      self.pTE_BMconfig.setFont(monofont)
+      self.pTE_PFconfig.setFont(monofont)
+
+    def setHelp_DE(self):
+      self.TE_Help.setText(open('doc/Hilfe.html', 'r').read() ) 
+
+    def setHelp_EN(self):
+      self.TE_Help.setText(open('doc/help.html', 'r').read() )
 
     def selectConfigFile(self):
       path2File = QtWidgets.QFileDialog.getOpenFileName(None,
@@ -453,8 +463,9 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - -
   ui = Ui_CosmoWindow()
   ui.setupUi(MainWindow)
 
-  ui.initDAQ(DAQconfFile)
+# call initialization
+  ui.init(MainWindow, DAQconfFile)
 
-
+# start pyqt event loop
   MainWindow.show()
   sys.exit(app.exec_())
