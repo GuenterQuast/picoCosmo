@@ -3,6 +3,11 @@
 *python* script to analyze data from CosMO detectors and Kamiokanne 
 by Netzwerk Teilchenwelt with picoScope USB device
 
+This is the **English Version** of the documentation.
+
+For German readers:  
+Die **deutsche Version** dieses Dokuments findet sich unter dem Link [Anleitung.md](Anleitung.md).
+
 The software is tailored to identify short pulses from muon detectors (the scintillator panels of the *CosMO*-experiment by "Netzwerk Teilchenwelt",
 <http://www.teilchenwelt.de>, or the *Kamiokanne*-Experiment (a water-Cherenkov detector with photomultiplier readout) with a PicoScope USB oscilloscope with two or four channels.
 
