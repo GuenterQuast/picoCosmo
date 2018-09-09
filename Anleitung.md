@@ -141,20 +141,20 @@ Zunächst werden alle Dateien dieses Projekts über den Link
 und in einem Arbeitsverzeichnis abgelegt. Vor der Verwendung
 müssen die folgenden Pakete installiert werden: 
 
-  - PicoTech Software Development Kit:
+  - PicoTech Software Development Kit:  
     <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - das *pico-pyhton* Paket:    
+  - das *pico-pyhton* Paket:  
     <https://github.com/colinoflynn/pico-python>.
-  - das picoDAQ Paket, vers. >= 0.7.2: 
+  - das picoDAQ Paket, vers. >= 0.7.2:  
     <https://github.com/GuenterQuast/picoDAQ>. 
 
 
-Zur Vereinfachung sind im Unterverzeichnis *whl/* kompatible
+Zur Vereinfachung der Installation sind im Unterverzeichnis *whl/* kompatible
 Versionen der Module *picoscope* aus dem Paket *pico-python*
 und *picodaqa* aus dem Paket *picoDAQ* als *python-wheels*
 enthalten, die mittels
 
-        pip install package-<vers\>-<tags\>.whl
+        pip install *.whl
 
 installiert werden können. 
 
@@ -169,67 +169,78 @@ verwendet.
 Nach dem Start eines Runs startet die grafische Oberfläche des Puffer-Managers
 und die in der Konfiguration festgelegten Echtzeit-Anzeigen. Über die
 Kontrollflächen des Puffer-Managers kann die Datennahme pausiert (*Pause*),
-wieder aufgenommen (*Resume*) oder beendet werden kann (*Stop* und **EndRun*).
+wieder aufgenommen (*Resume*) oder beendet werden (*Stop* und **EndRun*).
 In gestopptem Zustand werden die Ausgabedateien geschlossen, aber alle Fenster
-bleiben noch geöffnet, so dass Grafiken betrachtet  oder gespeichert und
+bleiben noch geöffnet, so dass Grafiken betrachtet oder gespeichert und
 statistische Information ausgewertet werden können. Wird der Run beendet,
 verschwinden alle Fenster.
 
-Zwei Hilfsanwendungen, *plotDoublePulses.py* und **makeFigs.py* ermöglichen
+Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen
 das Einlesen der abgespeicherten Pulsformen und deren graphische Anzeige
 bzw. Abspeichern als Grafikdateien im *.png*-Format.
 
 Die Konfigurationsdateien für das USB-Oszilloskop, den Puffer-Manager und
 die Signalanalyse sind in jeweils einer  Datei vom  Typ *.yaml* im
-Unterverzeichnis *config/* festgelegt. Die Dateinamen sind in Dateien vom
-Typ *.daq* enthalten, also `Kanne.daq` für  Kamiokanne and *Cosmo.daq* für
+Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom
+Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für
 die CosMO-Panels.
 
-Die folgenden Beispiele gelten für den Kamiokanne-Detektor:
+Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht
+die in den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*.
+Insbesondere kennzeichnet Text nach einem `#` -Zeichen erklärende Kommentare 
+oder enthält alternative, auskommentierte Konfigurationsoptionen, die durch
+Löschen des `#` -Zeichens aktiviert werden können.
+
+**Inhalt der Datei Kanne.daq:**
 
     # file Kanne.daq
     # --------------------
-    # configuration files for Kamiokanne
+    # Konfigurationsdateien für den Kamiokanne-Detektor
 
-    DeviceFile: config/PMpulse.yaml   # Oscilloscope configuration file
-    BMfile:     config/BMconfig.yaml  # Buffer Manager configuration
-    PFfile:     config/PFconfig.yaml  # Pulse Filter Configuration
+    DeviceFile: config/PMpulse.yaml   # Konfiguration des Oszilloskops
+    BMfile:     config/BMconfig.yaml  # Konfiguration des Puffer-Managers
+    PFfile:     config/PFconfig.yaml  # Konfiguration des Pulsfilters
 
-Die  Oszilloskop-Konfiguration enthält Informationen zum Typ
-des Oszilloskops, den aktiven Kanälen und zum Trigger:
+Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops, 
+die aktiven Kanäle und zum Trigger.
+
+**Inhalt der Datei PMpulse.yaml:**
 
     # file PMpulse.yaml
     # -----------------
-    # configuration file for PicoScope 2000 Series connected to a PM tube
+    # Konfigurationsdatei für PicoScope an Photoroehre
 
-    PSmodel: 2000a      # model type here (2000a is default)
+    PSmodel: 2000a      # Modeltyp (2000a ist voreingestellt)
 
-    picoChannels:      [A]
-    ChanRanges:        [0.5, 0.2]
-    ChanOffsets:       [0.4, 0.45]
+    picoChannels:      [A]         # aktiver Kanal, [A,B] aktiviert beide Kanaele
+    ChanRanges:        [0.5, 0.2]  # Messbereich
+    ChanOffsets:       [0.4, 0.45] # analoger Offset, der vor Anzeige addiert wird.
 
-    sampleTime:   16.E-6  # scientific format with '.' and signed exponent 
-    Nsamples:     3500
+    sampleTime:   16.E-6 # Zeit zwischen zwei Messpunkten in s
+         # Zahl im wissenschaftlichen Format mit '.' und Exponent mit Vorzeichen
+    Nsamples:     3500   # Anzahl der aufzunehmenden Messpunkte 
 
-    trgChan:    A
-    trgThr:     -45.E-3
-    trgTyp:     Falling
-    trgTO:      5000    #   time-out after which read-out occurs
-    pretrig:    0.05
-    ChanColors: [darkblue, sienna, indigo]
+    trgChan:    A        # Kanal, auf den der Trigger wirkt
+    trgThr:     -45.E-3  # Schwelle
+    trgTyp:     Falling  # fallend (Falling) oder ansteigend (Rising)
+    trgTO:      5000     # Timeout, nach dieser Zeit wird einmal ausgelesen
+    pretrig:    0.05     # Anteil der vor dem Trigger ausgelesenen Daten
+    ChanColors: [darkblue, sienna, indigo] # Farben für Darstellung der Kanäle
 
 Die Datei für den Puffer-Manager gibt an, wie viele Puffer verwendet
 werden, welche Anzeige-Module gestartet werden und ob ein Log-File
 erstellt werden soll:
 
+**Inhalt der Datei BMconfig.yaml:**
+
     # file BMconfig.yaml
     # ------------------
-    # configuration of picoDAQ Buffer Manager
+    # Konfigurationsdatei des picoDAQ Puffermanagers
 
-    NBuffers: 16           # number of buffers to store raw waveforms
-    BMmodules: [mpOsci]  # BufferMan modules to start
-    verbose: 1             # set verbosity level
-    LogFile: BMsum       # write log-file entries with current statistics
+    NBuffers: 16         # Anzahl der Puffer für aufgezeichnete Pulsformen
+    BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
+    verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
+    LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
 
 Die Konfiguration der Pulsanalyse spezifiziert die gewünschten
 Ausgabedateien und gibt  die Pulsform und die Pulshöhe
@@ -237,43 +248,46 @@ für jeden Kanal sowie die zu startenden Anzeige-Module an.
 Sie enthält auch die Spezifikation der Echtzeit-Histogramme für
 Pulshöhen, Myon-Rate und Lebensdauer. Ein Beispiel ist hier gezeigt:
 
+**Inhalt der Datei BMconfig.yaml:**
+
     # file PFKanne.yaml
     # -------------------
-    # Configuration file for PulseFilter with Kamiokanne
+    # Konfigurationsdtei für den PulseFilter mit Kamiokanne
 
-    #logFile: pFilt     # store all pulses, put Null if no output wanted
-    logFile: Null      # store all pulses, put Null if no output wanted
-    logFile2: dpFilt   # store double-pulses only, put Null if not
-    rawFile:  rawDP    # store raw wave forms, put Null if not wanted
-    pictFile: pictDP   # save pictures of double-pulse wave forms
+    #logFile: pFilt     # speichere Angaben zu allen gefundenen Pulsen
+    logFile: Null      #     Null falls keine Ausgebe erwuenscht
+    logFile2: dpFilt   # speichere nur  Doppelpulse, Null falls nicht erwuenscht
+    rawFile:  rawDP    # speichere Rohdaten von Doppelpulsen, put Null if not wanted
+    pictFile: pictDP   # Speichere Bilder von Doppelpulsen
 
-    # pulse parameters
+    # Puls-Parameter
     #         ______
     #        /      \ 
     #     _ /_ _ _ _ \_ 
     #      r    on  f 
+    #  r = rise (Anstiegszeit), on (Haltezeit), f = falling (Abfallzeit)
 
-    # pulse shape(s) for channels
-    #         if only one given, it is used for all channels
+    # Pulsformen für die aktiven Kanaele
+       #      falls nur eine angegeben, gilt sie fuer all Kanaele
     pulseShape:
-     - pheight: -0.035
-       taur   : 20.E-9
-       tauon  : 12.E-9 
-       tauf   : 128.E-9 
+     - pheight: -0.035   # Pulshoehe
+       taur   : 20.E-9   # Anstiegszeit
+       tauon  : 12.E-9   # Haltezeit
+       tauf   : 128.E-9  # Abfallzeit
 
-    # pulse shape for trigger signal
-    #         optional - if not given, uses pulseShape
+    # Pulsform fuer Triggerpuls
+    #         optional - falls nicht angegeben, nutze pulseShape
     trgPulseShape:
-     - pheight: -0.045
-       taur   : 20.E-9
-       tauon  : 12.E-9 
-       tauf   : 128.E-9 
+     - pheight: -0.045   # Pulshoehe
+       taur   : 20.E-9   # Anstiegszeit
+       tauon  : 12.E-9   # Haltezeit
+       tauf   : 128.E-9  # Abfallzeit
 
 
-    # Display Modules to be started
-    modules: [RMeter, Display, Hists]
+    # Anzeigen, die gestartet werden sollen
+    modules: [RMeter, Display, Hists]  # Rate, Pulsform, Histogramme
 
-    # Definition of Histograms
+    # Definition der Histogramme
     histograms:
      # min  max Nbins ymax    title              lin/log
      - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
@@ -281,7 +295,7 @@ Pulshöhen, Myon-Rate und Lebensdauer. Ein Beispiel ist hier gezeigt:
      - [0., 15.,  45, 7.5, "Tau (µs)", 1]
      - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
 
-    doublePulse: True  # switch for double-pulse search
+    doublePulse: True  # Doppelpulssuche ein, False falls nicht erwuenscht
 
 
 ## Beispielausgabe
