@@ -657,7 +657,7 @@ class PulseFilter(object):
           end='', file=self.logf )
       nac = [Nacc2, Nacc3, Nacc4]
       for j in range(1, NChan):
-        print("Nacc%i = %i "%(j+1, nac[j-2]),
+        print("Nacc%i = %i "%(j+1, nac[j-1]),
           end='', file=self.logf )
       print('\n', file = self.logf)
       self.logf.close()
@@ -667,7 +667,7 @@ class PulseFilter(object):
           end='', file=self.logfDP )
       Nac = [Nacc2, Nacc3, Nacc4]
       for j in range(1, NChan):
-        print("Nacc%i = %i "%(j+1, Nac[j-2]),
+        print("Nacc%i = %i "%(j+1, Nac[j-1]),
           end='', file=self.logfDP )
       print("\n#                       %i double pulses"%(Ndble), 
         file=self.logfDP )
