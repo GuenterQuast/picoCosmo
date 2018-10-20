@@ -42,7 +42,7 @@
      <string/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Tab_Control">
      <property name="toolTip">
@@ -439,9 +439,9 @@
      <widget class="QPushButton" name="pB_SaveDefault">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>220</x>
         <y>474</y>
-        <width>141</width>
+        <width>101</width>
         <height>34</height>
        </rect>
       </property>
@@ -449,7 +449,7 @@
        <string>Save as default configuration</string>
       </property>
       <property name="text">
-       <string>Save as default</string>
+       <string>Save Config</string>
       </property>
      </widget>
     </widget>
