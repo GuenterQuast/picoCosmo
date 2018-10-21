@@ -1,6 +1,7 @@
-# configuration files for Kamiokanne 
+#         Configuration Files    
+DeviceFile: config/PMpulse.yaml      # Oscilloscope
+PFfile: config/PFKanne.yaml               # PulseFilter
+BMfile: config/BMconfig.yaml            # Buffer Manager
 
-DeviceFile:    config/PMpulse.yaml
-BMfile:        config/BMconfig.yaml
-PFfile:        config/PFKanne.yaml
+
 

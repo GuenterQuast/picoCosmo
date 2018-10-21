@@ -1,4 +1,9 @@
 v0.5.2 first release with GUI
-       bug fix in PulseFilter.py
-       refinements to GUI
+       - instructions for setting up with Raspberry Pi
+       - code cleaning in GUI
+       - improved German documentation
+       - v0.5.2p1 support vor PicoScope 2x0yA series
+          and bug fix in PulseFilter.py: corrected counting
+          of coincidences in pFilt.log
+       - v0.5.3rc0 refinements to GUI: saving and loading configs
 v0.5.3 

@@ -1,5 +1,7 @@
-# configuration files for CosMO Panels
+#         Configuration Files    
+DeviceFile: config/SiPMpulse.yaml    # Oscilloscope
+PFfile: config/PFcosmo.yaml               # PulseFilter
+BMfile: config/BMconfig.yaml            # Buffer Manager
 
-DeviceFile:     config/SiPMpulse.yaml
-BMfile:         config/BMconfig.yaml
-PFfile:         config/PFcosmo.yaml
+
+
