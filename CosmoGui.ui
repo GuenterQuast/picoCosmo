@@ -42,7 +42,7 @@
      <string/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Tab_Control">
      <property name="toolTip">
@@ -347,6 +347,30 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <widget class="QWidget" name="DAQConfig">
+       <property name="toolTip">
+        <string>List of configuration files</string>
+       </property>
+       <attribute name="title">
+        <string>DAQConfig</string>
+       </attribute>
+       <widget class="QPlainTextEdit" name="pTE_DAQConfig">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>521</width>
+          <height>411</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>DAQ configuration: list of configuration filenames</string>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="OsciConfig">
        <attribute name="title">
         <string>OsciConfig</string>
@@ -361,7 +385,7 @@
          </rect>
         </property>
         <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Comnfiguration File for Oscilloscope&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Configuration File for Oscilloscope&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -436,7 +460,7 @@
        <string>Edit Mode</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pB_SaveDefault">
+     <widget class="QPushButton" name="pB_SaveConfig">
       <property name="geometry">
        <rect>
         <x>220</x>
@@ -450,6 +474,22 @@
       </property>
       <property name="text">
        <string>Save Config</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pB_ReloadConfig">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>423</x>
+        <y>466</y>
+        <width>111</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reload Config</string>
       </property>
      </widget>
     </widget>

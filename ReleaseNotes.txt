@@ -1,0 +1,4 @@
+v0.5.2 first release with GUI
+       bug fix in PulseFilter.py
+       refinements to GUI
+v0.5.3 
