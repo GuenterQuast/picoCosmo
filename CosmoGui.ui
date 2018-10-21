@@ -349,7 +349,7 @@
       </property>
       <widget class="QWidget" name="OsciConfig">
        <attribute name="title">
-        <string>Oscilloscope config</string>
+        <string>Oscilloscope</string>
        </attribute>
        <widget class="QPlainTextEdit" name="pTE_OsciConfig">
         <property name="geometry">
@@ -390,7 +390,7 @@
       </widget>
       <widget class="QWidget" name="PulseFilterConfig">
        <attribute name="title">
-        <string>PulseFilterConfig</string>
+        <string>PulseFilter</string>
        </attribute>
        <widget class="QPlainTextEdit" name="pTE_PFconfig">
         <property name="geometry">
@@ -443,7 +443,7 @@
         </sizepolicy>
        </property>
        <attribute name="title">
-        <string>BufferManager config</string>
+        <string>BufferManager</string>
        </attribute>
        <widget class="QPlainTextEdit" name="pTE_BMconfig">
         <property name="geometry">
@@ -486,7 +486,7 @@
      <widget class="QRadioButton" name="rB_EditMode">
       <property name="geometry">
        <rect>
-        <x>443</x>
+        <x>420</x>
         <y>15</y>
         <width>91</width>
         <height>30</height>
