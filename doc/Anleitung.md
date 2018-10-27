@@ -80,7 +80,7 @@ In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in 
 
 Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen Konfigurationsdateien:
 
-   ![Grafische Oberfläche CosmoGui](/home/quast/git/picoCosmo/doc/images/CosmoGui-Config.png)
+   ![Grafische Oberfläche CosmoGui](images/CosmoGui-Config.png)
 
 
 
