@@ -500,7 +500,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>600</y>
+        <y>620</y>
         <width>111</width>
         <height>30</height>
        </rect>
@@ -516,9 +516,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>475</y>
-        <width>521</width>
-        <height>121</height>
+        <y>493</y>
+        <width>531</width>
+        <height>120</height>
        </rect>
       </property>
       <property name="toolTip">
@@ -535,7 +535,7 @@
       <property name="geometry">
        <rect>
         <x>419</x>
-        <y>593</y>
+        <y>609</y>
         <width>111</width>
         <height>31</height>
        </rect>

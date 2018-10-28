@@ -40,5 +40,5 @@ histograms:
  - [0., 15.,  45, 7.5, "Tau (µs)", 1]
 # - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
 
-doublePulse: True  # switch to control double-pulse search
+doublePulse: true  # switch to control double-pulse search
 

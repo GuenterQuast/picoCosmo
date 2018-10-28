@@ -1,42 +1,50 @@
 # Software zur Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
 *Kurzfassung:*  
- Python-Script zur Aufnahme und Auswertung der Daten der CosMO-Detektoren
- und der Kamiokanne des Netzwerks Teilchenwelt mit einem USB-Oszilloskop
- der Firma PicoTechnology
+ Die in diesem Projekt bereit gestellten *python*-Skripte diene zur Aufnahme und Auswertung der Daten der CosMO-Detektoren und der Kamiokanne des Netzwerks Teilchenwelt mit einem USB-Oszilloskop.
 
    ![Abb. 1](../images/picoCosmo_iconic.jpg)
 
-## Beschreibung der Funktionalität
+
+
+## Übersicht 
 
 Das Netzwerk Teilchenwelt, <http://www.Teilchenwelt.de> stellt Experimente
 zum Nachweis von Myonen aus der kosmischem Strahlung zur Verfügung.
 Dies sind die Szintillationszähler des CosMO-Experiments und der aus einer
 Kaffeekanne mit aufgesetzter Photoröhre bestehende Wasser-Cherenkov-Zähler
-"Kamiokanne". Diese Detektoren liefern kurze Signale von ca. 100 ns Dauer
-und einigen 10 bis 100 mV Pulshöhe, die mit einem Oszillographen sichtbar
-gemacht werden können.
+"Kamiokanne".  Typsich für diese und ähnliche Detektoren sind kurze Signalpulse
+ von ca. 100 ns Dauer und einigen 10 bis 100 mV Pulshöhe, die an zufälligen
+ Zeitpunkten entstehen.  Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen 
+folgen einer Exponentialverteilung, deren Zeitkonstante dem Kehrwert der mittleren
+Ereignisrate entspricht. Mit einem Oszilloskop mit hinreichend hoher Bandbreite
+können die Signalpulse angezeigt werden. Wegen der zufälligen Natur der 
+Signale ist dabei die passende Einstellung des Oszilloskop-Triggers wichtig. 
 
-Moderne USB-Oszilloskope wie das PicoScope der Firma PichoTechnology,
-siehe <http://www.picotech.com>, erlauben es, die Pulsformen nicht nur
-anzuzeigen, sondern auch in Echtzeit an einen Commputer zu exportieren, mit
-dem sie dann aufgezeichnet, angezeigt und analysiert werden können.
+Moderne, am  USB-Port eines Rechners betriebene Oszilloskope wie das
+ PicoScope der Firma PichoTechnology, siehe <http://www.picotech.com>, 
+erlauben es, die Pulsformen nicht nur anzuzeigen, sondern auch in Echtzeit
+an einen Commputer zu exportieren, mit dem sie dann aufgezeichnet, 
+angezeigt und analysiert werden können.
 Diesem Zweck dient das hier beschriebene Projekt "*picoCosmo*". Es ist auf
 Linux-Systemen und auch auf dem Raspberry Pi lauffähig und unterstützt
 PicoScope-Geräte mit zwei oder vier Kanälen.
 
 *picoCosmo* nutzt zur Datenaufname den Puffermanager und die Echtzeit-Anzeigen
 des Projekts *picoDAQ* (<https://github.com/Guenter.Quast/picoDAQ>).
-Der Puffermanager von *picoDAQ* sammelt die Daten und verteilt sie an
-Echtzeit-Anzeigen oder weitere Prozesse zur Datenauswertung.
+Der Puffermanager von *picoDAQ* registriert die Daten des Oszilloskops, speichrt
+sie in einem Zwischenspeicher, dem Puffer, und verteilt sie von dort an mehrere
+sog. Konsumenten wie Echtzeit-Anzeigen oder weitere Prozesse zur Datenauswertung.
+
 *picoCosmo* ist eine angepasste und um umfangreiche Funktionalität zur
 Datenauswertung erweiterte Variante des Scripts *runDAQ.py* aus dem Projekt
 *picoDAQ*.
 
-Die Analyse der aufgezeichneten Pulsformen verläuft in drei Schritten:
+Die Analyse der vom Oszilloskop-Trigger ausgewählen und danach aufgezeichneten
+Pulsformen wird im sog. PulsFilter durchgeführt und verläuft in drei Schritten:
 
 1. #### Validierung der Trigger-Schwelle des Oszilloskops
-   Dazu wird der Signalverlauf um den Triggerzeitpunkt mit einem
+   Der Signalverlauf um den Triggerzeitpunkt wird mit einem
    Musterpuls verglichen und das Signal akzeptiert, wenn die Form gut
    übereinstimmt und der Puls eine Mindesthöhe überschreitet.
 
@@ -55,28 +63,32 @@ Die Analyse der aufgezeichneten Pulsformen verläuft in drei Schritten:
    durch den bzw. die Detektoren gestoppt und das aus dem Zerfall
    entstandene Elektron registriert wird. Die registrierten
    individuellen Lebensdauern folgen einer Exponential-Verteilung mit
-   einer mittleren Lebensdauern von 2,2 µs, die auf diese Weise
-   bestimmt werden kann.
+   einer mittleren Lebensdauern von 2,2µs, die auf diese Weise
+   bestimmt werden kann. Natürlich treten auch Zufallskoinzidenzen
+   auf, wenn ein zweites Myon oder ein Rausch-Pulse sehr kurz nach
+   dem Myon eintrifft, das den Trigger ausgelöst hat. 
 
 Die Software bietet Echtzeit-Anzeigen der Myon-Rate, der aufgenommenen
-Pulshöhen und der Myon-Lebensdauern. Zusätzlich können Mehrfach-Pulse
-als Rohdaten der registrierten Pulsformen oder als Bilder im *.png*-Format
+Pulshöhen und der Myon-Lebensdauern. Die in Echtzeit bestimmten Signal-Parameter
+werden optional kontinuierlich in Dateien geschrieben. Zusätzlich können Mehrfach-Pulse als Rohdaten der registrierten Pulsformen oder als Bilder im *.png*-Format
 gespeichert werden.
 
-Details zu Abhängigkeiten und zur Installation finden sich in der Datei  [README_de.md](../README_de.md).
+Details zu Abhängigkeiten und zur Installation von *picoCosmo* finden sich in der
+Datei  [README_de.md](../README_de.md).
 
 
 
 ## Starten des Programms
 
-Der Code kann entweder auf der Linux-Kommandozeile über das Script *runCosmo.py* oder über eine grafische Oberfläche, *CosmoGui.py*, gestartet werden. Auf vielen Systemen ist ein *Icon* auf der
-grafischen Oberfläche vorhanden, mit dem durch anklicken das Programm gestartet werden kann. 
+Der Code kann entweder auf der Linux-Kommandozeile über das Script *runCosmo.py* oder über eine grafische Oberfläche, *CosmoGui.py*, gestartet werden. Die grafische Oberfläche kann auch mit einem *Icon* verknüpft werden, so dass das Programm durch einfaches Anklicken gestartet werden kann.
 
-Hier ein Bild der grafischen Oberfläche:
+Die grafische Oberfläche erlaubt das Festlegen und Bearbeiten der Konfiguration und des Arbeitsverzeichnisses, in dem Dateien abgelegt werden, sowie den Start der eigentlichen Datenaufnahme.
+Hier ein Bild des Begrüßungsbildschirms der grafischen Oberfläche:
 
    ![Grafische Oberfläche CosmoGui](images/CosmoGui.png)
 
-In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in der alle weiteren Konfigurationsdateien enthalten sind, sowie das Arbeitsverzeichnis, in dem modifizierte Konfigurationen und die aufgezeichneten Daten abgelegt werden. Im Feld *Run Tag* steht ein Name, der der aktuellen Messung zugeordnet ist und aus dem die Dateinamen für Konfigurations- und Ausgabedateien und abgeleitet werden. 
+In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in der alle weiteren Konfigurationsdateien enthalten sind, sowie das Arbeitsverzeichnis, in dem modifizierte Konfigurationen und die aufgezeichneten Daten abgelegt werden. Im Feld *Run Tag* steht ein Name, der der aktuellen Messung zugeordnet ist und aus dem die Dateinamen für Konfigurations- und Ausgabedateien
+abgeleitet werden.  
 
 Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen Konfigurationsdateien:
 
@@ -84,20 +96,22 @@ Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen 
 
 
 
-Ganz unten im Fenster wird die Hauptkonfiguration angezeigt, die lediglich die Namen der Konfigurationsdateien für das USB-Oszilloskops, die Pulsanalyse und die Datennahme enthält. Die Konfigurationsdateien können mittels der grafischen Oberfläche ausgewählt (Klick auf das Dateisymbol) oder verändert werden (Knopf *EditMode* aktivieren).  Wenn alle Konfigurationsdateien erstellt sind, können sie mit dem Feld `Save all configs` im Arbeitsverzeichnis unter den in der Hauptkonfiguration angegebenen Namen gespeichert werden. Der Name der Hauptkonfigurationsdatei ist dabei der im Feld `Run Tag` gesetzte Text mit der Erweiterung *.daq*.  Vor dem Abspeichern erfolgt eine Überprüfung auf syntaktische Richtigkeit - sollte eine Fehlermeldung angezeigt werden, kann die betroffene Datei erneut modifiziert und dann die gesamte Konfiguration abgespeichert werden. 
+Ganz unten im Fenster wird die Hauptkonfiguration angezeigt, die lediglich die Namen der Konfigurationsdateien für das USB-Oszilloskops, die Pulsanalyse und die Datennahme enthält.  Die Reiter *Oscilloscope*, *PulseFilter* und *BuferManager* zeigen die einzelnen Konfigurationsdateien an.  Die Konfigurationsdateien können mittels der grafischen Oberfläche ausgewählt (Klick auf das Dateisymbol) oder verändert werden (Knopf *EditMode* aktivieren). Details zu den einzelnen Konfigurationen werden
+weiter unter erklärt. 
 
-Das Starten der Datennahme erfolgt mit dem Knopf `Start Run` im ersten Reiter. Es wird ein eigenes Unterverzeichnis im Arbeitsverzeichnis erzeugt, dessen Name aus dem im Feld  `Run Tag` eingetragenen Text und dem aktuelle Datum abgeleitet wird. Auch die komplette Konfiguration wird dort abgespeichert, so dass jederzeit ersichtlich ist, unter welchen Bedingungen die Daten im Verzeichnis aufgenommen wurden.
+Wenn alle Konfigurationsdateien erstellt sind, können sie mit dem Feld `Save all configs` im Arbeitsverzeichnis unter den in der Hauptkonfiguration angegebenen Namen gespeichert werden. Der Name der Hauptkonfigurationsdatei ist dabei der im Feld `Run Tag` gesetzte Text mit der Erweiterung *.daq*.  Vor dem Abspeichern erfolgt eine Überprüfung auf syntaktische Richtigkeit - sollte eine Fehlermeldung angezeigt werden, kann die betroffene Datei korrigiert und dann die gesamte Konfiguration abgespeichert werden. 
 
-Nach dem Abspeichern beendet sich die grafische Oberfläche, und die eigentliche Datennahme (engl. "Run") beginnt mit dem  Start der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten Echtzeitanzeigen. Die grafische Oberfläche ist hier gezeigt:
+Das Starten der Datennahme erfolgt mit dem Knopf `Start Run` im Begrüßungsbildschirm. Im gewählten Arbeitsverzeichnis wird eigenes Unterverzeichnis erzeugt, dessen Name aus dem im Feld `Run Tag` eingetragenen Text und dem aktuelle Datum abgeleitet wird. Auch die komplette Konfiguration wird dort abgespeichert, so dass jederzeit ersichtlich ist, unter welchen Bedingungen die Daten im Verzeichnis aufgenommen wurden. Danach beendet sich die grafische Oberfläche, und die eigentliche Datennahme (engl. "Run") beginnt mit dem  Start der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten Echtzeitanzeigen. Die grafische Oberfläche ist hier gezeigt:
 
    ![Grafische Oberfläche des Puffermanagers](images/BufferManWindow.png)
 
 
-Über die Kontrollflächen des Puffer-Managers kann die Datennahme pausiert (*Pause*),  wieder aufgenommen (*Resume*) oder beendet werden (*Stop* und **EndRun*). In gestopptem Zustand werden die Ausgabedateien geschlossen, aber alle Fenster bleiben noch geöffnet, so dass Grafiken betrachtet oder gespeichert und statistische Information ausgewertet werden können. Wird der Run beendet, verschwinden alle Fenster.
+Über die Kontrollflächen des Puffer-Managers kann die Datennahme pausiert (*Pause*),  wieder aufgenommen (*Resume*) oder beendet werden (*Stop* und *EndRun*). In gestopptem Zustand werden die Ausgabedateien geschlossen, aber alle Fenster bleiben noch geöffnet, so dass Grafiken betrachtet oder gespeichert und statistische Information ausgewertet werden können. Wird der Run beendet, verschwinden alle Fenster.
 
-Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Informationen zur Initialisierung, Konfiguration und zum Start einzelner, jeweils als Hintergrundprozessen ausgeführten Programmkomponenten angezeigt werden. Die Kontrolle ist auch über Eingabe einzelner Kommandos mit der Tastatur möglich, wenn das Ausgabefenster vorher durch Anklicken aktiviert wurde: 
+Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Informationen zur Initialisierung, Konfiguration und zum Start einzelner, jeweils als Hintergrundprozesse ausgeführten Programmkomponenten angezeigt werden. Die Kontrolle ist auch über Eingabe einzelner Kommandos mit der Tastatur möglich, wenn das Ausgabefenster vorher durch Anklicken aktiviert wurde: 
 
     type -> E(nd), P(ause), S(top) or R(esume) + <ret> 
+
 
 
 Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Echtzeit-Analyse der vom  Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
@@ -111,7 +125,7 @@ Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateie
   - Dateien mit dem Namensanfang *dpFilt* enthalten Informationen zu den
     aufgezeichneten Doppelpulsen im CSV-Format:
 
-    ​    \# Nacc,      Ndble,      Tau,     delT(iChan), ... , V(iChan), ... 
+     ```Nacc,      Ndble,      Tau,     delT(iChan), ... , V(iChan), ...``` 
 
     - *Nacc*  : Zahl der akzeptierten Pulse
     - *Ndble*: Zahl der akzeptierten Doppelpulse 
@@ -130,11 +144,10 @@ Es ist auch möglich, grafische Darstellungen von Doppelpulsen im Verzeichnis mi
 
    ![Beispiel eines Doppelpulses](images/DPfig741.png)
 
-Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren graphische Anzeige bzw. Abspeichern als Grafikdateien im *.png*-Format.
+Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren grafische Anzeige bzw. Abspeichern als Grafikdateien
+im *.png*-Format.
 
-Eine weitere Hilfsanwendung, *fit_dpData.py*, fürhrt die Anpassung einer Exponentialfunktion an die in Dateien mit Namensanfang *dpFilt* abgelegten
-individuellen µ-Lebensdauern. Zum Start einer Anpassung an die in der Datei
-dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15µs folgenden Befehl  
+Eine weitere Hilfsanwendung, *fit_dpData.py*, fürhrt die Anpassung einer Exponentialfunktion an die in Dateien mit Namensanfang *dpFilt* abgelegten individuellen µ-Lebensdauern. Zum Start einer Anpassung an die in der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15µs folgenden Befehl
 auf der Kommandozeile eingeben:
 
     ./fit_dpData.py dpFilt<Name> 1.0 15.
@@ -145,12 +158,15 @@ Ein typisches Ergebnis mit etwa 700 mit den Cosmo-Panels aufgezeichneten Doppelp
 
 
 
+## Details zu Konfiguration
 
-##Details zu Konfiguration
+Die Konfigurationsdateien für das USB-Oszilloskop, den Puffer-Manager und die Signalanalyse sind in jeweils einer  Datei vom  Typ *.yaml* im Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für die CosMO-Panels. Sie können entweder mit einem Text-Editor oder auch mit Hilfe der oben beschriebenen grafischen Oberfläche bearbeitet werden.
 
-Die Konfigurationsdateien für das USB-Oszilloskop, den Puffer-Manager und die Signalanalyse sind in jeweils einer  Datei vom  Typ *.yaml* im Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für die CosMO-Panels.
+Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht die in den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*. Insbesondere kennzeichnet Text nach einem `#` -Zeichen erklärende Kommentare oder enthält alternative, auskommentierte Konfigurationsoptionen, die durch Löschen des `#` -Zeichens aktiviert werden können. 
 
-Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht die in den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*. Insbesondere kennzeichnet Text nach einem `#` -Zeichen erklärende Kommentare oder enthält alternative, auskommentierte Konfigurationsoptionen, die durchLöschen des `#` -Zeichens aktiviert werden können.
+
+
+Diese folgende Datei enthält die Dateinamen der einzelnen Konfigurationsdateien:
 
 **Inhalt der Datei Kanne.daq:**
 
@@ -164,9 +180,13 @@ Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht
 
 
 
-Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops,  die aktiven Kanäle und zum Trigger.
+**Konfiguration des Oszilloskops**
 
-**Inhalt der Datei PMpulse.yaml:**
+Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops,  die aktiven Kanäle und zum Trigger. Bei den Einstellungen zum Messbereich kann ein analoger Offset eingestellt werden, der zum Signal addiert wird. Bei unipolaren Pulsen, wie sie viele Detektoren produzieren, kann so eine Erhöhung der Auflösung sowie eine optimierte Darstellung erreicht werden.  Wenn nur ein Kanal aktiv ist, werden Angaben für die weiteren Kanäle ignoriert.   
+Die Einstellungen zur Zeitbasis des Oszilloskops erlauben die Angabe der gesamten, aufzuzeichnenden Zeitdauer und die Anzahl der Messwerte - die Differenz zwischen zwei Abtastungen ergibt sich dann als Quotient dieser Werte. Die Einstellungen zum Trigger erlauben die Auswahl des Triggerkanals, die Triggerschwelle und die Richtung des Signals - also steigend (*Rising*) oder fallend (*Falling*). Es ist auch möglich, die Signalausgabe vor dem eigentlichen Triggerzeitpunkt zu starten - dazu dient der Eintrag *pretrig*, der den prozentualen Anteil der vor dem Triggerzeitpunkt ausgegebenen Werte angibt.  
+Es ist an dieser Stelle wichtig anzumerken, dass die vorgegebenen Werte nicht unbedingt denen entsprechen, die vom Oszilloskop unterstützt werden. Bei der Initialisierung werden die vorgegebenen Werte durch solche ersetzt, die unterstützt werden und den Vorgaben am nächsten kommen. Die tatsächlich eingestellten Werte werden nach Initialisierung des Oszilloskops in der Textkonsole angezeigt.
+
+Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrieb an einer Photoröhre ist hier gezeigt (Datei PMpulse.yaml) :
 
     # file PMpulse.yaml
     # -----------------
@@ -191,9 +211,19 @@ Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops, 
 
 
 
-Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Sie enthält auch die Spezifikation der Echtzeit-Histogramme für Pulshöhen, Myon-Rate und Lebensdauer. Ein Beispiel ist hier gezeigt:
 
-**Inhalt der Datei BFconfig.yaml:**
+
+**Konfiguration des Pulsfilters**
+
+Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Im ersten Teil des unten gezeigten Beispiels werden die gewünschten Ausgabedateien angegeben, also die Ausgabe aller Pulsparamter nach der Validierung der Triggerbedingung, die Pulsparameter oder die kompletten Rohdaten der Signalformen für gefundene Doppelpulsen oder auch die Abspeicherung der Signalformen als Grafiken.  
+Im zweiten Teil der Datei werden die Pulsparameter für die Pulssuche angegeben, und zwar für die Näherung als Trapezförmiges Signal mit Anstiegszeit (*taur*), Haltezeit (*tauon*) und Abfalleit (*tauf*) sowie der Pulshöhe am Maximum (*pheight*) als Parameter. Ein solcher Eintrag kann für jeden aktiven Kanal angegeben werden; wird nur einer angegeben, gilt er für alle Kanäle.   
+Oft ist es notwendig, für den Triggerpuls andere
+Pulsformen auszuwählen. Dazu kann optional mit dem Schlüsselwort *trgPulseShape* eine eigene Pulsdefinitnion für den Triggerpuls auf dem Triggerkanal gewählt werden.  
+Über das Schlüsselwort *modules* werden die gewünschten Echtzeit-Anzeigen angegeben. Möglich sind eine Darstellung der Rate akzeptierter Ereignisse in Abhängigkeit von der Zeit, eine einfache Anzeige der Signalhöhen für jedes akzeptierte Ereignis als Balkendiagramm und die Anzeige von Häufigkeitsverteilungen (Histogramme) von Pulsparametern . Die Konfigurationsparameter der gewünschten Histogramme werden im letzten Teil der Datei angegeben. Dies sind der Wertebereich, die Zahl der Intervalle, der Maximalwert der Häufigkeit, ein Name für die angezeigte Größe und die Wahl einer linearen oder logarithmischen Skala. In der gegenwärtigen Version der Software sind nur die vier unten gezeigten Histogramme in genau dieser Reihenfolge implementiert.  
+Über den Schlüssel *doublePulse* kann die Doppelpussuche ggf. abgeschaltet werden, wenn man den Wert auf *false* setzt. 
+
+Ein Beispiel für die Analyse von Signalen einer Photoröhre ist hier gezeigt
+(Datei BFconfig.yaml):
 
     # file PFKanne.yaml
     # -------------------
@@ -240,13 +270,13 @@ Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien u
      - [0., 15.,  45, 7.5, "Tau (µs)", 1]
      - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
     
-    doublePulse: True  # Doppelpulssuche ein, False falls nicht erwuenscht
+    doublePulse: true  # Doppelpulssuche ein, False falls nicht erwuenscht
 
 
 
-Die Konfigurationsdatei für den Puffer-Manager muss eigentlich selten geändert werden. Sie gibt an, wie viele Puffer verwendet werden, welche Anzeige-Module gestartet werden und ob ein Log-File erstellt werden soll:
+**Konfiguration des Puffer-Managers**
 
-**Inhalt der Datei BMconfig.yaml:**
+Die Konfigurationsdatei für den Puffer-Manager muss meist nicht geändert werden. Sie gibt an, wie viele Puffer verwendet werden, welche Anzeige-Module gestartet werden und ob ein Log-File erstellt werden soll. Hier ein Beispiel (Datei BMconfig.yaml):
 
 ```
 # file BMconfig.yaml
@@ -258,8 +288,6 @@ BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
 verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
 LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
 ```
-
-
 
 
 
