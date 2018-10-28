@@ -322,23 +322,27 @@ an gemessene Lebensdauern zwischen 1.5 µs and 15. µs kann mit dem Skript
 
 *picoCosmo* läuft auch auf dem Einplatinen-Computer Rasbperry Pi unter
 dem Betriebssystem Raspbian. Nach dem Aufsetzen des Raspberry Pi sind
-die folgenden Schritte notwendig, um alle benötigten Pakete zu installieren:
+die folgenden Schritte notwendig  um alle benötigten Pakete zu installieren (*stretch* Release):
 
-```
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 
-sudo pip3 install --upgrade numpy
-sudo pip3 install scipy
-sudo pip3 install matplotlib
-sudo pip3 install pyyaml
-sudo apt-get install pyqt5-dev
-sudo apt-get install pyqt5-tools
+sudo apt-get install python3-scipy
+sudo apt-get install python3-matplotlib
+sudo apt-get install python3-pyqt5
+sudo apt-get install libatlas-base-dev # needed by latest version of numpy
 
-sudo apt-get install at-spi2-core
+sudo pip3 install pyyaml
+
+# Installation der MS TrueType fonts
+sudo apt-get install ttf-mscorefonts-installer
 
 # Installation der picoScope-Treiber siehe
 #    https://www.picotech.com/support/topic14649.html
+# nach Aufsetzen des picotech Repositories
+sudo apt-get install libps2000a
+sudo apt-get install libps2000
 
 # picoCosmo Code und notwendige Pakete
 mkdir git
@@ -346,6 +350,8 @@ cd git
 git pull https://github.com/GuenterQuast/picoCosmo
 cd picoCosmo/whl
 sudo pip3 install *.whl
+# Nuter in Gruppe  pico eintragen, um Zugriff auf USB-Ports zu gewähren 
+sudo useradd -G pico $USER
 ```
 
 Erzeugen Sie das Unterverzeichnis *picoCosmo*, in dem alle Konfigurationsdateien und  

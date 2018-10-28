@@ -193,7 +193,7 @@ The parameters of events containing double-pulses are stored in file *dpKanne2_1
 ## Running on Raspberry Pi
 
 *picoCosmo* also runs on the very popular Rasbperry Pi single board computer. After setting up your Raspberry Pi, the following steps should be taken to update and
-install all necessary packages:
+install all necessary packages (Debian release *stretch*):
 
 ```bash
 sudo apt-get update
@@ -202,15 +202,18 @@ sudo apt-get upgrade
 sudo apt-get install python3-scipy
 sudo apt-get install python3-matplotlib
 sudo apt-get install python3-pyqt5
+sudo apt-get install libatlas-base-dev # needed by latest version of numpy
 
 sudo pip3 install pyyaml
+
+# installation of MS TrueType fonts
+sudo apt-get install ttf-mscorefonts-installer
 
 # PicoTech base drivers for picoScope usb devices
 #   see https://www.picotech.com/support/topic14649.html
 # after inclusion of the picotech raspbian repository:  
 sudo apt-get install libps2000a
-# allow access of user pi to usb port
-sudo usermod -a -G tty pi
+sudo apt-get install libps2000
 
 # get picoCosmo code and dependencies
 mkdir git
@@ -218,6 +221,8 @@ cd git
 git pull https://github.com/GuenterQuast/picoCosmo
 cd picoCosmo/whl
 sudo pip3 install *.whl
+# put current user in group pico to grant acces to USB ports
+sudo useradd -G pico $USER
 ```
 
 Create the subdirectory  `picoCosmo` in the home directory, where all the output and modified configuration files will be stored:
