@@ -80,7 +80,7 @@ In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in 
 
 Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen Konfigurationsdateien:
 
-   ![Grafische Oberfläche CosmoGui](images/CosmoGui-Config.png)
+   ![Reiter "Configuration" von CosmoGui](images/CosmoGui-Config.png)
 
 
 
@@ -88,31 +88,65 @@ Ganz unten im Fenster wird die Hauptkonfiguration angezeigt, die lediglich die N
 
 Das Starten der Datennahme erfolgt mit dem Knopf `Start Run` im ersten Reiter. Es wird ein eigenes Unterverzeichnis im Arbeitsverzeichnis erzeugt, dessen Name aus dem im Feld  `Run Tag` eingetragenen Text und dem aktuelle Datum abgeleitet wird. Auch die komplette Konfiguration wird dort abgespeichert, so dass jederzeit ersichtlich ist, unter welchen Bedingungen die Daten im Verzeichnis aufgenommen wurden.
 
-Nach dem Abspeichern beendet sich die grafische Oberfläche, und die eigentliche Datennahme  (engl. "Run") beginnt mit dem  Start der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. Als Datenkonsument des Puffermanagers startet auch der Pulsfilter zur  Echtzeit-Analyse der aufgezeichneten Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen.  Außerdem werden die Informationen über gefilterte Pulse in Dateien geschrieben.
+Nach dem Abspeichern beendet sich die grafische Oberfläche, und die eigentliche Datennahme (engl. "Run") beginnt mit dem  Start der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten Echtzeitanzeigen. Die grafische Oberfläche ist hier gezeigt:
 
-Dateien mit dem Namensanfang  *pFilt* enthalten Informationen zu allen aufgezeichneten Pulsen, die die Stufe der Triggervalidierung passiert haben. 
+   ![Grafische Oberfläche des Puffermanagers](images/BufferManWindow.png)
 
-Dateien mit dem Namensanfang *dpFilt* enthalten Informationen zu den aufgezeichneten Doppelpulsen im CSV-Format:
-
-​    \# Nacc,      Ndble,      Tau,     delT(iChan),           ...          V(iChan) 
-
-  - *Nacc*  : Zahl der akzeptierten Pulse
-  - *Ndble*: Zahl der akzeptierten Doppelpulse 
-  - *Tau*:   Zeitlicher Abstand zwischen Triggerpuls und (erstem) Folgepuls (= gemessene µ-Lebensdauer)
-  - *delT(iChan)* :  zeitlicher Abstand des Doppelpulses vom Triggerpuls in Kanal *iChan*
-  - *V(iChan)*: Pulshöhe in mV des Folgepulses in Kanal *iChan*
-
-Falls eingeschaltet, werden auch die vollständigen Rohdaten von allen erkannten Doppelpulsen in der Dateien mit Namensbeginn *dpRaw* im *.yaml*-Format abgelegt. Damit können eigene Analysen der Rohdaten ausgeführt werden. 
-
-Es ist auch möglich, grafische Darstellungen von Doppelpulsen im Verzeichnis mit Namensbeginn *dpFig* abzulegen. Ein Beispiel für einen Doppelpuls im dritten (untersten) Panel bei einer Datennahme mit drei Cosmo-Panels ist hier gezeigt: 
-
-   ![Grafische Oberfläche CosmoGui](images/DPfig741.png)
 
 Über die Kontrollflächen des Puffer-Managers kann die Datennahme pausiert (*Pause*),  wieder aufgenommen (*Resume*) oder beendet werden (*Stop* und **EndRun*). In gestopptem Zustand werden die Ausgabedateien geschlossen, aber alle Fenster bleiben noch geöffnet, so dass Grafiken betrachtet oder gespeichert und statistische Information ausgewertet werden können. Wird der Run beendet, verschwinden alle Fenster.
 
+Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Informationen zur Initialisierung, Konfiguration und zum Start einzelner, jeweils als Hintergrundprozessen ausgeführten Programmkomponenten angezeigt werden. Die Kontrolle ist auch über Eingabe einzelner Kommandos mit der Tastatur möglich, wenn das Ausgabefenster vorher durch Anklicken aktiviert wurde: 
+
+    type -> E(nd), P(ause), S(top) or R(esume) + <ret> 
+
+
+Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Echtzeit-Analyse der vom  Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
+
+Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateien auf der Festplatte abgelegt:
+
+  - Dateien mit dem Namensanfang  *pFilt* enthalten Informationen zu
+    allen aufgezeichneten Pulsen, die die Stufe der Triggervalidierung
+    passiert haben. 
+
+  - Dateien mit dem Namensanfang *dpFilt* enthalten Informationen zu den
+    aufgezeichneten Doppelpulsen im CSV-Format:
+
+    ​    \# Nacc,      Ndble,      Tau,     delT(iChan), ... , V(iChan), ... 
+
+    - *Nacc*  : Zahl der akzeptierten Pulse
+    - *Ndble*: Zahl der akzeptierten Doppelpulse 
+    - *Tau*:   Zeitlicher Abstand zwischen Triggerpuls und (erstem) Folgepuls
+       (= gemessene µ-Lebensdauer)
+    - *delT(iChan)* :  zeitlicher Abstand des Doppelpulses vom Triggerpuls in
+       Kanal *iChan*
+    - *V(iChan)*: Pulshöhe in mV des Folgepulses in Kanal *iChan*
+
+ - Falls eingeschaltet, werden auch die vollständigen Rohdaten von allen
+   erkannten Doppelpulsen in der Dateien mit Namensbeginn *dpRaw* im
+   *.yaml*-Format abgelegt. Damit können eigene Analysen der Rohdaten
+    ausgeführt werden. 
+
+Es ist auch möglich, grafische Darstellungen von Doppelpulsen im Verzeichnis mit Namensbeginn *dpFig* abzulegen. Ein Beispiel für einen Doppelpuls im dritten (untersten) Panel bei einer Datennahme mit drei Cosmo-Panels ist hier gezeigt: 
+
+   ![Beispiel eines Doppelpulses](images/DPfig741.png)
+
 Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren graphische Anzeige bzw. Abspeichern als Grafikdateien im *.png*-Format.
 
-### Details zu Konfiguration
+Eine weitere Hilfsanwendung, *fit_dpData.py*, fürhrt die Anpassung einer Exponentialfunktion an die in Dateien mit Namensanfang *dpFilt* abgelegten
+individuellen µ-Lebensdauern. Zum Start einer Anpassung an die in der Datei
+dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15µs folgenden Befehl  
+auf der Kommandozeile eingeben:
+
+    ./fit_dpData.py dpFilt<Name> 1.0 15.
+
+Ein typisches Ergebnis mit etwa 700 mit den Cosmo-Panels aufgezeichneten Doppelpulsen im Bereich von 1µs - 15µs ist hier gezeigt:
+
+ ![Anpassung einer Exponentialfunktoin](images/LebensdauerFit.png)
+
+
+
+
+##Details zu Konfiguration
 
 Die Konfigurationsdateien für das USB-Oszilloskop, den Puffer-Manager und die Signalanalyse sind in jeweils einer  Datei vom  Typ *.yaml* im Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für die CosMO-Panels.
 
