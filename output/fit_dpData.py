@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #coding=utf-8
 from __future__ import print_function, unicode_literals, division, absolute_import
 
@@ -15,6 +15,8 @@ from the command line
 
 import sys
 import numpy as np
+import matplotlib
+matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 def pdf(t, fbg=0.1, tau=2.2, a=1., b=9.75):
