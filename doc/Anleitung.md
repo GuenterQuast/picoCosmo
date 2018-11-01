@@ -13,17 +13,15 @@ Das Netzwerk Teilchenwelt, <http://www.Teilchenwelt.de> stellt Experimente
 zum Nachweis von Myonen aus der kosmischem Strahlung zur Verfügung.
 Dies sind die Szintillationszähler des CosMO-Experiments und der aus einer
 Kaffeekanne mit aufgesetzter Photoröhre bestehende Wasser-Cherenkov-Zähler
-"Kamiokanne".  Typsich für diese und ähnliche Detektoren sind kurze Signalpulse
- von ca. 100 ns Dauer und einigen 10 bis 100 mV Pulshöhe, die an zufälligen
- Zeitpunkten entstehen.  Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen 
-folgen einer Exponentialverteilung, deren Zeitkonstante dem Kehrwert der mittleren
-Ereignisrate entspricht. Mit einem Oszilloskop mit hinreichend hoher Bandbreite
-können die Signalpulse angezeigt werden. Wegen der zufälligen Natur der 
-Signale ist dabei die passende Einstellung des Oszilloskop-Triggers wichtig. 
+"Kamiokanne".  Typisch für diese und ähnliche Detektoren sind kurze Signalpulse
+von ca. 100 ns Dauer und einigen 10 bis 100 mV Pulshöhe, die zu zufälligen
+Zeitpunkten entstehen. Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen folgen einer Exponentialverteilung, deren Zeitkonstante
+dem Kehrwert der mittleren Ereignisrate entspricht.
+Mit einem Oszilloskop mit hinreichend hoher Bandbreite können die Signalpulse angezeigt werden. Wegen der zufälligen Natur der Signale ist dabei eine geeignete  Einstellung des Oszilloskop-Triggers wichtig.
 
 Moderne, am  USB-Port eines Rechners betriebene Oszilloskope wie das
- PicoScope der Firma PichoTechnology, siehe <http://www.picotech.com>, 
-erlauben es, die Pulsformen nicht nur anzuzeigen, sondern auch in Echtzeit
+PicoScope der Firma PichoTechnology, siehe <http://www.picotech.com>,
+erlauben es, die Signalformen nicht nur anzuzeigen, sondern auch in Echtzeit
 an einen Commputer zu exportieren, mit dem sie dann aufgezeichnet, 
 angezeigt und analysiert werden können.
 Diesem Zweck dient das hier beschriebene Projekt "*picoCosmo*". Es ist auf
@@ -32,7 +30,7 @@ PicoScope-Geräte mit zwei oder vier Kanälen.
 
 *picoCosmo* nutzt zur Datenaufname den Puffermanager und die Echtzeit-Anzeigen
 des Projekts *picoDAQ* (<https://github.com/Guenter.Quast/picoDAQ>).
-Der Puffermanager von *picoDAQ* registriert die Daten des Oszilloskops, speichrt
+Der Puffermanager von *picoDAQ* registriert die Daten des Oszilloskops, speichert
 sie in einem Zwischenspeicher, dem Puffer, und verteilt sie von dort an mehrere
 sog. Konsumenten wie Echtzeit-Anzeigen oder weitere Prozesse zur Datenauswertung.
 
@@ -40,7 +38,7 @@ sog. Konsumenten wie Echtzeit-Anzeigen oder weitere Prozesse zur Datenauswertung
 Datenauswertung erweiterte Variante des Scripts *runDAQ.py* aus dem Projekt
 *picoDAQ*.
 
-Die Analyse der vom Oszilloskop-Trigger ausgewählen und danach aufgezeichneten
+Die Analyse der vom Oszilloskop-Trigger ausgewählten und danach aufgezeichneten
 Pulsformen wird im sog. PulsFilter durchgeführt und verläuft in drei Schritten:
 
 1. #### Validierung der Trigger-Schwelle des Oszilloskops
@@ -63,7 +61,7 @@ Pulsformen wird im sog. PulsFilter durchgeführt und verläuft in drei Schritten
    durch den bzw. die Detektoren gestoppt und das aus dem Zerfall
    entstandene Elektron registriert wird. Die registrierten
    individuellen Lebensdauern folgen einer Exponential-Verteilung mit
-   einer mittleren Lebensdauern von 2,2µs, die auf diese Weise
+   einer mittleren Lebensdauer von 2,2µs, die auf diese Weise
    bestimmt werden kann. Natürlich treten auch Zufallskoinzidenzen
    auf, wenn ein zweites Myon oder ein Rausch-Pulse sehr kurz nach
    dem Myon eintrifft, das den Trigger ausgelöst hat. 
@@ -80,15 +78,15 @@ Datei  [README_de.md](../README_de.md).
 
 ## Starten des Programms
 
-Der Code kann entweder auf der Linux-Kommandozeile über das Script *runCosmo.py* oder über eine grafische Oberfläche, *CosmoGui.py*, gestartet werden. Die grafische Oberfläche kann auch mit einem *Icon* verknüpft werden, so dass das Programm durch einfaches Anklicken gestartet werden kann.
+Nach dem Anschließen des PicoScopes an den USB-Port kann das Programm gestartet
+werden. Dies kann entweder auf der Linux-Kommandozeile über das Script *runCosmo.py*, am einfachsten aber über die grafische Oberfläche, *CosmoGui.py*, erfolgen. Die grafische Oberfläche kann auch mit einem *Icon* verknüpft werden, so dass das Programm durch einfaches Anklicken gestartet werden kann. 
 
 Die grafische Oberfläche erlaubt das Festlegen und Bearbeiten der Konfiguration und des Arbeitsverzeichnisses, in dem Dateien abgelegt werden, sowie den Start der eigentlichen Datenaufnahme.
 Hier ein Bild des Begrüßungsbildschirms der grafischen Oberfläche:
 
    ![Grafische Oberfläche CosmoGui](images/CosmoGui.png)
 
-In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in der alle weiteren Konfigurationsdateien enthalten sind, sowie das Arbeitsverzeichnis, in dem modifizierte Konfigurationen und die aufgezeichneten Daten abgelegt werden. Im Feld *Run Tag* steht ein Name, der der aktuellen Messung zugeordnet ist und aus dem die Dateinamen für Konfigurations- und Ausgabedateien
-abgeleitet werden.  
+In den Feldern mit Dateinamen steht zunächst die Haupt-Konfigurationsdatei, in der alle weiteren Konfigurationsdateien enthalten sind, sowie das Arbeitsverzeichnis, in dem modifizierte Konfigurationen und die aufgezeichneten Daten abgelegt werden. Im Feld *Run Tag* steht ein Name, der der aktuellen Messung zugeordnet ist und aus dem die Dateinamen für Konfigurations- und Ausgabedateien abgeleitet werden.  
 
 Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen Konfigurationsdateien:
 
@@ -114,7 +112,7 @@ Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Info
 
 
 
-Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Echtzeit-Analyse der vom  Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
+Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Analyse der vom  Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
 
 Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateien auf der Festplatte abgelegt:
 
@@ -218,7 +216,7 @@ Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrie
 Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Im ersten Teil des unten gezeigten Beispiels werden die gewünschten Ausgabedateien angegeben, also die Ausgabe aller Pulsparamter nach der Validierung der Triggerbedingung, die Pulsparameter oder die kompletten Rohdaten der Signalformen für gefundene Doppelpulsen oder auch die Abspeicherung der Signalformen als Grafiken.  
 Im zweiten Teil der Datei werden die Pulsparameter für die Pulssuche angegeben, und zwar für die Näherung als Trapezförmiges Signal mit Anstiegszeit (*taur*), Haltezeit (*tauon*) und Abfalleit (*tauf*) sowie der Pulshöhe am Maximum (*pheight*) als Parameter. Ein solcher Eintrag kann für jeden aktiven Kanal angegeben werden; wird nur einer angegeben, gilt er für alle Kanäle.   
 Oft ist es notwendig, für den Triggerpuls andere
-Pulsformen auszuwählen. Dazu kann optional mit dem Schlüsselwort *trgPulseShape* eine eigene Pulsdefinitnion für den Triggerpuls auf dem Triggerkanal gewählt werden.  
+Pulsparameter auszuwählen. Dazu kann optional mit dem Schlüsselwort *trgPulseShape* eine eigene Pulsdefinitnion für den Triggerpuls auf dem Triggerkanal gewählt werden.  
 Über das Schlüsselwort *modules* werden die gewünschten Echtzeit-Anzeigen angegeben. Möglich sind eine Darstellung der Rate akzeptierter Ereignisse in Abhängigkeit von der Zeit, eine einfache Anzeige der Signalhöhen für jedes akzeptierte Ereignis als Balkendiagramm und die Anzeige von Häufigkeitsverteilungen (Histogramme) von Pulsparametern . Die Konfigurationsparameter der gewünschten Histogramme werden im letzten Teil der Datei angegeben. Dies sind der Wertebereich, die Zahl der Intervalle, der Maximalwert der Häufigkeit, ein Name für die angezeigte Größe und die Wahl einer linearen oder logarithmischen Skala. In der gegenwärtigen Version der Software sind nur die vier unten gezeigten Histogramme in genau dieser Reihenfolge implementiert.  
 Über den Schlüssel *doublePulse* kann die Doppelpussuche ggf. abgeschaltet werden, wenn man den Wert auf *false* setzt. 
 
