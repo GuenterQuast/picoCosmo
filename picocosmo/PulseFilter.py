@@ -308,7 +308,7 @@ class PulseFilter(object):
     datetime=time.strftime('%y%m%d-%H%M', time.localtime())
     if logFile is not None:
       self.logf = open(logFile + '_' + datetime+'.dat', 'w')
-      print("# EvNr, EvT, Vs ...., Ts ...", 
+      print("# EvNr,  EvT,   V(1),  T(1), ..., V(NC), T(NC) ", 
         file=self.logf) # header line
     else:
       self.logf = None
@@ -662,27 +662,28 @@ class PulseFilter(object):
 # add summary information to log-files
     tag = "# pulseFilter Summary: " 
     if self.logf is not None:
-      print(tag+"last evNR %i, Nval, Nacc: %i, %i "%(evcnt, Nval, Nacc), 
-          end='', file=self.logf )
+      print(tag+"events %i, Nval, Nacc: %i, %i "%(evcnt, Nval, Nacc), 
+          file=self.logf )
       nac = [Nacc2, Nacc3, Nacc4]
+      print("# " , end='', file=self.logf)
       for j in range(1, NChan):
         print("Nacc%i = %i "%(j+1, nac[j-1]),
           end='', file=self.logf )
-      print('\n', file = self.logf)
-      print("#      active time %.1f s (from BufferMan)"%(self.BM.Tlife),
+      print("\n#      active time %.1f s (from BufferMan)"%(self.BM.Tlife.value),
         file = self.logf)
       self.logf.close()
 
     if self.logfDP is not None: 
-      print(tag+"last evNR %i, Nval, Nacc: %i, %i "%(evcnt, Nval, Nacc), 
-          end='', file=self.logfDP )
+      print(tag+" %i events, Nval, Nacc: %i, %i "%(evcnt, Nval, Nacc), 
+          file=self.logfDP )
+      print("# " , end='', file=self.logfDP)
       Nac = [Nacc2, Nacc3, Nacc4]
       for j in range(1, NChan):
         print("Nacc%i = %i "%(j+1, Nac[j-1]),
           end='', file=self.logfDP )
       print("\n#                       %i double pulses"%(Ndble), 
         file=self.logfDP )
-      print("#      active time %.1f s (from BufferMan)"%(self.BM.Tlife),
+      print("#      active time %.1f s (from BufferMan)"%(self.BM.Tlife.value),
         file=self.logfDP )
       self.logfDP.close()
 
