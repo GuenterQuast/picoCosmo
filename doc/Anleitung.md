@@ -413,26 +413,47 @@ Zweifachkoinzidenzen, N_12.
 
 Zur einfachen Auswertung werden im Text-Fenster des BufferManagers
 die Zahlen der registrierten Zwei- und Dreifachkoinzidenzen angezeigt.
+Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
+werden, findet sich diese Information. 
+
 Da in diesem Fall Zeifachkoinzidenzen auf drei Arten entstehen können
 (Panel 1 oder Panel 2 oder Panel 3 haben nicht angesprochen), ist die
-Zahl der auf diese Weise ermittelten Ineffizienz drei mal so groß wie
-im oben angenommenen Fall. Wenn man nun - vereinfachend - annimmt, 
-dass alle Detektoren in etwa die gleiche Ansprechwahrscheinlichkeit haben, 
-so ergibt sich daraus die (mittlere) Effizienz eines Detektors: 
+Zahl der auf diese Weise ermittelten Ineffizienz drei mal so groß wie im
+oben angenommenen Fall. Wenn man nun - vereinfachend - annimmt, dass
+alle Detektoren in etwa die gleiche Ansprechwahrscheinlichkeit ε haben, 
+so ergibt sich  die (mittlere) Ineffizienz,  1- ε , eines Detektors aus den
+Anzahlen der Zeifach- und Dreifachkoinzidenzen, N_2 bzw. N_3:
 
-​      ε = 1 - (Nacc_2 - Nacc_3) / (3 · Nacc_2)
+​       1- ε =  N_2  /  (3 · N_3 + N_2) .  
 
-Die Myon-Rate ergibt sich nun durch Korrektur auf die Ansprechwahrscheinlichkeit.
-Für Zweifach-Koinzidenzen ist die Rauschrate praktisch Null, die Zahl der nachgewiesenen
-Myonen ergibt sich also zu:
+Die Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten
+auf die Ansprechwahrscheinlichkeit.
+Für Koinzidenzen ist die Rauschrate praktisch Null, die tatsächliche Zahl
+der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen zu
 
-​     N_µ = N_12 /  ε² 
+​     N_µ = N_2 /  ε² 
 
 Bei Verwendung von drei Panels und der Bedingung, das mindestens zwei
-davon angesprochen haben, ergibt sich die die Zahl der Myonen nach etwas
-Kombinatorik zu 
+davon angesprochen haben, ergibt sich die Zahl der Myonen nach etwas
+Kombinatorik aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
 
-​    N_µ = N_2aus3  ·   / (3·ε² - 2·ε³  ) 
+​    N_µ = (N_2 + N_3)  /  (3·ε² - 2·ε³  ) 
+
+
+
+**Berücksichtigung der Auslese-Totzeit**
+
+
+
+
+
+**Messung der Myon-Lebensdauer**
+
+
+
+
+
+
 
 
 
