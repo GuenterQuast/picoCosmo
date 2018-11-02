@@ -69,10 +69,10 @@ Pulsformen wird im sog. PulsFilter durchgeführt und verläuft in drei Schritten
    dem Myon eintrifft, das den Trigger ausgelöst hat. 
 
 Die Software bietet Echtzeit-Anzeigen der Myon-Rate, der aufgenommenen
-Pulshöhen und der Myon-Lebensdauern. Die in Echtzeit bestimmten Signal-Parameter
-werden optional kontinuierlich in Dateien geschrieben. Zusätzlich können
-Mehrfach-Pulse als Rohdaten der registrierten Pulsformen oder als Bilder im
- *.png*-Format gespeichert werden.
+Pulshöhen und der Myon-Lebensdauern. Die in Echtzeit bestimmten
+Signal-Parameter werden optional kontinuierlich in Dateien geschrieben.
+Zusätzlich können Mehrfach-Pulse als Rohdaten der registrierten Pulsformen
+ oder als Bilder im *.png*-Format gespeichert werden.
 
 Details zu Abhängigkeiten und zur Installation von *picoCosmo* finden sich in der
 Datei  [README_de.md](../README_de.md).
@@ -123,8 +123,9 @@ Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Ech
 Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateien auf der Festplatte abgelegt:
 
   - Dateien mit dem Namensanfang  *pFilt* enthalten Informationen zu
-    allen aufgezeichneten Pulsen, die die Stufe der Triggervalidierung
-    passiert haben. 
+    allen aufgezeichneten Signalen, die die Stufe der Triggervalidierung
+    passiert haben und bei  denen  bei mehreren Detektoren -mindestens
+    ein weiter angesprochen hat (Zweifach-Koinzidenz).
 
   - Dateien mit dem Namensanfang *dpFilt* enthalten Informationen zu den
     aufgezeichneten Doppelpulsen im CSV-Format:
@@ -145,15 +146,15 @@ Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateie
     ausgeführt werden. 
 
 Es ist auch möglich, grafische Darstellungen von Doppelpulsen im Verzeichnis mit 
-Namensbeginn *dpFig* abzulegen. Ein Beispiel für einen Doppelpuls im untersten von
-drei Cosmo-Panels ist hier gezeigt: 
+Namensbeginn *dpFig* abzulegen. Hier Beispiel für einen Doppelpuls in der Kamiokanne
+mit einem nach ca. 3 µs zerfallenden Myon: 
 
-   ![Beispiel eines Doppelpulses](images/DPfig741.png)
+   ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
 
 Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren grafische Anzeige bzw. Abspeichern als Grafikdateien
 im *.png*-Format.
 
-Eine weitere Hilfsanwendung, *fit_dpData.py*, fürhrt die Anpassung einer Exponentialfunktion an
+Eine weitere Hilfsanwendung, *fit_dpData.py*, führt die Anpassung einer Exponentialfunktion an
 die in Dateien mit Namensanfang *dpFilt* abgelegten individuellen µ-Lebensdauern. Zum Start
 einer Anpassung an die in der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von
 1.0 bis 15 µs folgenden Befehl auf der Kommandozeile eingeben:
@@ -345,36 +346,37 @@ der picoCosmo-Software eingeben zu können.
 
 **Koinzidenzen**
 
-Um sicher zu stellen, dass es sich bei den beobachteten Signalen
-nicht um Rauschen oder im Sensor selber erzeugte Pulse handelt,
-ist eine Koinzidenz-Messung mit zwei Sensoren notwendig. Dazu
-kann man zwei gleiche Detektoren oder auch eine Kanne und eines
-der CosMO-Panels verwenden. Wenn man auf den einen Kanal triggert
-und gleichzeitig beide Kanäle beobachtet, wird man Koinzidenzen sehen,
-wenn die Detektoren geometrisch so angeordnet sind, dass sie gleichzeitig
-von Spuren durchdrungen werden.  Stellt man die Detektoren nebeneinander
+Um sicher zu stellen, dass es sich bei den beobachteten Signalen nicht
+um Rauschen oder im Sensor selber erzeugte Pulse handelt, ist eine
+Koinzidenz-Messung mit zwei Sensoren notwendig. Dazu kann man zwei
+gleiche Detektoren oder auch eine Kanne und eines der CosMO-Panels
+verwenden. Wenn man auf den einen Kanal triggert und gleichzeitig
+beide Kanäle beobachtet, wird man Koinzidenzen sehen, wenn die
+Detektoren geometrisch so angeordnet sind, dass sie gleichzeitig von
+Spuren durchdrungen werden.  Stellt man die Detektoren nebeneinander
 in weiter Entfernung auf, so werden keine Koinzidenzen beobachtet. Mit 
-dieser einfachen Vorgehensweise kann also der Nachweis geführt
-werden, dass es sich um ein äußeres Phänomen - wie zum Beispiel
-den gleichzeitigen Durchgang von Teilchen durch beide Detektoren - 
-handeln muss. 
+dieser einfachen Vorgehensweise kann also der Nachweis geführt werden,
+dass es sich um ein äußeres Phänomen - wie zum Beispiel den gleichzeitigen
+Durchgang von Teilchen durch beide Detektoren - handeln muss. 
 
 **Ratenmessungen**
 
 Nach diesen Vorversuchen sollten nun mit Hilfe von picoCosmo Messungen
 der Koinzidenzrate unter verschiedenen Bedingungen durchgeführt werden.
 Dazu sollten mindestens zwei Panels verwendet werden, um Rauschsignale
-zu unterdrücken.   Dazu sollte in der Oszilloskop-Konfiguration eine 
-Samplingzeit von 1.2 µs mit 250 Samples eingestellt werden. Im Fenster
-"RateDisplay" wird nun der zeitliche Verlauf der Koinzidenzrate angezeigt.
-Die  Fluktuationen der Rate sind eine Folge der zufälligen Natur der registrierten
-Ereignisse - man kann die angezeigte Kurve gut "per Auge" mitteln, um
-eine zuverlässige Ratenbestimmung vorzunehmen. Ein genaueres 
-Ergebnis erhält man, wenn man die im Textfeld des RateDisplays angezeigte
-Anzahl akzeptierter Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit
-dividiert.  Mit diesem experimentellen Set-Up können nun die Eigenschaften
-des eben entdeckten Phänomens untersucht werden. Interessant sind
-die folgenden Fragen:
+zu unterdrücken.   Am besten stellt man in der Oszilloskop-Konfiguration eine 
+Samplingzeit von 0.8 µs mit 200 Samples eingestellen. Dazu gibt es eine
+vorberietete Konfiguration, *CosmoRate.daq*. 
+Nach dem Start der Datennahme wir im Fenster "RateDisplay" der zeitliche
+Verlauf der Koinzidenzrate angezeigt. Die  Fluktuationen der Rate sind eine
+Folge der zufälligen Natur der registrierten Ereignisse - man kann
+die angezeigte Kurve gut "per Auge" mitteln, um eine zuverlässige
+Ratenbestimmung vorzunehmen. Ein genaueres  Ergebnis erhält man, 
+wenn man die im Textfeld des RateDisplays angezeigte Anzahl akzeptierter
+Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.  Mit
+diesem experimentellen Set-Up können nun die Eigenschaften des eben
+entdeckten Phänomens untersucht werden. Interessant sind die folgenden
+Fragen:
 
 - **Aus welcher Richtung kommen die Signale ?**
   dazu werden die Detektoren übereinander, nebeneinander oder
@@ -393,32 +395,41 @@ die folgenden Fragen:
   gleich der Wurzel aus N, also ΔN = √N, der relative Fehler auf die Rate
   also ΔN/N = 1/√N .
 
-**Eigenschaften der Detektoren und Effizienz-Korrektur**
+
+
+**Eigenschaften der Detektoren und Korrekturen**
 
 Typisch für Messungen, bei denen Signal- und Rauschpulse vorkommen,
 ist die Notwendigkeit, einen optimalen Arbeitspunkt festzulegen, an  
-dem Signalpulse von Rauschpulsen getrennt werden. Hier ist die kritische Größe die Pulshöhe, die für den Trigger des Oszilloskops
-und im Pulsfilter angegeben wird. Ist die Schwelle zu hoch, verliert
-man Signalpulse, wenn sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
+dem Signalpulse von Rauschpulsen getrennt werden. Hier ist die kritische
+Größe die Pulshöhe, die für den Trigger des Oszilloskops und im Pulsfilter
+angegeben wird. Ist die Schwelle zu hoch, verliert man Signalpulse, wenn
+sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
 
-Die Triggerschwelle des Oszilloskops sollte niedriger als die
-Schwelle für den entsprechenden Kanal im Pulsfilter gewählt
-werden. Dadurch wird sichergestellt, dass praktisch alle Signale,
-die der Pulsfilter akzeptiert, auch den Trigger ausgelöst haben.
+Die Triggerschwelle des Oszilloskops sollte niedriger als die Schwelle
+für den entsprechenden Kanal im Pulsfilter gewählt werden. Dadurch
+wird sichergestellt, dass praktisch alle Signale, die der Pulsfilter akzeptiert,
+auch den Trigger ausgelöst haben.
 
 Eine quantitative Untersuchung des Signal-zu-Rauschverhältnisses in
 Abhängigkeit von der Schwelle wird möglich, wenn man drei Detektoren
-zur Verfügung hat. Nutzt man zwei Detektoren in Koinzidenz, so hat man mit sehr hoher Wahrscheinlichkeit einen echten Teilchendurchgang
-identifiziert. Jetzt kann man überprüfen, ob auch der dritte Detektor angesprochen hat. Die Ansprechwahrscheinlichkeit ist also die Zahl der Dreifachkoinzidenzen, N_123, dividiert durch die Zahl der Zweifachkoinzidenzen, N_12.
+zur Verfügung hat. Nutzt man zwei Detektoren in Koinzidenz, so hat man
+mit sehr hoher Wahrscheinlichkeit einen echten Teilchendurchgang
+identifiziert. Jetzt kann man überprüfen, ob auch der dritte Detektor
+angesprochen hat. Die Ansprechwahrscheinlichkeit ist also die Zahl
+der Dreifachkoinzidenzen, N_123, dividiert durch die Zahl der
+Zweifachkoinzidenzen, N_12.
 
-Zur einfachen Auswertung werden im Text-Fenster des BufferManagers
+Zur einfachen Besimmung werden im Text-Fenster des BufferManagers
 die Zahlen der registrierten Zwei- und Dreifachkoinzidenzen angezeigt.
 Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
 werden, findet sich diese Information. 
 
 Wegen des Triggerkanals, der immer ansprechen muss, können
-Zeifachkoinzidenzen auf zwei Arten entstehen: 
-Panel 2 **oder** Panel 3 hat nicht angesprochen. Dreifachkoinzidenzen werden beobachtet, wenn zusätzlich zum Triggerkanal Panel 2 **und** Panel 3 ansprechen.
+Zeifachkoinzidenzen auf zwei Arten entstehen:  Panel 2 hat angespochen
+und Panel 3 nicht, **oder** Panel 3 hat angespochen und Panel 2 nicht. 
+Dreifachkoinzidenzen werden beobachtet,  wenn zusätzlich zum
+Triggerkanal Panel 2 **und** Panel 3 ansprechen.
 Wenn man - vereinfachend - annimmt, dass alle Detektoren in etwa
 die gleiche Ansprechwahrscheinlichkeit ε haben, so ergibt sich für
 die Anzahlen der Zwei- und Dreifachkoinzidenzen, N_2 bzw. N_3:  
@@ -426,35 +437,66 @@ die Anzahlen der Zwei- und Dreifachkoinzidenzen, N_2 bzw. N_3:
        N_2 = 2·ε·(1-ε) · N 
        N_3 = ε² · N
 
-N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die
-Kanal l 1 getriggert haben. Bildet man das Verhältnis von N_2 und N_3, so kann die Ansprechwahrscheinlichkeit bestimmt werden:
+N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die Kanal 1 getriggert
+haben. Bildet man das Verhältnis von N_2 und N_3, so kann die
+Ansprechwahrscheinlichkeit bestimmt werden:
 
- ​     1-ε =  N_2  /  (2 · N_3 + N_2) .  
+ ​        ε = 1 - [  N_2  /  (2 · N_3 + N_2) ] .  
 
-Die wahre Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten auf die Ansprechwahrscheinlichkeit.
-Verlangt man Koinzidenzen von zwei Panels, so ist die Rauschrate praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen als
-  ​    N_µ = N_2 /  ε² 
+Die wahre Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten
+auf die Ansprechwahrscheinlichkeit. 
 
-Bei Verwendung von drei Panels und der Bedingung, das mindestens
-zwei davon angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
+Verwendeet man zwei Panels mit gleicher Ansprechwahrscheinlichkeit ε, so ist
+die Rauschrate praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl
+der Zweifachkoinzidenzen als N_µ = N_2 /  ε² . 
 
-​    N_µ = (N_2 + N_3)  /  (3·ε² - 2·ε³  ) 
+Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
+angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik aus
+der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
+
+​    N_µ = (N_2 + N_3)  /  (2·ε² - ε³  ) 
 
 
-**Berücksichtigung der Auslese-Totzeit**
 
-Der Transfer der Daten vom Oszilloskop über die USB-Schnittstelle
-benötigt natürlich eine gewisse Zeit, während der keine Signale
-aufgezeichnet werden können. Diese sogenannte "Totzeit" zeigt der Buffer Manager im Grafik-Fenster an. Die gesamte aktive Zeit, also   
-die Laufzeit verringert um die Totzeit und ggf. Zeiten, die im
-*paused*-Zustand verbracht wurden, werden am Ende der Logdateien
-ausgegeben. Damit lässt sich direkt die um die Totzeit korrigierte
-Rate berechnen: R = N / T_life . N kann dabei die Zahl der akzeptierten Myonen, die Zahl der Zwei- oder Dreifachkoinzidenzen
-oder auch die Zahl der Ereignisse mit verzögerten Pulsen sein.
+Berücksichtigung der **Auslese-Totzeit**
+
+Der Transfer der Daten vom Oszilloskop über die USB-Schnittstelle in den
+Pufferspeicher benötigt eine gewisse Zeit, während der keine Signale
+aufgezeichnet werden können. Diese sogenannte "Totzeit" zeigt der
+Buffer Manager im Grafik-Fenster an. Die gesamte aktive Zeit, also die
+Laufzeit verringert um die Totzeit und ggf. Zeiten, die im *paused*-Zustand
+verbracht wurden, werden am Ende in den Log-Dateien ausgegeben. 
+Damit lässt sich direkt die um die Totzeit korrigierte Rate berechnen: 
+
+​     R = N / T_life.
+
+
+
+Betrachten wir ein typisches **Beispiel** mit 3 CosMO-Panels, 
+Triggerschwelle 27.5 mV,  PulseFilter 30 mV:
+
+​     →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
+
+     N_2 = 635, N_3 = 2376
+     →  ε = 88.2 ,  2·ε² - ε³  = 0.870
+
+Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6 Hz**     
+  
 
 **Messung der Myon-Lebensdauer**
 
+Wenn Myonen im Detektor oder in dessen Nähe zur Ruhe kommen, zerfallen sie
+im einer typischen mittleren Lebensdauer, die einer Exponentialverteilung folgt.
+Dieser Teilchenzerfall ist völlig ananlog zum Zerfall radioaktiver Kerne.
+Myonen zerfallen in je ein Elektron und zwei Neutrinos. Wenn die Elektronen
+den Detektor treffen, weden auch sie nachgewiesen, und zwar zu einem um
+die individuelle Lebensdauer des zerfallenen Myons verzögerten Zeitpunkt.
+Die Signatur des Zerfalls eines gestoppen Myons ist also ein Doppelpuls. 
+Ein Bild eines solchen Ereignisses ist hier gezeigt:
 
+
+
+ ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
 
 
 
