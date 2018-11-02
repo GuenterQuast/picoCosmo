@@ -1,0 +1,9 @@
+#         Configuration Files    
+DeviceFile: config/SiPMrate.yaml    # Oscilloscope
+PFfile: config/PFcosmoRate.yaml               # PulseFilter
+BMfile: config/BMconfig.yaml            # Buffer Manager
+
+
+
+
+
