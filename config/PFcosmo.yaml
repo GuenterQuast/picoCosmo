@@ -24,6 +24,8 @@ pulseShape:
 
 modules: [RMeter, Display, Hists]
 
+NminCoincidence: 2  # min nbr to accept event
+
 histograms:
   # min max Nbins ymax    title              lin/log
  - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]

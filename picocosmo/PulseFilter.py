@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import print_function,division,absolute_import,unicode_literals
 
 # -- class PulseFilter 
@@ -276,13 +277,19 @@ class PulseFilter(object):
       if "modules" in self.confDict:
         modules = self.confDict['modules']
       else:
-        modules = ['RMeter','Hists']
+        modules = ['RMeter']
 
       if "histograms" in self.confDict:
         histograms = self.confDict['histograms']
       else:
         histograms = None
 
+      if "NminCoincidence" in self.confDict:
+        self.NmnCoinc = self.confDict['NminCoincidence']
+      else:
+        self.NmnCoinc = 2      
+      print("Number of coincidences to accept event %i"%(self.NmnCoinc) )       
+  
       if "doublePulse" in self.confDict:
         self.DPanalysis = self.confDict['doublePulse']
       else:
@@ -391,6 +398,8 @@ class PulseFilter(object):
     refPm = self.refPm # mean-subtacted reference pulse(s) ...
     pthrm = self.pthrm #  ... and relevant threshold(s)
     lref = self.lref  # length of reference pulse(s)
+    NmnCoinc = min(self.NmnCoinc, NChan) 
+               # min. number of coincident pulses to accept event
 
     if verbose:
       print("*==* Pulse Filter starting analysis")
@@ -481,7 +490,7 @@ class PulseFilter(object):
             tevt += T
 
 # check wether event should be accepted 
-      if (NChan == 1 and validated) or (NChan > 1 and Ncoinc >=2):
+      if (validated and Ncoinc >= NmnCoinc):
         accepted = True
         Nacc += 1
       else:
@@ -660,6 +669,8 @@ class PulseFilter(object):
         print("Nacc%i = %i "%(j+1, nac[j-1]),
           end='', file=self.logf )
       print('\n', file = self.logf)
+      print("#      active time %.1f s (from BufferMan)"%(self.BM.Tlife),
+        file = self.logf)
       self.logf.close()
 
     if self.logfDP is not None: 
@@ -670,6 +681,8 @@ class PulseFilter(object):
         print("Nacc%i = %i "%(j+1, Nac[j-1]),
           end='', file=self.logfDP )
       print("\n#                       %i double pulses"%(Ndble), 
+        file=self.logfDP )
+      print("#      active time %.1f s (from BufferMan)"%(self.BM.Tlife),
         file=self.logfDP )
       self.logfDP.close()
 
