@@ -395,57 +395,62 @@ die folgenden Fragen:
 
 **Eigenschaften der Detektoren und Effizienz-Korrektur**
 
-Typisch für Messungen, bei denen Signal- und Rauschpulse vorkommen, ist 
-die Notwendigkeit, einen optimalen Arbeitspunkt festzulegen, an dem Signalpulse
-von Rauschpulsen getrennt werden. Hier ist die kritische Größe die Pulshöhe,
-die für den Trigger des Oszilloskops und im Pulsfilter angegeben wird. Ist
-die Schwelle zu hoch, verliert man Signalpulse, ist sie zu niedrig, werden zu
-viele Rauschpulse akzeptiert. 
+Typisch für Messungen, bei denen Signal- und Rauschpulse vorkommen,
+ist die Notwendigkeit, einen optimalen Arbeitspunkt festzulegen, an  
+dem Signalpulse von Rauschpulsen getrennt werden. Hier ist die kritische Größe die Pulshöhe, die für den Trigger des Oszilloskops
+und im Pulsfilter angegeben wird. Ist die Schwelle zu hoch, verliert
+man Signalpulse, wenn sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
+
+Die Triggerschwelle des Oszilloskops sollte niedriger als die
+Schwelle für den entsprechenden Kanal im Pulsfilter gewählt
+werden. Dadurch wird sichergestellt, dass praktisch alle Signale,
+die der Pulsfilter akzeptiert, auch den Trigger ausgelöst haben.
 
 Eine quantitative Untersuchung des Signal-zu-Rauschverhältnisses in
 Abhängigkeit von der Schwelle wird möglich, wenn man drei Detektoren
-zur Verfügung hat. Nutzt man zwei Detektoren in Koinzidenz, so hat man
-mit sehr hoher Wahrscheinlichkeit einen echten Teilchendurchgang
-identifiziert. Jetzt kann man überprüfen, ob auch der dritte Detektor
-angesprochen hat. Die Ansprechwahrscheinlichkeit ist also die Zahl
-der Dreifachkoinzidenzen, N_123, dividiert durch die Zahl der 
-Zweifachkoinzidenzen, N_12.
+zur Verfügung hat. Nutzt man zwei Detektoren in Koinzidenz, so hat man mit sehr hoher Wahrscheinlichkeit einen echten Teilchendurchgang
+identifiziert. Jetzt kann man überprüfen, ob auch der dritte Detektor angesprochen hat. Die Ansprechwahrscheinlichkeit ist also die Zahl der Dreifachkoinzidenzen, N_123, dividiert durch die Zahl der Zweifachkoinzidenzen, N_12.
 
 Zur einfachen Auswertung werden im Text-Fenster des BufferManagers
 die Zahlen der registrierten Zwei- und Dreifachkoinzidenzen angezeigt.
 Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
 werden, findet sich diese Information. 
 
-Da in diesem Fall Zeifachkoinzidenzen auf drei Arten entstehen können
-(Panel 1 oder Panel 2 oder Panel 3 haben nicht angesprochen), ist die
-Zahl der auf diese Weise ermittelten Ineffizienz drei mal so groß wie im
-oben angenommenen Fall. Wenn man nun - vereinfachend - annimmt, dass
-alle Detektoren in etwa die gleiche Ansprechwahrscheinlichkeit ε haben, 
-so ergibt sich  die (mittlere) Ineffizienz,  1- ε , eines Detektors aus den
-Anzahlen der Zeifach- und Dreifachkoinzidenzen, N_2 bzw. N_3:
+Wegen des Triggerkanals, der immer ansprechen muss, können
+Zeifachkoinzidenzen auf zwei Arten entstehen: 
+Panel 2 **oder** Panel 3 hat nicht angesprochen. Dreifachkoinzidenzen werden beobachtet, wenn zusätzlich zum Triggerkanal Panel 2 **und** Panel 3 ansprechen.
+Wenn man - vereinfachend - annimmt, dass alle Detektoren in etwa
+die gleiche Ansprechwahrscheinlichkeit ε haben, so ergibt sich für
+die Anzahlen der Zwei- und Dreifachkoinzidenzen, N_2 bzw. N_3:  
 
-​       1- ε =  N_2  /  (3 · N_3 + N_2) .  
+       N_2 = 2·ε·(1-ε) · N 
+       N_3 = ε² · N
 
-Die Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten
-auf die Ansprechwahrscheinlichkeit.
-Für Koinzidenzen ist die Rauschrate praktisch Null, die tatsächliche Zahl
-der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen zu
+N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die
+Kanal l 1 getriggert haben. Bildet man das Verhältnis von N_2 und N_3, so kann die Ansprechwahrscheinlichkeit bestimmt werden:
 
-​     N_µ = N_2 /  ε² 
+ ​     1-ε =  N_2  /  (2 · N_3 + N_2) .  
 
-Bei Verwendung von drei Panels und der Bedingung, das mindestens zwei
-davon angesprochen haben, ergibt sich die Zahl der Myonen nach etwas
-Kombinatorik aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
+Die wahre Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten auf die Ansprechwahrscheinlichkeit.
+Verlangt man Koinzidenzen von zwei Panels, so ist die Rauschrate praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen als
+  ​    N_µ = N_2 /  ε² 
+
+Bei Verwendung von drei Panels und der Bedingung, das mindestens
+zwei davon angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
 
 ​    N_µ = (N_2 + N_3)  /  (3·ε² - 2·ε³  ) 
 
 
-
 **Berücksichtigung der Auslese-Totzeit**
 
-
-
-
+Der Transfer der Daten vom Oszilloskop über die USB-Schnittstelle
+benötigt natürlich eine gewisse Zeit, während der keine Signale
+aufgezeichnet werden können. Diese sogenannte "Totzeit" zeigt der Buffer Manager im Grafik-Fenster an. Die gesamte aktive Zeit, also   
+die Laufzeit verringert um die Totzeit und ggf. Zeiten, die im
+*paused*-Zustand verbracht wurden, werden am Ende der Logdateien
+ausgegeben. Damit lässt sich direkt die um die Totzeit korrigierte
+Rate berechnen: R = N / T_life . N kann dabei die Zahl der akzeptierten Myonen, die Zahl der Zwei- oder Dreifachkoinzidenzen
+oder auch die Zahl der Ereignisse mit verzögerten Pulsen sein.
 
 **Messung der Myon-Lebensdauer**
 
