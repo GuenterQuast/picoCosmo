@@ -219,7 +219,7 @@ Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrie
     trgTO:      5000     # Timeout, nach dieser Zeit wird einmal ausgelesen
     pretrig:    0.05     # Anteil der vor dem Trigger ausgelesenen Daten
     ChanColors: [darkblue, sienna, indigo] # Farben für Darstellung der Kanäle
-    
+
 
 
 
@@ -410,7 +410,13 @@ Samplingzeit von 0.8 µs mit 200 Samples eingestellen. Dazu gibt es eine
 vorbereitete Konfiguration, *CosmoRate.daq*. 
 
 Nach dem Start der Datennahme wir im Fenster "RateDisplay" der zeitliche
-Verlauf der Koinzidenzrate angezeigt. Die  Fluktuationen der Rate sind eine
+Verlauf der Koinzidenzrate angezeigt: 
+
+  ![Myon-Rate](images/MyonRate.png)
+
+
+
+Die  Fluktuationen der Rate sind eine
 Folge der zufälligen Natur der registrierten Ereignisse - man kann
 die angezeigte Kurve gut "per Auge" mitteln, um eine zuverlässige
 Ratenbestimmung vorzunehmen. Ein genaueres  Ergebnis erhält man, 
@@ -460,14 +466,14 @@ angesprochen hat. Die Ansprechwahrscheinlichkeit ist also die Zahl
 der Dreifachkoinzidenzen, N_123, dividiert durch die Zahl der
 Zweifachkoinzidenzen, N_12.
 
-Zur einfachen Besimmung werden im Text-Fenster des BufferManagers
+Zur einfachen Bestimmung werden im Text-Fenster des BufferManagers
 die Zahlen der registrierten Zwei- und Dreifachkoinzidenzen angezeigt.
 Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
 werden, findet sich diese Information. 
 
 Wegen des Triggerkanals, der immer ansprechen muss, können
-Zeifachkoinzidenzen auf zwei Arten entstehen:  Panel 2 hat angespochen
-und Panel 3 nicht, **oder** Panel 3 hat angespochen und Panel 2 nicht. 
+Zeifachkoinzidenzen auf zwei Arten entstehen:  Panel 2 hat angesprochen
+und Panel 3 nicht, **oder** Panel 3 hat angesprochen und Panel 2 nicht. 
 Dreifachkoinzidenzen werden beobachtet,  wenn zusätzlich zum
 Triggerkanal Panel 2 **und** Panel 3 ansprechen.
 Wenn man - vereinfachend - annimmt, dass alle Detektoren in etwa
@@ -477,24 +483,24 @@ die Anzahlen der Zwei- und Dreifachkoinzidenzen, N_2 bzw. N_3:
        N_2 = 2·ε·(1-ε) · N 
        N_3 = ε² · N
 
-N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die Kanal 1 getriggert
-haben. Bildet man das Verhältnis von N_2 und N_3, so kann die
-Ansprechwahrscheinlichkeit bestimmt werden:
+N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die Kanal 1
+getriggert haben. Bildet man das Verhältnis von N_2 und N_3, so kann
+die Ansprechwahrscheinlichkeit bestimmt werden:
 
  ​        ε = 1 - [  N_2  /  (2 · N_3 + N_2) ] .  
 
-Die wahre Myon-Rate ergibt sich nun durch Korrektur der gemessenen Koinzidenzraten
-auf die Ansprechwahrscheinlichkeit. 
+Die wahre Myon-Rate ergibt sich nun durch Korrektur der gemessenen
+Koinzidenzraten auf die Ansprechwahrscheinlichkeit. 
 
-Verwendeet man zwei Panels mit gleicher Ansprechwahrscheinlichkeit ε, so ist
+Verwendet man zwei Panels mit gleicher Ansprechwahrscheinlichkeit ε, so ist
 die Rauschrate praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl
 der Zweifachkoinzidenzen als N_µ = N_2 /  ε² . 
 
 Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
-angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik aus
-der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
+angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik  
+aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
 
-​    N_µ = (N_2 + N_3)  /  (2·ε² - ε³  ) 
+    N_µ = (N_2 + N_3)  /  (2·ε² - ε³  ) 
 
 
 
@@ -518,8 +524,8 @@ Panels gemessen werden. Dazu wählt man für den Triggerkanal eine sehr hohe
 Schwelle, so dass nur echte Myonen den Trigger auslösen.  Im Pulsfilter kann
 über die Einstellung `NminCoincidence: 1` erreicht werden, dass ein validiertes
 Triggersignal ausreicht, um ein Ereignis zu akzeptieren. Die Zahl der
-Zweifachkoinzidenzen dividiert durch die Zahl der akzeptierten Ereigeignisse
-ergibt die Ansprechwahrscheinlichkeit des zweiten Panels. Allerding ist zu
+Zweifachkoinzidenzen dividiert durch die Zahl der akzeptierten Ereignisse
+ergibt die Ansprechwahrscheinlichkeit des zweiten Panels. Allerdings ist zu
 beachten, dass immer noch ein Anteil an Rauschpulsen fälschlich als Myon-Ereignis
 akzeptiert wird und dadurch die Effizienz des zweiten Panels unterschätzt wird.
 
@@ -556,27 +562,28 @@ Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6
 
 Wenn Myonen im Detektor oder in dessen Nähe zur Ruhe kommen, zerfallen sie
 im einer typischen mittleren Lebensdauer, die einer Exponentialverteilung folgt.
-Dieser Teilchenzerfall ist völlig ananlog zum Zerfall radioaktiver Kerne.
+Diese zeitliche Verteilung der individuellen Lebensdauern ist völlig analog  
+zum Zerfall radioaktiver Kerne.
 Myonen zerfallen in je ein Elektron und zwei Neutrinos. Wenn die Elektronen
-den Detektor treffen, weden auch sie nachgewiesen, und zwar zu einem um
+den Detektor treffen, werden auch sie nachgewiesen, und zwar zu einem um
 die individuelle Lebensdauer des zerfallenen Myons verzögerten Zeitpunkt.
-Die Signatur des Zerfalls eines gestoppen Myons ist also ein Doppelpuls. 
+Die Signatur des Zerfalls eines gestoppten Myons ist also ein Doppelpuls. 
 Ein Oszilloskop-Bild eines solchen Ereignisses wurde schon oben gezeigt.
 
 Der Anteil gestoppter Myonen liegt nur im Promille-Bereich, und deshalb muss
 die Suche nach Doppelpulsen automatisiert werden, um genügend Ereignisse
 aufzusammeln. Es ist aber durchaus möglich, durch hinreichend lange Beobachtung
-des Oszilloskp-Bildschirms einen Doppelpuls zu sehen.  
+des Oszilloskop-Bildschirms einen Doppelpuls zu sehen.  
 
 In *picoCosmo* werden die aufgezeichneten Signale des USB-Oszilloskops nach
-Doppelpulsen durchsucht und die Daten der identifzierten Ereignisse abgespeichert.
+Doppelpulsen durchsucht und die Daten der identifizierten Ereignisse abgespeichert.
 Zur Messung der Myon-Lebensdauer gibt eine vorbereitete Konfigurationsdatei, 
 *CosmoLife.daq*, die als Grundlage für eigene Messungen verwendet werden kann. 
 
 *picoCosmo* führt die Doppelpuls-Suche in Echtzeit aus und speichert wahlweise
 unterschiedlichste Informationen ab:
 
-1. Pulshöhe und Zeitpunt relativ zum Trigger in allen Ereignissen mit
+1. Pulshöhe und Zeitpunkt relativ zum Trigger in allen Ereignissen mit
    identifiziertem Doppelpuls
 2. die vom Oszilloskop ausgegebenen Rohdaten 
 3. die Rohdaten als grafische Darstellung (*.png*-Format)
@@ -587,20 +594,20 @@ Im einfachsten Fall verwendet man die Grafiken und lässt Schüler
 die jeweils beobachteten Lebensdauern in eine Häufigkeitsverteilung
 eintragen. Dazu bietet sich Gruppenarbeit und eine entsprechende
 Aufteilung des Datansatzes an - dann können die Gruppenergebnisse
-statistisch kombiniert, d. h. in eine einzige Häfugkeitsvereilung eingetragen
-werden.  
+statistisch kombiniert, d. h. in eine einzige Häufigkeitsverteilung
+eingetragen werden.  
 
 Mit den Daten zu den Parametern der Doppelpulse können eigene Auswertungen
-ausgeführt werden.  Für jedes Ereigenis mit einem Doppelpuls werden Anzahl der
-akzeptiertn Myonen, die laufende Nummer des Doppelpulses, der Zeitpunkt
+ausgeführt werden.  Für jedes Ereignis mit einem Doppelpuls werden Anzahl der
+akzeptierten Myonen, die laufende Nummer des Doppelpulses, der Zeitpunkt
 des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
-zum Trigger und die registierten Pulshöhen der verzögerten Pulse für jeden
+zum Trigger und die registrierten Pulshöhen der verzögerten Pulse für jeden
 Kanal dargestellt: 
 
 ` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC`
 
-Eine Pulshöhe von Null bedeutet dabei, das kein Verzögertes Signal im entsprechenden
-Kanal gefunden wurde.
+Eine Pulshöhe von Null bedeutet dabei, das kein Verzögertes Signal im
+entsprechenden Kanal gefunden wurde.
 
 Aus der dritten Spalte dieser Datei lässt ich die Häufigkeitsverteilung der
 Lebensdauern gewinnen: 
@@ -617,9 +624,9 @@ ein Myon und ein Rauschpuls kurz nacheinander im Detektor eintreffen.
 Die Wahrscheinlichkeit solcher Zufallskoinzidenzen in einem Zeitfenster
 ΔT lässt sich über die Einzelrate R der Panels bestimmen:     
 
-​    W_z =  ΔT · R_p
+    W_z =  ΔT · R_p
 
-Die insgesamt während der gesamten Messzeit mit N\_µ  registrieten Myonen
+Die insgesamt während der gesamten Messzeit mit N\_µ  registrierten Myonen
 aufgetretenen Zufallskoinzidenzen sind also:  
     N_z = ΔT · R_p · N_µ · N_panels
 
@@ -630,11 +637,11 @@ Zufallskoinzidenzen berücksichtigt.
 
 Neben den Zufallskoinzidenzen ist ein weiterer physikalischer Effekt relevant:
 Negativ geladene, gestoppte Myonen werden von Atomkernen angezogen und
-lösen dort Kernreakionen aus. Bei schweren Kernen wie Blei ist die damit
-assoziierte Lebensaduer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
+lösen dort Kernreaktionen aus. Bei schweren Kernen wie Blei ist die damit
+assoziierte Lebensdauer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
 in der Anpassung berücksichtigt werden. Bei leichteren Kernen (z.B. Kohlenstoff
 im organischen Material der Szintillator-Panels) liegt die Lebensdauer für
-Myon-Einfang allerdings in der gleichen Größenordung wie die Myon-Lebensdauer
+Myon-Einfang allerdings in der gleichen Größenordnung wie die Myon-Lebensdauer
 und kann das Ergebnis verfälschen. 
 
 
@@ -670,12 +677,10 @@ und kann das Ergebnis verfälschen.
      Konfiguration für zwei Cosmo-Panels
   - `Kanne.daq`  
      Konfiguration für eine Kanne mit Photoröhre und Pulslänge 150 ns  
-  - `CosmoRate.daq`
+  - `CosmoRate.daq`  
      Ratenmessungen mit zwei oder mehr CosMO-Panels
-  - `CosmoLife.daq`
+  - `CosmoLife.daq`  
      Messung der Myon-Lebensdauer mit zwei oder mehr CosMO-Panels
-
-
   - `config/BMconfig.yaml`  
     Konfiguration für den Puffermanager
   - `SiPMpulse.yaml`  
