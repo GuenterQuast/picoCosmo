@@ -118,7 +118,7 @@ Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Info
 
 
 
-Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Analyse der vom  Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
+Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Analyse der vom Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
 
 Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateien auf der Festplatte abgelegt:
 
@@ -126,6 +126,9 @@ Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateie
     allen aufgezeichneten Signalen, die die Stufe der Triggervalidierung
     passiert haben und bei  denen  bei mehreren Detektoren -mindestens
     ein weiter angesprochen hat (Zweifach-Koinzidenz).
+
+Wenn die Suche nach Doppelpulsen aktiviert ist, können zusätzliche Informationen
+gespeichert werden: 
 
   - Dateien mit dem Namensanfang *dpFilt* enthalten Informationen zu den
     aufgezeichneten Doppelpulsen im CSV-Format:
@@ -141,7 +144,7 @@ Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateie
     - *V(iChan)*: Pulshöhe in mV des Folgepulses in Kanal *iChan*
 
  - Falls eingeschaltet, werden auch die vollständigen Rohdaten von allen
-   erkannten Doppelpulsen in der Dateien mit Namensbeginn *dpRaw* im
+   erkannten Doppelpulsen in der Datei mit Namensbeginn *dpRaw* im
    *.yaml*-Format abgelegt. Damit können eigene Analysen der Rohdaten
     ausgeführt werden. 
 
@@ -150,6 +153,8 @@ Namensbeginn *dpFig* abzulegen. Hier Beispiel für einen Doppelpuls in der Kamio
 mit einem nach ca. 3 µs zerfallenden Myon: 
 
    ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
+
+
 
 Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren grafische Anzeige bzw. Abspeichern als Grafikdateien
 im *.png*-Format.
@@ -160,10 +165,6 @@ einer Anpassung an die in der Datei dpFilt<Name>.dat abgelegten Daten im Bereich
 1.0 bis 15 µs folgenden Befehl auf der Kommandozeile eingeben:
 
     ./fit_dpData.py dpFilt<Name> 1.0 15.
-
-Ein typisches Ergebnis mit etwa 700 mit den Cosmo-Panels aufgezeichneten Doppelpulsen im Bereich von 1µs - 15µs ist hier gezeigt:
-
- ![Anpassung einer Exponentialfunktoin](images/LebensdauerFit.png)
 
 
 
@@ -218,6 +219,7 @@ Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrie
     trgTO:      5000     # Timeout, nach dieser Zeit wird einmal ausgelesen
     pretrig:    0.05     # Anteil der vor dem Trigger ausgelesenen Daten
     ChanColors: [darkblue, sienna, indigo] # Farben für Darstellung der Kanäle
+    
 
 
 
@@ -267,6 +269,8 @@ Ein Beispiel für die Analyse von Signalen einer Photoröhre ist hier gezeigt
        tauf   : 128.E-9  # Abfallzeit
 
 
+    NminCoincidence: 2  # min nbr to accept event
+    
     # Anzeigen, die gestartet werden sollen
     modules: [RMeter, Display, Hists]  # Rate, Pulsform, Histogramme
     
@@ -278,7 +282,7 @@ Ein Beispiel für die Analyse von Signalen einer Photoröhre ist hier gezeigt
      - [0., 15.,  45, 7.5, "Tau (µs)", 1]
      - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
     
-    doublePulse: true  # Doppelpulssuche ein, False falls nicht erwuenscht
+    doublePulse: true  # Doppelpulssuche ein, false falls nicht erwuenscht
 
 
 
@@ -296,6 +300,43 @@ BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
 verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
 LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
 ```
+
+
+
+**Wahl der Konfigurationsparameter**
+
+Typisch für Messungen, bei denen Signal- und Rauschpulse vorkommen,
+ist die Notwendigkeit, einen optimalen Arbeitspunkt festzulegen, an  
+dem Signalpulse von Rauschpulsen getrennt werden. Hier ist die kritische
+Größe die Pulshöhe, die für den Trigger des Oszilloskops und im Pulsfilter
+angegeben wird. Ist die Schwelle zu hoch, verliert man Signalpulse, wenn
+sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
+
+Die Triggerschwelle des Oszilloskops sollte niedriger als die Schwelle
+für den entsprechenden Kanal im Pulsfilter gewählt werden. Dadurch
+wird sichergestellt, dass praktisch alle Signale, die der Pulsfilter akzeptiert,
+auch den Trigger ausgelöst haben. 
+
+Als Einstellungshilfe bietet der *PulsFilter* Häufigkeitsverteilungen der 
+Pulshöhen für Signale, die
+
+1. den Trigger ausgelöst, aber vom Pulsfilter nicht akzeptiert wurden
+2. den Trigger ausgelöst und vom Pulsfilter akzeptiert wurden
+3. die Pulshöhen der Pulse auf den übrigen Kanälen, falls mehr als
+   ein Detektor angeschlossen wurde.
+
+Wird eine Suche nach Doppelpulsen durchgeführt, wird in einem weiteren
+Histogramm die Häufigkeitsverteilung der gemessenen Zeitdifferenzen 
+zwischen dem Triggerpuls und dem ersten verzögerten Puls, also
+die individuelle Lebensdauern der zerfallenden Myonen, angezeigt.
+
+Ein Beispiel zeigt die folgende Grafik:![Histogramme des PulsFilters](images/Filter_Histograms.png)
+
+Das beobachtete Spektrum der Signalhöhen fällt stark zu großen Werten
+ab, insbesondere bei kleinen Pulshöhen steigt die Rate sehr schnell an.
+Bei den CosMO-Panels ist keine klare Trennung zwischen Signal- und
+Rauschpulsen möglich.  Hinweise zur Wahl der Schwelle finden sich weiter
+unten im Absatz *Messen mit picoCosmo*.
 
 
 
@@ -318,16 +359,16 @@ an gemessene Lebensdauern zwischen 1.5 µs and 15. µs kann mit dem Skript
 
 
 
-## Didaktische Hinweise
+## Messen mit *picoCosmo* 
 
-Wichtig für das Verständnis der technischen Grundlagen der Messung der
-Eigenschaften der Myonen aus der kosmischen Strahlung ist eine gewisse
-Vertrautheit mit der Verwendung von Oszilloskopen, insbesondere die
-Notwenigkeit des Triggers und der Speicherfunktion zur Darstellung von
-kurzen, zufällig auftretenden Signalen. Zur Einführung kann dazu die
-Oszilloskop-Software *Picoscope*  verwendet werden, die mit dem Oszilloskop
-auf CD ausgeliefert bzw. heruntergeladen werden kann. Als Download ist
-auch die Linux-Version der Software erhältlich.
+Wichtig für das Verständnis der Messung der Eigenschaften der Myonen
+aus der kosmischen Strahlung ist eine gewisse Vertrautheit mit der 
+Verwendung von Oszilloskopen, insbesondere die Notwenigkeit des
+Triggers und der Speicherfunktion zur Darstellung von kurzen, zufällig
+auftretenden Signalen. 
+Zur Einführung kann dazu die Oszilloskop-Software *Picoscope*  verwendet
+werden, die mit dem Oszilloskop auf CD ausgeliefert bzw. heruntergeladen
+werden kann. Als Download ist auch die Linux-Version der Software erhältlich.
 
 **Registrierung zufälliger Pulse mit einem Oszilloskop**
 
@@ -366,15 +407,26 @@ der Koinzidenzrate unter verschiedenen Bedingungen durchgeführt werden.
 Dazu sollten mindestens zwei Panels verwendet werden, um Rauschsignale
 zu unterdrücken.   Am besten stellt man in der Oszilloskop-Konfiguration eine 
 Samplingzeit von 0.8 µs mit 200 Samples eingestellen. Dazu gibt es eine
-vorberietete Konfiguration, *CosmoRate.daq*. 
+vorbereitete Konfiguration, *CosmoRate.daq*. 
+
 Nach dem Start der Datennahme wir im Fenster "RateDisplay" der zeitliche
 Verlauf der Koinzidenzrate angezeigt. Die  Fluktuationen der Rate sind eine
 Folge der zufälligen Natur der registrierten Ereignisse - man kann
 die angezeigte Kurve gut "per Auge" mitteln, um eine zuverlässige
 Ratenbestimmung vorzunehmen. Ein genaueres  Ergebnis erhält man, 
 wenn man die im Textfeld des RateDisplays angezeigte Anzahl akzeptierter
-Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.  Mit
-diesem experimentellen Set-Up können nun die Eigenschaften des eben
+Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.  
+
+Wie in den Histogramen oben gezeigt, ist die Wahl einer Schwelle für
+akzeptierte Pulse wichtig, um eine hohe Effizienz für Myonen bei hinreichend
+guter Unterdrückung von Rauschsignalen zu erreichen. Die Koinzidenzrate,
+kann man im Fenster *RateDisplay* ablesen.  Bei niedriger Wahl der Schwelle
+ist sie praktisch unabhängig von der Schwelle, sinkt aber bei zu hohen
+Schwellenwerten schnell ab.  Für die CosMO-Panels haben sich Schwellen
+von ca. 30 mV für den Triggerkanal und 35 mV im Pulsfilter als günstig
+erwiesen.  
+
+Mit diesem experimentellen Set-Up können nun die Eigenschaften des eben
 entdeckten Phänomens untersucht werden. Interessant sind die folgenden
 Fragen:
 
@@ -398,18 +450,6 @@ Fragen:
 
 
 **Eigenschaften der Detektoren und Korrekturen**
-
-Typisch für Messungen, bei denen Signal- und Rauschpulse vorkommen,
-ist die Notwendigkeit, einen optimalen Arbeitspunkt festzulegen, an  
-dem Signalpulse von Rauschpulsen getrennt werden. Hier ist die kritische
-Größe die Pulshöhe, die für den Trigger des Oszilloskops und im Pulsfilter
-angegeben wird. Ist die Schwelle zu hoch, verliert man Signalpulse, wenn
-sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
-
-Die Triggerschwelle des Oszilloskops sollte niedriger als die Schwelle
-für den entsprechenden Kanal im Pulsfilter gewählt werden. Dadurch
-wird sichergestellt, dass praktisch alle Signale, die der Pulsfilter akzeptiert,
-auch den Trigger ausgelöst haben.
 
 Eine quantitative Untersuchung des Signal-zu-Rauschverhältnisses in
 Abhängigkeit von der Schwelle wird möglich, wenn man drei Detektoren
@@ -458,6 +498,33 @@ der Zahl der Zweifach- und Dreifachkoinzidenzen zu
 
 
 
+Für eigene Auswertungen zum Ansprechverhalten der Detektoren können die
+für jedes akzeptierte Ereignis gespeicherten Puls-Parameter verwendet werden.
+Damit ist dann auch die Messung der individuellen Ansprechwahrscheinlichkeit
+für jedes Panel möglich. In jeweils einer Zeile der Datei im CSV-Format werden
+für jedes Myon die Ereignis-Nummer, der Zeitpunkt relativ zum Run-Start sowie
+die Pulshöhen und Zeitpunkte relativ zum Trigger für Pulse auf jedem Kanal
+angegeben:
+
+`EvNr,    EvT,    V(1),    T(1),    ... ,   V(NC),    T(NC)`
+
+Eine Pulshöhe von Null bedeutet dabei, das kein Signal gefunden wurde.
+
+
+
+*Anmerkung*:  
+Prinzipiell kann die Ansprechwahrscheinlichkeit auch mit nur zwei
+Panels gemessen werden. Dazu wählt man für den Triggerkanal eine sehr hohe
+Schwelle, so dass nur echte Myonen den Trigger auslösen.  Im Pulsfilter kann
+über die Einstellung `NminCoincidence: 1` erreicht werden, dass ein validiertes
+Triggersignal ausreicht, um ein Ereignis zu akzeptieren. Die Zahl der
+Zweifachkoinzidenzen dividiert durch die Zahl der akzeptierten Ereigeignisse
+ergibt die Ansprechwahrscheinlichkeit des zweiten Panels. Allerding ist zu
+beachten, dass immer noch ein Anteil an Rauschpulsen fälschlich als Myon-Ereignis
+akzeptiert wird und dadurch die Effizienz des zweiten Panels unterschätzt wird.
+
+
+
 Berücksichtigung der **Auslese-Totzeit**
 
 Der Transfer der Daten vom Oszilloskop über die USB-Schnittstelle in den
@@ -468,20 +535,22 @@ Laufzeit verringert um die Totzeit und ggf. Zeiten, die im *paused*-Zustand
 verbracht wurden, werden am Ende in den Log-Dateien ausgegeben. 
 Damit lässt sich direkt die um die Totzeit korrigierte Rate berechnen: 
 
-​     R = N / T_life.
+     R = N / T_life.
 
 
 
-Betrachten wir ein typisches **Beispiel** mit 3 CosMO-Panels, 
+Betrachten wir zum Abschluss ein typisches **Beispiel** mit 3 CosMO-Panels, 
 Triggerschwelle 27.5 mV,  PulseFilter 30 mV:
+    →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
+    N_2 = 635, N_3 = 2376
+    →  ε = 88.2 ,  2·ε² - ε³  = 0.870
+Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6 Hz**
+    Fläche der Panels: 20 x 20 cm²
+    →  Myon-Rate  **Rµ = 0.014 / cm² / s**
 
-​     →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
 
-     N_2 = 635, N_3 = 2376
-     →  ε = 88.2 ,  2·ε² - ε³  = 0.870
 
-Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6 Hz**     
-  
+
 
 **Messung der Myon-Lebensdauer**
 
@@ -492,15 +561,81 @@ Myonen zerfallen in je ein Elektron und zwei Neutrinos. Wenn die Elektronen
 den Detektor treffen, weden auch sie nachgewiesen, und zwar zu einem um
 die individuelle Lebensdauer des zerfallenen Myons verzögerten Zeitpunkt.
 Die Signatur des Zerfalls eines gestoppen Myons ist also ein Doppelpuls. 
-Ein Bild eines solchen Ereignisses ist hier gezeigt:
+Ein Oszilloskop-Bild eines solchen Ereignisses wurde schon oben gezeigt.
 
+Der Anteil gestoppter Myonen liegt nur im Promille-Bereich, und deshalb muss
+die Suche nach Doppelpulsen automatisiert werden, um genügend Ereignisse
+aufzusammeln. Es ist aber durchaus möglich, durch hinreichend lange Beobachtung
+des Oszilloskp-Bildschirms einen Doppelpuls zu sehen.  
 
+In *picoCosmo* werden die aufgezeichneten Signale des USB-Oszilloskops nach
+Doppelpulsen durchsucht und die Daten der identifzierten Ereignisse abgespeichert.
+Zur Messung der Myon-Lebensdauer gibt eine vorbereitete Konfigurationsdatei, 
+*CosmoLife.daq*, die als Grundlage für eigene Messungen verwendet werden kann. 
 
- ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
+*picoCosmo* führt die Doppelpuls-Suche in Echtzeit aus und speichert wahlweise
+unterschiedlichste Informationen ab:
 
+1. Pulshöhe und Zeitpunt relativ zum Trigger in allen Ereignissen mit
+   identifiziertem Doppelpuls
+2. die vom Oszilloskop ausgegebenen Rohdaten 
+3. die Rohdaten als grafische Darstellung (*.png*-Format)
 
+Mit diesen Daten sind unterschiedliche Auswertungen möglich.
 
+Im einfachsten Fall verwendet man die Grafiken und lässt Schüler
+die jeweils beobachteten Lebensdauern in eine Häufigkeitsverteilung
+eintragen. Dazu bietet sich Gruppenarbeit und eine entsprechende
+Aufteilung des Datansatzes an - dann können die Gruppenergebnisse
+statistisch kombiniert, d. h. in eine einzige Häfugkeitsvereilung eingetragen
+werden.  
 
+Mit den Daten zu den Parametern der Doppelpulse können eigene Auswertungen
+ausgeführt werden.  Für jedes Ereigenis mit einem Doppelpuls werden Anzahl der
+akzeptiertn Myonen, die laufende Nummer des Doppelpulses, der Zeitpunkt
+des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
+zum Trigger und die registierten Pulshöhen der verzögerten Pulse für jeden
+Kanal dargestellt: 
+
+` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC`
+
+Eine Pulshöhe von Null bedeutet dabei, das kein Verzögertes Signal im entsprechenden
+Kanal gefunden wurde.
+
+Aus der dritten Spalte dieser Datei lässt ich die Häufigkeitsverteilung der
+Lebensdauern gewinnen: 
+
+ ![Anpassung einer Exponentialfunktoin](/home/quast/git/picoCosmo/doc/images/LebensdauerFit.png)
+
+Mit Hilfe des *python*-Programms *fit_dpData.py* wurde eine Exponentialfunktion
+an die Daten angepasst. Die Grafik enthält ca. 700 mit den Cosmo-Panels
+aufgezeichnete Doppelpulse im Bereich von 1µs - 15µs. 
+
+Neben echten Myon-Zerfällen sind im Datensatz auch Zufällige verzögerte
+Koinzidenzen enthalten, die entstehen, wenn zwei Myonen oder auch
+ein Myon und ein Rauschpuls kurz nacheinander im Detektor eintreffen. 
+Die Wahrscheinlichkeit solcher Zufallskoinzidenzen in einem Zeitfenster
+ΔT lässt sich über die Einzelrate R der Panels bestimmen:     
+
+​    W_z =  ΔT · R_p
+
+Die insgesamt während der gesamten Messzeit mit N\_µ  registrieten Myonen
+aufgetretenen Zufallskoinzidenzen sind also:  
+    N_z = ΔT · R_p · N_µ · N_panels
+
+Setzt man Zahlen ein, so sieht man, dass Zufallskoinzidenzen mit 10 - 20% zu
+den Ereignissen mit Doppelpulsen beitragen.  In der oben gezeigten Anpassung
+wurde daher zusätzlich zur Exponentialfunktion ein konstanter Anteil aus
+Zufallskoinzidenzen berücksichtigt. 
+
+Neben den Zufallskoinzidenzen ist ein weiterer physikalischer Effekt relevant:
+Negativ geladene, gestoppte Myonen werden von Atomkernen angezogen und
+lösen dort Kernreakionen aus. Bei schweren Kernen wie Blei ist die damit
+assoziierte Lebensaduer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
+in der Anpassung berücksichtigt werden. Bei leichteren Kernen (z.B. Kohlenstoff
+im organischen Material der Szintillator-Panels) liegt die Lebensdauer für
+Myon-Einfang allerdings in der gleichen Größenordung wie die Myon-Lebensdauer
+und kann das Ergebnis verfälschen. 
 
 
 
@@ -521,45 +656,42 @@ Ein Bild eines solchen Ereignisses ist hier gezeigt:
   - `Anleitung.md` bzw. `Anleitung.pdf`  
     Deutschsprachige Anleitung
 
-## Module
+### Module
+
   - picocosmo/PulseFilter.py  
     Analyse der vom Oszillographen gelieferten Pulsformen;  
     Auslese und Anzeige mittels der Module im Projekt *picoDAQ*
 
-## Konfigurationsdateien
+### Konfigurationsdateien
 
   - `default.daq`  
      Konfiguration für zwei Cosmo-Panels
-
   - `Cosmo.daq`  
      Konfiguration für zwei Cosmo-Panels
-
   - `Kanne.daq`  
      Konfiguration für eine Kanne mit Photoröhre und Pulslänge 150 ns  
+  - `CosmoRate.daq`
+     Ratenmessungen mit zwei oder mehr CosMO-Panels
+  - `CosmoLife.daq`
+     Messung der Myon-Lebensdauer mit zwei oder mehr CosMO-Panels
 
 
   - `config/BMconfig.yaml`  
     Konfiguration für den Puffermanager
-
-  - `SiPMpulse.yaml'  
+  - `SiPMpulse.yaml`  
     Konfiguration des Picoscopes für SiPM-Pulse 
-
-  - `PMpulse.yaml'  
+  - `PMpulse.yaml`  
     Konfiguration des Picoscopes für Photomultiplier-Pulse 
-
-  - `SiPMpulse2000.yaml'  
+  - `SiPMpulse2000.yaml`  
     Konfiguration eines Picoscopes 2202A für SiPM-Pulse 
-
-  - `PFcosmo.yaml'  
+  - `PFcosmo.yaml`  
     Konfiguration des PulseFilters für Cosmo-Panels 
-
-  - `PFKanne.yaml'  
+  - `PFKanne.yaml`  
     Konfiguration des PulseFilters für eine Kanne
-
-  - `PFcosmo2000.yaml'  
+  - `PFcosmo2000.yaml`  
     Konfiguration des PulseFilters für Cosmo-Panels an Picoscope 2202A 
 
-##Beispiele
+### Beispiele
 
    - `output/CosmoPanels_180514`  
      Beispielausgabe einer Datennahme mit den Cosmo-Panels  
@@ -583,3 +715,4 @@ Ein Bild eines solchen Ereignisses ist hier gezeigt:
    - `output/plotDoublePulses.py`  
      Anzeigen von Doppelpulsen aus Dateien *dpRaw.dat* als Grafiken auf dem
      Bildschirm
+
