@@ -1,4 +1,8 @@
-# Software zur Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
+# Tutorial zu picoCosmo
+
+### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
+
+
 
 *Kurzfassung:*  
  Die in diesem Projekt bereit gestellten *python*-Skripte diene zur Aufnahme und Auswertung der Daten der CosMO-Detektoren und der Kamiokanne des Netzwerks Teilchenwelt mit einem USB-Oszilloskop.
@@ -74,8 +78,7 @@ Signal-Parameter werden optional kontinuierlich in Dateien geschrieben.
 Zusätzlich können Mehrfach-Pulse als Rohdaten der registrierten Pulsformen
  oder als Bilder im *.png*-Format gespeichert werden.
 
-Details zu Abhängigkeiten und zur Installation von *picoCosmo* finden sich in der
-Datei  [README_de.md](../README_de.md).
+Details zur Installation  von *picoCosmo* finden sich in der Datei  [README_de.md](../README_de.md).
 
 
 
@@ -118,9 +121,20 @@ Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Info
 
 
 
-Als einer der Datenkonsumenten des Puffermanagers startet neben den diversen Echtzeitanzeigen auch der Pulsfilter zur Analyse der vom Oszilloskop ausgelesenen Daten mit den in dessen Konfiguration festgelegten Echtzeit-Anzeigen. 
+Das Oszilloskop-Fenster Pulsen in zwei CosMO-Panels ist hier gezeigt: 
 
-Informationen über die im Pulsfilter erkannten Signale werden laufend in Dateien auf der Festplatte abgelegt:
+ ![Oszillograpenfenster mit Signalpulsen](/home/quast/git/picoCosmo/doc/images/OscilloscopeDisplay.png)
+
+Die beiden Pulse treten zum gleichen Zeitpunkt auf und weisen damit auf
+einen echten Teilchendurchgang durch beide Panels hin. 
+
+
+
+Als einer der Datenkonsumenten des Puffermanagers startet neben den
+diversen Echtzeitanzeigen auch der Pulsfilter zur Analyse der vom Oszilloskop
+ausgelesenen Daten mit den in dessen Konfiguration festgelegten
+Echtzeit-Anzeigen. Informationen über die im Pulsfilter erkannten
+Signale werden laufend in Dateien auf der Festplatte abgelegt:
 
   - Dateien mit dem Namensanfang  *pFilt* enthalten Informationen zu
     allen aufgezeichneten Signalen, die die Stufe der Triggervalidierung
@@ -149,20 +163,20 @@ gespeichert werden:
     ausgeführt werden. 
 
 Es ist auch möglich, grafische Darstellungen von Doppelpulsen im Verzeichnis mit 
-Namensbeginn *dpFig* abzulegen. Hier Beispiel für einen Doppelpuls in der Kamiokanne
-mit einem nach ca. 3 µs zerfallenden Myon: 
-
-   ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
+Namensbeginn *dpFig* abzulegen. Ein Beispiel einr solchen Grafik ist im Abschnitt
+*Experimentieren mit picoCosmo* gezeigt. 
 
 
 
-Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das Einlesen der abgespeicherten Pulsformen und deren grafische Anzeige bzw. Abspeichern als Grafikdateien
-im *.png*-Format.
+Zwei Hilfsanwendungen, *plotDoublePulses.py* und *makeFigs.py* ermöglichen das
+Einlesen der abgespeicherten Pulsformen und deren grafische Anzeige bzw.
+Abspeichern als Grafikdateien im *.png*-Format.
 
-Eine weitere Hilfsanwendung, *fit_dpData.py*, führt die Anpassung einer Exponentialfunktion an
-die in Dateien mit Namensanfang *dpFilt* abgelegten individuellen µ-Lebensdauern. Zum Start
-einer Anpassung an die in der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von
-1.0 bis 15 µs folgenden Befehl auf der Kommandozeile eingeben:
+Eine weitere Hilfsanwendung, *fit_dpData.py*, führt die Anpassung einer
+Exponentialfunktion an die in Dateien mit Namensanfang *dpFilt* abgelegten
+individuellen µ-Lebensdauern durch. Zum Start einer Anpassung an die in
+der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15 µs
+wird folgender Befehl auf der Kommandozeile eingegeben:
 
     ./fit_dpData.py dpFilt<Name> 1.0 15.
 
@@ -336,7 +350,7 @@ Das beobachtete Spektrum der Signalhöhen fällt stark zu großen Werten
 ab, insbesondere bei kleinen Pulshöhen steigt die Rate sehr schnell an.
 Bei den CosMO-Panels ist keine klare Trennung zwischen Signal- und
 Rauschpulsen möglich.  Hinweise zur Wahl der Schwelle finden sich weiter
-unten im Absatz *Messen mit picoCosmo*.
+unten im Absatz *Experimentieren mit picoCosmo*.
 
 
 
@@ -359,7 +373,7 @@ an gemessene Lebensdauern zwischen 1.5 µs and 15. µs kann mit dem Skript
 
 
 
-## Messen mit *picoCosmo* 
+## Experimentieren mit *picoCosmo* 
 
 Wichtig für das Verständnis der Messung der Eigenschaften der Myonen
 aus der kosmischen Strahlung ist eine gewisse Vertrautheit mit der 
@@ -426,36 +440,48 @@ Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.
 Wie in den Histogramen oben gezeigt, ist die Wahl einer Schwelle für
 akzeptierte Pulse wichtig, um eine hohe Effizienz für Myonen bei hinreichend
 guter Unterdrückung von Rauschsignalen zu erreichen. Die Koinzidenzrate,
-kann man im Fenster *RateDisplay* ablesen.  Bei niedriger Wahl der Schwelle
-ist sie praktisch unabhängig von der Schwelle, sinkt aber bei zu hohen
-Schwellenwerten schnell ab.  Für die CosMO-Panels haben sich Schwellen
-von ca. 30 mV für den Triggerkanal und 35 mV im Pulsfilter als günstig
-erwiesen.  
+die man im Fenster *RateDisplay* ablesen kann, ist niedriger Wahl der Schwelle
+kaum davon abhängig, sinkt aber bei zu hohen Schwellenwerten schnell ab.  
+Für die CosMO-Panels haben sich Schwellen von ca. 30 mV für den
+Triggerkanal und 35 mV im Pulsfilter als günstig erwiesen.  
 
 Mit diesem experimentellen Set-Up können nun die Eigenschaften des eben
 entdeckten Phänomens untersucht werden. Interessant sind die folgenden
 Fragen:
 
 - **Aus welcher Richtung kommen die Signale ?**
-  dazu werden die Detektoren übereinander, nebeneinander oder
+  Dazu werden die Detektoren übereinander, nebeneinander oder
   um 30° und 60° gedreht angeordnet und die gemessenen Raten
   verglichen.  
 - **Lassen sich die Signale abschirmen ? **
   Dazu können verschieden dicke Materialien auf einem Tisch
   über den Detektoren angebracht und die jeweiligen Raten gemessen
   werden.
-  Eine überzeugende Bestätigung, dass die beobachteten Teilchen
-  Materie leicht durchdringen, erhält man, wenn man Messungen
-  im Keller mit solchen aus den oberen Stockwerken vergleicht.
-  Achtung: wegen der statistischen Natur haben die gemessenen
-  Raten eine statistische Unsicherheit, die durch die Poisson-Verteilung
-  beschreiben ist. Der Fehler auf die gesamte gemessene Anzahl N ist
-  gleich der Wurzel aus N, also ΔN = √N, der relative Fehler auf die Rate
-  also ΔN/N = 1/√N .
+  Eine überzeugende Bestätigung, dass die beobachteten Teilchen Materie
+  leicht durchdringen, erhält man, wenn man Messungen im Keller mit
+  solchen aus den oberen Stockwerken vergleicht.
+  <u>Achtung</u>: wegen der statistischen Natur haben gemessene Raten
+  eine Unsicherheit, die durch die Poisson-Verteilung beschreiben ist.
+  Die Unsicherheit auf die gesamte gemessene Anzahl N ist gegeben durch
+  Wurzel aus N, also ΔN = √N, die relative Unsicherheit auf die Rate
+  also ΔN/N = 1/√N . Signifikant sind nur Ratenunterschiede, die deutlich
+  größer als die statistische Unsicherheit sind. 
 
 
 
 **Eigenschaften der Detektoren und Korrekturen**
+
+Insbesondere Silizium-Photo-Multiplier, aber auch klassische
+Photomultiplier-Röhen haben eine erhebliche Rauschrate, die
+auch bei völliger Dunkelheit zu Signalen führt. Die Rauschpulse
+sind typischerweise kleiner als echte Signalpulse, die Verteilung
+der Pulshöhen überlappt aber mit der der Signale.  Eine Trennung
+erfolgt durch die Wahl einer Schwelle auf die Pulshöhe, die als
+Signal klassifizierte Pulse überscheiten müssen. Dadurch verliert
+man kleine Pulse, behält aber auch einige Rauschpulse, die man
+fälschlicherweise als Signal behandelt. Wir wir oben gesehen
+haben, treten Signalpulse in mehreren Detektoren auf, während
+Rauschpulse immer nur einzelne Detektoren betreffen. 
 
 Eine quantitative Untersuchung des Signal-zu-Rauschverhältnisses in
 Abhängigkeit von der Schwelle wird möglich, wenn man drei Detektoren
@@ -484,7 +510,8 @@ die Anzahlen der Zwei- und Dreifachkoinzidenzen, N_2 bzw. N_3:
        N_3 = ε² · N
 
 N ist dabei die Zahl der insgesamt aufgetretenen Myonen, die Kanal 1
-getriggert haben. Bildet man das Verhältnis von N_2 und N_3, so kann
+getriggert haben und in mindestens einem weiteren Detektor nachgewiesen
+wurden. Bildet man das Verhältnis von N_2 und N_3, so kann
 die Ansprechwahrscheinlichkeit bestimmt werden:
 
  ​        ε = 1 - [  N_2  /  (2 · N_3 + N_2) ] .  
@@ -519,8 +546,8 @@ Eine Pulshöhe von Null bedeutet dabei, das kein Signal gefunden wurde.
 
 
 *Anmerkung*:  
-Prinzipiell kann die Ansprechwahrscheinlichkeit auch mit nur zwei
-Panels gemessen werden. Dazu wählt man für den Triggerkanal eine sehr hohe
+Prinzipiell kann die Ansprechwahrscheinlichkeit auch mit nur zwei Panels
+gemessen werden. Dazu wählt man für den Triggerkanal eine sehr hohe
 Schwelle, so dass nur echte Myonen den Trigger auslösen.  Im Pulsfilter kann
 über die Einstellung `NminCoincidence: 1` erreicht werden, dass ein validiertes
 Triggersignal ausreicht, um ein Ereignis zu akzeptieren. Die Zahl der
@@ -568,7 +595,10 @@ Myonen zerfallen in je ein Elektron und zwei Neutrinos. Wenn die Elektronen
 den Detektor treffen, werden auch sie nachgewiesen, und zwar zu einem um
 die individuelle Lebensdauer des zerfallenen Myons verzögerten Zeitpunkt.
 Die Signatur des Zerfalls eines gestoppten Myons ist also ein Doppelpuls. 
-Ein Oszilloskop-Bild eines solchen Ereignisses wurde schon oben gezeigt.
+Ein Oszilloskop-Bild eines solchen Ereignisses in der Kamiokanne mit einem
+nach ca. 3 µs  zerfallenden Myon ist hier gezeigt: 
+
+   ![Beispiel eines Doppelpulses](/home/quast/git/picoCosmo/doc/images/DPfig_Kanne.png)
 
 Der Anteil gestoppter Myonen liegt nur im Promille-Bereich, und deshalb muss
 die Suche nach Doppelpulsen automatisiert werden, um genügend Ereignisse
@@ -593,20 +623,21 @@ Mit diesen Daten sind unterschiedliche Auswertungen möglich.
 Im einfachsten Fall verwendet man die Grafiken und lässt Schüler
 die jeweils beobachteten Lebensdauern in eine Häufigkeitsverteilung
 eintragen. Dazu bietet sich Gruppenarbeit und eine entsprechende
-Aufteilung des Datansatzes an - dann können die Gruppenergebnisse
-statistisch kombiniert, d. h. in eine einzige Häufigkeitsverteilung
-eingetragen werden.  
+Aufteilung des Datansatzes an. Die Gruppenergebnisse können
+kombiniert, d. h. in eine einzige Häufigkeitsverteilung eingetragen
+und die statistische Signifikanz im Vergleich zu den Einzelergebnissen
+erhöht werden.  
 
 Mit den Daten zu den Parametern der Doppelpulse können eigene Auswertungen
-ausgeführt werden.  Für jedes Ereignis mit einem Doppelpuls werden Anzahl der
-akzeptierten Myonen, die laufende Nummer des Doppelpulses, der Zeitpunkt
+ausgeführt werden.  Für jedes Ereignis mit einem Doppelpuls werden die Anzahl
+der bis dahin akzeptierten Myonen und erkanten Doppelpulse, der Zeitpunkt
 des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
 zum Trigger und die registrierten Pulshöhen der verzögerten Pulse für jeden
 Kanal dargestellt: 
 
 ` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC`
 
-Eine Pulshöhe von Null bedeutet dabei, das kein Verzögertes Signal im
+Eine Pulshöhe von Null bedeutet dabei, das kein verzögertes Signal im
 entsprechenden Kanal gefunden wurde.
 
 Aus der dritten Spalte dieser Datei lässt ich die Häufigkeitsverteilung der
@@ -614,15 +645,17 @@ Lebensdauern gewinnen:
 
  ![Anpassung einer Exponentialfunktoin](/home/quast/git/picoCosmo/doc/images/LebensdauerFit.png)
 
-Mit Hilfe des *python*-Programms *fit_dpData.py* wurde eine Exponentialfunktion
-an die Daten angepasst. Die Grafik enthält ca. 700 mit den Cosmo-Panels
-aufgezeichnete Doppelpulse im Bereich von 1µs - 15µs. 
+Mit Hilfe des *python*-Programms *fit_dpData.py* wurde in der Grafik oben
+eine Exponentialfunktion an die Daten angepasst. Die Ferhlerbalken
+entsprechen der statistischen Unsicherhiet im jeweiligen Intervall.
+Die Grafik enthält ca. 700 mit den CosMO-Panels aufgezeichnete
+Doppelpulse im Bereich von 1µs - 15µs. 
 
-Neben echten Myon-Zerfällen sind im Datensatz auch Zufällige verzögerte
+Neben echten Myon-Zerfällen sind im Datensatz auch zufällige verzögerte
 Koinzidenzen enthalten, die entstehen, wenn zwei Myonen oder auch
 ein Myon und ein Rauschpuls kurz nacheinander im Detektor eintreffen. 
 Die Wahrscheinlichkeit solcher Zufallskoinzidenzen in einem Zeitfenster
-ΔT lässt sich über die Einzelrate R der Panels bestimmen:     
+ΔT lässt sich über die Einzelrate R_p der Panels bestimmen:     
 
     W_z =  ΔT · R_p
 
@@ -636,7 +669,7 @@ wurde daher zusätzlich zur Exponentialfunktion ein konstanter Anteil aus
 Zufallskoinzidenzen berücksichtigt. 
 
 Neben den Zufallskoinzidenzen ist ein weiterer physikalischer Effekt relevant:
-Negativ geladene, gestoppte Myonen werden von Atomkernen angezogen und
+negativ geladene, gestoppte Myonen werden von Atomkernen angezogen und
 lösen dort Kernreaktionen aus. Bei schweren Kernen wie Blei ist die damit
 assoziierte Lebensdauer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
 in der Anpassung berücksichtigt werden. Bei leichteren Kernen (z.B. Kohlenstoff
