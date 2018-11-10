@@ -635,7 +635,7 @@ des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
 zum Trigger und die registrierten Pulshöhen der verzögerten Pulse für jeden
 Kanal dargestellt: 
 
-` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC`
+` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC)`
 
 Eine Pulshöhe von Null bedeutet dabei, das kein verzögertes Signal im
 entsprechenden Kanal gefunden wurde.
