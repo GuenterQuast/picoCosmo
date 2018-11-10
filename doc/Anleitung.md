@@ -78,7 +78,8 @@ Signal-Parameter werden optional kontinuierlich in Dateien geschrieben.
 Zusätzlich können Mehrfach-Pulse als Rohdaten der registrierten Pulsformen
  oder als Bilder im *.png*-Format gespeichert werden.
 
-Details zur Installation  von *picoCosmo* finden sich in der Datei  [README_de.md](../README_de.md).
+Details zur Installation  von *picoCosmo* finden sich in der Datei
+[README_de.md](../README_de.md).
 
 
 
@@ -630,12 +631,12 @@ erhöht werden.
 
 Mit den Daten zu den Parametern der Doppelpulse können eigene Auswertungen
 ausgeführt werden.  Für jedes Ereignis mit einem Doppelpuls werden die Anzahl
-der bis dahin akzeptierten Myonen und erkanten Doppelpulse, der Zeitpunkt
+der bis dahin akzeptierten Myonen und erkannten Doppelpulse, der Zeitpunkt
 des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
 zum Trigger und die registrierten Pulshöhen der verzögerten Pulse für jeden
 Kanal dargestellt: 
 
-` Nacc,    Ndble,    Tau,     dT(1)  , ..., dT(NC),   V(1), ...,   V(NC)`
+` Nacc,    Ndble,    Tau,     dT(1)  , ...,   dT(NC),   V(1), ...,   V(NC)`
 
 Eine Pulshöhe von Null bedeutet dabei, das kein verzögertes Signal im
 entsprechenden Kanal gefunden wurde.
@@ -646,7 +647,7 @@ Lebensdauern gewinnen:
  ![Anpassung einer Exponentialfunktoin](/home/quast/git/picoCosmo/doc/images/LebensdauerFit.png)
 
 Mit Hilfe des *python*-Programms *fit_dpData.py* wurde in der Grafik oben
-eine Exponentialfunktion an die Daten angepasst. Die Ferhlerbalken
+eine Exponentialfunktion an die Daten angepasst. Die Fehlerbalken
 entsprechen der statistischen Unsicherhiet im jeweiligen Intervall.
 Die Grafik enthält ca. 700 mit den CosMO-Panels aufgezeichnete
 Doppelpulse im Bereich von 1µs - 15µs. 
@@ -655,7 +656,7 @@ Neben echten Myon-Zerfällen sind im Datensatz auch zufällige verzögerte
 Koinzidenzen enthalten, die entstehen, wenn zwei Myonen oder auch
 ein Myon und ein Rauschpuls kurz nacheinander im Detektor eintreffen. 
 Die Wahrscheinlichkeit solcher Zufallskoinzidenzen in einem Zeitfenster
-ΔT lässt sich über die Einzelrate R_p der Panels bestimmen:     
+ΔT lässt sich über die Einzelrate R_p der Panels bestimmen:  
 
     W_z =  ΔT · R_p
 
@@ -690,11 +691,39 @@ und kann das Ergebnis verfälschen.
     Datennahme und Anzeigen wie in den Konfigurationsdateien (Vorgabe
      *defaut.daq* für zwei Cosmo-Panels mit Messung der µ-Lebensdauer
 
-  - `README_de.md` bzw. `README_de.pdf`  
+  - `README.md`  
+    Englischsprachige Beschreibung
+
+  - `README_de.md`  
     Deutschsprachige Beschreibung
+
+  - `CosmoRate.daq`    
+     Konfigurationsdatei für eine Ratenmessung mit den CosMO-Panels
+
+  - `CosmoLife.daq`    
+     Konfigurationsdatei für eine Lebensdauermessung mit den CosMO-Panels
+
+  - `Kanne.daq`    
+     Konfigurationsdatei für die Kanne mit kurzen (150ns) Pulse
+
+  - `config\*.yaml`    
+     Konfigurationsdateien für Oszillosskop, Pulsfilter und BufferManager,  
+     werden von den Dateien vom Typ *.daq* referenziert. 
+
+### Tutorial  
 
   - `Anleitung.md` bzw. `Anleitung.pdf`  
     Deutschsprachige Anleitung
+
+  - `dpFigs_Kanne.pdf`    
+    Bilder aufgezeichneter Doppelpulse mit der Kamiokanne  
+
+  - `dpFigs_CosMO.pdf`  
+    Bilder aufgezeichneter Doppelpulse mit zwei CosMO-Panels  
+
+ - `README_de.pdf`  
+    Deutschsprachige Beschreibung
+
 
 ### Module
 
