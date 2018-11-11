@@ -584,6 +584,22 @@ Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6
 
 
 
+**Statistische Zusammenhänge**
+
+Die Wahrscheinlichkeit für die Registrierung eines Myons in einem 
+infinitesimal kleinen Zeitintervall *dT* ist zu jedem Zeitpunkt gleich.
+Daraus folgt:
+
+1. Die Zahl *k* der in einem endlichen Zeitintevall *ΔT* mit der (mittleren) 
+   Rate *Rµ* eintreffenden Myonen folgt einer Poisson-Verteilung folgt,
+   deren Erwartungswert durch  *Rµ · ΔT* gegeben ist.
+2. Die Verteilung der Zeiten zwischen zwei Myonen, 
+   die sogenannte Wartezeit, *tw*, ist eine Exponentialverteilung,
+   `f(tw) = Rµ · exp(-tw · Rµ)`.
+
+Aus den aufgezeichneten Daten aller registrierten Pulse können diese
+Zusammenhänge untersucht und bestätigt werden. 
+
 
 
 **Messung der Myon-Lebensdauer**
