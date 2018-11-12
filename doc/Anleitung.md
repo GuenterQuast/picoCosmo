@@ -575,12 +575,12 @@ Damit lässt sich direkt die um die Totzeit korrigierte Rate berechnen:
 
 Betrachten wir zum Abschluss ein typisches **Beispiel** mit 3 CosMO-Panels, 
 Triggerschwelle 27.5 mV,  PulseFilter 30 mV:
-    →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
-    N_2 = 635, N_3 = 2376
-    →  ε = 88.2 ,  2·ε² - ε³  = 0.870
+​    →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
+​    N_2 = 635, N_3 = 2376
+​    →  ε = 88.2 ,  2·ε² - ε³  = 0.870
 Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6 Hz**
-    Fläche der Panels: 20 x 20 cm²
-    →  Myon-Rate  **Rµ = 0.014 / cm² / s**
+​    Fläche der Panels: 20 x 20 cm²
+​    →  Myon-Rate  **Rµ = 0.014 / cm² / s**
 
 
 
@@ -643,9 +643,17 @@ eintragen. Dazu bietet sich Gruppenarbeit und eine entsprechende
 Aufteilung des Datansatzes an. Die Gruppenergebnisse können
 kombiniert, d. h. in eine einzige Häufigkeitsverteilung eingetragen
 und die statistische Signifikanz im Vergleich zu den Einzelergebnissen
-erhöht werden.  
+erhöht werden.  Eine große Anzahl an Bildern mit zwei CosMO-Panels
+und der Kanne sind in den Dateien *doc/dpFigs_CosMO.pdf* und
+*doc/dpFigs_Kanne.pdf* enthalten.  Ein Beispiel zeigt die folgende Grafik:
 
-Mit den Daten zu den Parametern der Doppelpulse können eigene Auswertungen
+![mit den CosMo-Panels aufgezeichnete Doppelpulse ](images/DoublePulses.png)
+
+
+
+ 
+
+Mit den Daten der Parameter von erkannten  Doppelpulsen können eigene Auswertungen
 ausgeführt werden.  Für jedes Ereignis mit einem Doppelpuls werden die Anzahl
 der bis dahin akzeptierten Myonen und erkannten Doppelpulse, der Zeitpunkt
 des ersten verzögerten Pulses sowie daran anschließend die Zeitpunkte relativ
@@ -662,9 +670,9 @@ Lebensdauern gewinnen:
 
  ![Anpassung einer Exponentialfunktoin](/home/quast/git/picoCosmo/doc/images/LebensdauerFit.png)
 
-Mit Hilfe des *python*-Programms *fit_dpData.py* wurde in der Grafik oben
+Mit Hilfe des *python*-Skritps *fit_dpData.py* wurde in der Grafik oben
 eine Exponentialfunktion an die Daten angepasst. Die Fehlerbalken
-entsprechen der statistischen Unsicherhiet im jeweiligen Intervall.
+entsprechen der statistischen Unsicherheit im jeweiligen Intervall.
 Die Grafik enthält ca. 700 mit den CosMO-Panels aufgezeichnete
 Doppelpulse im Bereich von 1µs - 15µs. 
 
@@ -678,7 +686,7 @@ Die Wahrscheinlichkeit solcher Zufallskoinzidenzen in einem Zeitfenster
 
 Die insgesamt während der gesamten Messzeit mit N\_µ  registrierten Myonen
 aufgetretenen Zufallskoinzidenzen sind also:  
-    N_z = ΔT · R_p · N_µ · N_panels
+​    N_z = ΔT · R_p · N_µ · N_panels
 
 Setzt man Zahlen ein, so sieht man, dass Zufallskoinzidenzen mit 10 - 20% zu
 den Ereignissen mit Doppelpulsen beitragen.  In der oben gezeigten Anpassung
@@ -726,7 +734,7 @@ und kann das Ergebnis verfälschen.
      Konfigurationsdateien für Oszillosskop, Pulsfilter und BufferManager,  
      werden von den Dateien vom Typ *.daq* referenziert. 
 
-### Tutorial  
+### Tutorial im Verzeichnis *doc/*  
 
   - `Anleitung.md` bzw. `Anleitung.pdf`  
     Deutschsprachige Anleitung
@@ -741,7 +749,7 @@ und kann das Ergebnis verfälschen.
     Deutschsprachige Beschreibung
 
 
-### Module
+### Module im Verzeichnis *picocosmo/*
 
   - picocosmo/PulseFilter.py  
     Analyse der vom Oszillographen gelieferten Pulsformen;  
