@@ -75,6 +75,7 @@ ab, die zuvor auf Ihrem System installiert sein müssen:
     <https://github.com/colinoflynn/pico-python>
   - die Gerätetreibern und C-Bibliotheken aus dem
       'Pico Technlology Software Development Kit', das zusammen mit
+
     der PicoScope-Software installiert wird, siehe
     <https://www.picotech.com/downloads>
 
@@ -219,7 +220,7 @@ die aktiven Kanäle und zum Trigger.
     ChanRanges:        [0.5, 0.2]  # Messbereich
     ChanOffsets:       [0.4, 0.45] # analoger Offset, der vor Anzeige addiert wird.
     
-    sampleTime:   16.E-6 # Zeit zwischen zwei Messpunkten in s
+    sampleTime:   16.E-6 #  Zeitdauer einer einzelnen Datenaufnahme
          # Zahl im wissenschaftlichen Format mit '.' und Exponent mit Vorzeichen
     Nsamples:     3500   # Anzahl der aufzunehmenden Messpunkte 
     
@@ -251,7 +252,7 @@ für jeden Kanal sowie die zu startenden Anzeige-Module an.
 Sie enthält auch die Spezifikation der Echtzeit-Histogramme für
 Pulshöhen, Myon-Rate und Lebensdauer. Ein Beispiel ist hier gezeigt:
 
-**Inhalt der Datei BMconfig.yaml:**
+**Inhalt der Datei PMconfig.yaml:**
 
     # file PFKanne.yaml
     # -------------------
