@@ -1,6 +1,6 @@
 # Tutorial zu picoCosmo
 
-​															Vers. 0.5.3   Günter Quast, Nov. 2018
+															Vers. 0.5.3   Günter Quast, Nov. 2018
 
 ### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
@@ -134,7 +134,7 @@ Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Info
 
 Das Oszilloskop-Fenster mit Pulsen in zwei CosMO-Panels ist hier gezeigt: 
 
- ![Oszillograpenfenster mit Signalpulsen](/home/quast/git/picoCosmo/doc/images/OscilloscopeDisplay.png)
+ ![Signalpulse](/home/quast/git/picoCosmo/doc/images/OscilloscopeDisplay.png)
 
 Die beiden Pulse treten zum gleichen Zeitpunkt auf und weisen damit auf
 einen echten Teilchendurchgang durch beide Panels hin. 
