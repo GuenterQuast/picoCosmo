@@ -1,6 +1,4 @@
-
-v0.5.3 
-
+v0.5.3  Nov. 18, 2018
 changes and additions:
        - v0.5.3rc0 refinements to GUI: saving and loading configs
        - v0.5.2p1 support vor PicoScope 2x0yA series and bug fix
