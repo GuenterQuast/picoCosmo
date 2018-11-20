@@ -215,10 +215,15 @@ class PulseFilter(object):
              self.taur[-1], self.tauon[-1], self.tauf[-1], self.pheight[-1]) )
 
 # calculate thresholds for correlation analysis
-    # norm of reference pulse    
-    self.pthr = np.sum(self.refP * self.refP, axis=1) 
-    # norm of mean-subtracted reference pulse    
-    self.pthrm = np.sum(self.refPm * self.refPm, axis=1) 
+    # norm of reference pulse
+    pthr=[] 
+    # norm of mean-subtracted reference pulse
+    pthrm=[] 
+    for i in range(Npulses):
+      pthr.append(np.sum(self.refP[i]*self.refP[i]) )
+      pthrm.append(np.sum(self.refPm[i] * self.refPm[i]) )
+    self.pthr = np.array(pthr)  
+    self.pthrm = np.array(pthrm)
 
     if self.verbose > 1:
       print('PulseFilter: reference pulse(s)')
