@@ -1,6 +1,6 @@
 # Tutorial zu picoCosmo
 
-															Vers. 0.5.3   Günter Quast, Nov. 2018
+									  Vers. 0.5.3  				    Günter Quast, Nov. 2018
 
 ### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
@@ -674,6 +674,10 @@ Kanal dargestellt:
 
 Eine Pulshöhe von Null bedeutet dabei, das kein verzögertes Signal im
 entsprechenden Kanal gefunden wurde.
+
+
+
+
 
 Aus der dritten Spalte dieser Datei lässt ich die Häufigkeitsverteilung der
 Lebensdauern gewinnen: 
