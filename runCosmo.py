@@ -54,8 +54,18 @@ from picocosmo.PulseFilter import *
 #     scope settings defined in .yaml-File, see picoConfig
 # --------------------------------------------------------------
 
-
 # some helper functions 
+def kbdwait():
+  ''' 
+    wait for keyboard input
+  '''
+  # 1st, remove pyhton 2 vs. python 3 incompatibility for keyboard input
+  if sys.version_info[:2] <=(2,7):
+    get_input = raw_input
+  else: 
+    get_input = input
+ #  wait for input
+  get_input(50*' '+'type <ret> to exit -> ')
 
 def stop_processes(proclst):
   '''
@@ -83,26 +93,31 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   try:
     with open(DAQconfFile) as f:
       DAQconfdict=yaml.load(f)
-  except:
+  except Exception as e:
     print('     failed to read DAQ configuration file ' + DAQconfFile)
+    print(str(e))
+    kbdwait()
     exit(1)
 
   if "DeviceFile" in DAQconfdict: 
     DeviceFile = DAQconfdict["DeviceFile"] # configuration file for scope
   else:
     print('     no device configuration file - exiting')
+    kbdwait()
     exit(1)
 
   if "BMfile" in DAQconfdict: 
     BMfile = DAQconfdict["BMfile"] # Buffer Manager configuration file 
   else:
     print('     no BM configuration file - exiting')
+    kbdwait()
     exit(1)
 
   if "PFfile" in DAQconfdict: 
     PFfile = DAQconfdict["PFfile"] # Buffer Manager configuration file 
   else:
     print('     no pulse filter configuration file - exiting')
+    kbdwait()
     exit(1)
 
   if 'DAQmodules' in DAQconfdict:
@@ -119,8 +134,10 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   try:
     with open(DeviceFile) as f:
       PSconfdict=yaml.load(f)
-  except:
+  except Exception as e:
     print('     failed to read scope configuration file ' + DeviceFile)
+    print(str(e))
+    kbdwait()
     exit(1)
 
   # read Buffer Manager configuration file
@@ -128,18 +145,22 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   try:
     with open(BMfile) as f:
         BMconfdict=yaml.load(f)
-  except:
-   print('     failed to read BM input file ' + BMfile)
-   exit(1)
+  except Exception as e:
+    print('     failed to read BM input file ' + BMfile)
+    print(str(e))
+    kbdwait()
+    exit(1)
 
   # read Pulse Filter configuration file
   print('    Pulse Filter configuration from file ' + PFfile)
   try:   
     with open(PFfile) as f:
       PFconfdict = yaml.load(f)
-  except:
-   print('     failed to read Pulse Filter input file ' + PFfile)
-   exit(1)
+  except Exception as e:
+    print('     failed to read Pulse Filter input file ' + PFfile)
+    print(str(e))
+    kbdwait()
+    exit(1)
 
 # initialisation
   print(' -> initializing PicoScope')
@@ -150,9 +171,14 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
     PSconfdict['frqSG'] = 0.
   if 'trgTO' not in PSconfdict:
     PSconfdict['trgTO'] = 5000
+ 
+  try:   
+    PSconf = picodaqa.picoConfig.PSconfig(PSconfdict)
+    PSconf.init()
+  except:
+    kbdwait()
+    exit(1)
     
-  PSconf = picodaqa.picoConfig.PSconfig(PSconfdict)
-  PSconf.init()
   # copy some of the important configuration variables ...
   NChannels = PSconf.NChannels # number of channels in use
   TSampling = PSconf.TSampling # sampling interval
