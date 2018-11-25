@@ -372,17 +372,17 @@ class Ui_CosmoWindow(object):
       try:
         with open(DAQconfFile) as f:
           DAQconf = f.read()
-      except:
+      except Exception as e:
         self.MB_Warning('Warning', 
-                   'failed to read DAQ configuration file ' + DAQconfFile) 
+          'failed to read DAQ configuration file ' + DAQconfFile +'\n' + str(e)) 
         print('     failed to read DAQ configuration file ' + DAQconfFile)
         exit(1)
 
       try:
         DAQconfdict=yaml.load(DAQconf)
-      except:
+      except Exception as e:
         self.MB_Warning('Warning', 
-                  'DAQ configuration not valid yaml format ' + DAQconfFile) 
+          'DAQ configuration not valid yaml format ' + DAQconfFile +'\n' + str(e) ) 
         print('     DAQ configuration not valid yaml format' + DAQconfFile)
         exit(1)
 
@@ -403,9 +403,9 @@ class Ui_CosmoWindow(object):
       # check if valid yaml syntax
       try:
         DAQconfDict = yaml.load(DAQconf)
-      except:
+      except Exception as e:
         self.MB_Warning('Warning', 
-           'DAQ config is not valid yaml format')       
+          'DAQ config is not valid yaml format \n' + str(e) )       
         return 1
       self.readConfigs(DAQconfDict)
 
@@ -483,34 +483,34 @@ class Ui_CosmoWindow(object):
         # check if valid yaml syntax
         try:
           DAQconfDict = yaml.load(DAQconf)
-        except:
+        except Exception as e:
           self.MB_Warning('Warning', 
-             'DAQ config is not valid yaml format')       
+                          'DAQ config is not valid yaml format \n' + str(e) )       
           return 1
 
         PSconf = self.pTE_OsciConfig.toPlainText() 
         # check if valid yaml syntax
         try:
           d = yaml.load(PSconf)
-        except:
+        except Exception as e:
           self.MB_Warning('Warning', 
-             'PicoScope config is not valid yaml format')       
+            'PicoScope config is not valid yaml format\n' + str(e) )       
           return 1
 
         BMconf = self.pTE_BMconfig.toPlainText() 
         try:
           d = yaml.load(BMconf)
-        except:
+        except Exception as e:
           self.MB_Warning('Warning', 
-             'Buffer Manager config is not valid yaml format')       
+            'Buffer Manager config is not valid yaml format \n'+ str(e) )       
           return 1
 
         PFconf = self.pTE_PFconfig.toPlainText() 
         try:
           d = yaml.load(PFconf)
-        except:
+        except Exception as e:
           self.MB_Warning('Warning', 
-             'Pulse Filter config is not valid yaml format')       
+            'Pulse Filter config is not valid yaml format \n' + str(e) )       
           return 1
 
         # generate file name from RunTag 
