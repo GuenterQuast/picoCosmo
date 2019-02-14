@@ -1,6 +1,6 @@
 # Tutorial zu picoCosmo
 
-									  Vers. 0.5.3  				    Günter Quast, Nov. 2018
+									  Vers. 0.5.3  		    Günter Quast, Nov. 2018
 
 ### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
@@ -86,7 +86,7 @@ registrierten Pulsformen oder als Bilder im *.png*-Format gespeichert werden.
 Details zur Installation  von *picoCosmo* finden sich in der Datei
 [README_de.md](../README_de.md).
 
-d
+
 
 ## Starten des Programms
 
