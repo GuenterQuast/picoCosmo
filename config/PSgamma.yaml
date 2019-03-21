@@ -1,5 +1,5 @@
-# example of a configuration file for PicoScope 2000 Series
-#    connected to a PM tube
+# example of a configuration file for PicoScope 2000B Series
+#    connected to a GDK101 gamma counter
 
 PSmodel: 2000a      # model type (default 2000a)
 

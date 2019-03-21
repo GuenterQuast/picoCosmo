@@ -1,5 +1,5 @@
 # Configuration file for PulseFilter (rate measurement)
-#    for gamma decector GDK101
+#    for gamma detector GDK101
 
 # output files 
 logFile: pFilt   # store all pulses, Null to disable
