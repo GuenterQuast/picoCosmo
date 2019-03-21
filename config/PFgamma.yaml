@@ -27,7 +27,7 @@ NminCoincidence: 1  # set number of Coincidences
 
 modules: [RMeter, Display]
 RMeterInterval:  60.  # update interval in sec.
-RMeterRate:  0.05  # max rate in Hz
+RMeterRate:  0.1  # max rate in Hz
 RMeterTitle: 'gamma rate history (s)'
 
 doublePulse: false # switch to control double-pulse search
