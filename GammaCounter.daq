@@ -1,0 +1,7 @@
+#         Configuration Files for gamma detector 
+DeviceFile: config/PSgamma.yaml       # Oscilloscope
+PFfile: config/PFgamma.yaml           # PulseFilter
+BMfile: config/BMconfig.yaml          # Buffer Manager
+
+
+

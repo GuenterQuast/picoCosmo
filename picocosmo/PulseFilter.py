@@ -67,8 +67,11 @@ class PulseFilter(object):
       self.filtRateQ = Queue(1) # information queue for Filter
       self.subprocs.append(Process(name='RMeter',
              target = mpRMeter, 
-             args=(self.filtRateQ, 12., 2500., 'muon rate history') ) )
-#                  Queue  rate  update interval          
+             args=(self.filtRateQ,       # Queue
+                    self.RMeterRate,                 # max rate
+                    self.RMeterInterval*1000., # update interval (ms)
+                    self.RMeterTitle) ) ) # name
+#                   Queue  rate  update interval          
 
 #  pulse shape and livetime histograms
     self.histQ = None
@@ -283,6 +286,20 @@ class PulseFilter(object):
         modules = self.confDict['modules']
       else:
         modules = ['RMeter']
+      if 'RMeter' in modules:
+        if 'RMeterInterval' in self.confDict:
+          self.RMeterInterval = self.confDict['RMeterInterval']
+        else:
+          self.RMeterInterval = 2.5 # 2500 sec
+        if 'RMeterRate' in self.confDict:
+          self.RMeterRate = self.confDict['RMeterRate']
+        else:
+          self.RMeterRate = 12. # max. rate
+
+        if 'RMeterTitle' in self.confDict:
+          self.RMeterTitle = self.confDict['RMeterTitle']
+        else:
+          self.RMeterTitle = "signal rate history" 
 
       if "histograms" in self.confDict:
         histograms = self.confDict['histograms']
@@ -498,7 +515,12 @@ class PulseFilter(object):
       if (validated and Ncoinc >= NmnCoinc):
         accepted = True
         Nacc += 1
-      else:
+
+# provide information to RateMeter
+      if self.filtRateQ and self.filtRateQ.empty(): 
+        self.filtRateQ.put( (Nacc, evTime) ) 
+
+      if (not accepted):
         continue #- while 
 
 # fix event time:
@@ -645,9 +667,9 @@ class PulseFilter(object):
         self.prlog('*==* double pulse: Nacc, Ndble, dT ' + s)
 
 # provide information for background display processes
-# -- RateMeter
-      if self.filtRateQ and self.filtRateQ.empty(): 
-        self.filtRateQ.put( (Nacc, evTime) ) 
+# -- RateMeter  # moved above
+#      if self.filtRateQ and self.filtRateQ.empty(): 
+#        self.filtRateQ.put( (Nacc, evTime) ) 
 
 # -- histograms
       if len(hvTrSigs) and self.histQ and self.histQ.empty(): 
