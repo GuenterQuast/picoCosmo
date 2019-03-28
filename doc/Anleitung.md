@@ -134,7 +134,7 @@ Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Info
 
 Das Oszilloskop-Fenster mit Pulsen in zwei CosMO-Panels ist hier gezeigt: 
 
- ![Signalpulse](/home/quast/git/picoCosmo/doc/images/OscilloscopeDisplay.png)
+ ![Signalpulse](images/OscilloscopeDisplay.png)
 
 Die beiden Pulse treten zum gleichen Zeitpunkt auf und weisen damit auf
 einen echten Teilchendurchgang durch beide Panels hin. 
@@ -355,7 +355,11 @@ Histogramm die Häufigkeitsverteilung der gemessenen Zeitdifferenzen
 zwischen dem Triggerpuls und dem ersten verzögerten Puls, also
 die individuelle Lebensdauern der zerfallenden Myonen, angezeigt.
 
-Ein Beispiel zeigt die folgende Grafik:![Histogramme des PulsFilters](images/Filter_Histograms.png)
+Ein Beispiel zeigt die folgende Grafik:
+
+
+ ![Histogramme des PulsFilters](images/Filter_Histograms.png)
+
 
 Das beobachtete Spektrum der Signalhöhen fällt stark zu großen Werten
 ab, insbesondere bei kleinen Pulshöhen steigt die Rate sehr schnell an.
@@ -625,7 +629,7 @@ Die Signatur des Zerfalls eines gestoppten Myons ist also ein Doppelpuls.
 Ein Oszilloskop-Bild eines solchen Ereignisses in der Kamiokanne mit einem
 nach ca. 3 µs  zerfallenden Myon ist hier gezeigt: 
 
-   ![Beispiel eines Doppelpulses](/home/quast/git/picoCosmo/doc/images/DPfig_Kanne.png)
+   ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
 
 Der Anteil gestoppter Myonen liegt nur im Promille-Bereich, und deshalb muss
 die Suche nach Doppelpulsen automatisiert werden, um genügend Ereignisse
