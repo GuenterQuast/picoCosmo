@@ -686,7 +686,7 @@ entsprechenden Kanal gefunden wurde.
 Aus der dritten Spalte dieser Datei lässt ich die Häufigkeitsverteilung der
 Lebensdauern gewinnen: 
 
- ![Anpassung einer Exponentialfunktoin](/home/quast/git/picoCosmo/doc/images/LebensdauerFit.png)
+ ![Anpassung einer Exponentialfunktoin](images/LebensdauerFit.png)
 
 Mit Hilfe des *python*-Skritps *fit_dpData.py* wurde in der Grafik oben
 eine Exponentialfunktion an die Daten angepasst. Die Fehlerbalken
