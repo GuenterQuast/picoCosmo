@@ -9,7 +9,7 @@
 
 
 
-Ein ausführliches Tutorium befindet sich unter dem Link [Anleitung.pdf](https://github/GuenterQuast/picoCosmo/doc/Anleitung.pdf).
+Ein ausführliches Tutorium befindet sich unter dem Link [Anleitung.pdf](https://github.com/GuenterQuast/picoCosmo/blob/master/doc/Anleitung.pdf).
 
 ## Kurzbeschreibung der Funktionalität
 
