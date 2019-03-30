@@ -7,7 +7,11 @@
 
    ![Abb. 1](./images/picoCosmo_iconic.jpg)
 
-## Beschreibung der Funktionalität
+
+
+Ein ausführliches Tutorium befindet sich unter dem Link [Anleitung.pdf](https://github/GuenterQuast/picoCosmo/doc/Anleitung.pdf).
+
+## Kurzbeschreibung der Funktionalität
 
 Das Netzwerk Teilchenwelt, <http://www.Teilchenwelt.de> stellt Experimente
 zum Nachweis von Myonen aus der kosmischem Strahlung zur Verfügung.
