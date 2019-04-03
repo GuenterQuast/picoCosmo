@@ -148,13 +148,12 @@ class PulseFilter(object):
     if mode: # for bipolar pulse
     # normalize neg. pulse to same integral as positive part
       voff = -(0.5*(tr+tf)+ton) / (0.5*(tf2+tr2)+toff) 
-      ti = ti.append(tr+ton+tf+tf2)
-      ri = ri.append(voff) 
-      ti = ti.append(tr+ton+tf+tf2+toff)
-      ri = ri.append(voff) 
-      ti = ti.append(tr+ton+tf+tf2+toff+tr2)
-      ri = ri.append(0.) 
-
+      ti.append(tr+ton+tf+tf2)
+      ri.append(voff) 
+      ti.append(tr+ton+tf+tf2+toff)
+      ri.append(voff) 
+      ti.append(tr+ton+tf+tf2+toff+tr2)
+      ri.append(0.) 
     fpulse = interp1d(ti, ri, kind='linear', copy=False, assume_sorted= True)
     return fpulse(t)
 
@@ -169,17 +168,20 @@ class PulseFilter(object):
         pulse height in Volt
         mode : 0 uni-polar  1 bi-polar
     '''
-    tp = taur + tauon + tauf
-    l = np.int32( tp/dT +0.5 ) + 1  
+    tp = taur + tauon + tauf + tauf2 + tauoff + taur2
+    l = np.int32( tp/dT + 0.5 ) + 1  
     ti = np.linspace(0, tp, l)    
-    rp = self.trapezoidPulse(ti, taur, tauon, tauf, mode) # uni-polar pulse
+    if mode:
+      rp = self.trapezoidPulse(ti, taur, tauon, tauf,
+                                   tauf2, tauoff, taur2, mode=1 ) # bipolar pulse
+    else:
+      rp = self.trapezoidPulse(ti, taur, tauon, tauf, mode=0) # uni-polar pulse
     rp = pheight * rp   # normalize to pulse height
 
     return rp
 
   def setReferencePulses(self, dT, refPulseDicts):
 # generate reference pulse 
-#   self.refP = self.setRefPulse(dT, taur, tauon, tauf, pheight)
     refP = []
     refPm = []
     lref = []
@@ -195,27 +197,41 @@ class PulseFilter(object):
     self.taur = np.zeros(Npulses)
     self.tauon = np.zeros(Npulses)
     self.tauf = np.zeros(Npulses)
-    self.pheight = np.zeros(Npulses)    
+    self.pheight = np.zeros(Npulses)
+    self.mode = []    
     for i in range(Npulses):
       self.taur[i] = refPulseDicts[i]['taur'] 
       self.tauon[i] = refPulseDicts[i]['tauon'] 
       self.tauf[i] =  refPulseDicts[i]['tauf']
       self.pheight[i] = refPulseDicts[i]['pheight'] 
+    if 'mode' in refPulseDicts[i]:
+      self.mode.append(refPulseDicts[i]['mode'] )
+    else:
+      self.mode.append(0)
 
     if self.verbose:
-      print('*==*  Pulse Filter: pulse parameters set:')
+      print('*==*  Pulse Filter   pulse parameters:')
       for iC in range(self.NChan):
         idP = min(iC, self.NShapes - 1) # Channel Pulse Shape 
         print(8*' '+\
             '%s: τ_r: %.3gs, τ_on: %.3gs, τ_f: %.3gs, height: %.3gV'\
           %(self.ChanNames[iC],
             self.taur[idP], self.tauon[idP], self.tauf[idP], self.pheight[idP]) )
+        if self.mode[i]:
+          print(11*' ' + 'τ_f2: %.3gs, τ_off: %.3gs, τ_r2: %.3gs'\
+            %(refPulseDicts[i]['tauf2'], refPulseDicts[i]['tauoff'], 
+              refPulseDicts[i]['taur2']) )        
+
       if self.useTrgShape:
         print(6*' '+'Trigger pulse shape:')
         print(8*' '\
                    +'%s: τ_r: %.3gs, τ_on: %.3gs, τ_f: %.3gs, height: %.3gV'\
            %(self.trgChan, 
              self.taur[-1], self.tauon[-1], self.tauf[-1], self.pheight[-1]) )
+        if self.mode[-1]:
+          print(11*' ' + 'τ_f2: %.3gs, τ_off: %.3gs, τ_r2: %.3gs'\
+                %(refPulseDicts[-1]['tauf2'], refPulseDicts[-1]['tauoff'], 
+                  refPulseDicts[-1]['taur2']) )        
 
 # calculate thresholds for correlation analysis
     # norm of reference pulse
@@ -635,7 +651,7 @@ class PulseFilter(object):
 # print to log file 
       if accepted and verbose > 1:
         if NChan ==1:
-          self.prlog ('*==* PF: %i, %i, %.2f, %.3g, %.3g'\
+          self.prlog ('*==* PF: %i, %i, %.2f, %.3g'\
               %(evcnt, Nacc, tevt, VSig[0][0]) )
         elif NChan ==2:
           self.prlog ('*==* PF: %i, %i, i%, %.3g, %.3g, %.3g'\

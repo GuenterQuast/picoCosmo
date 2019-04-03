@@ -2,6 +2,6 @@
 DeviceFile: config/PSgamma.yaml       # Oscilloscope
 PFfile: config/PFgamma.yaml           # PulseFilter
 BMfile: config/BMconfig.yaml          # Buffer Manager
-
+# verbose: 2  # 0: minimal output 1: info 2: debug
 
 

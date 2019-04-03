@@ -113,6 +113,11 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
     kbdwait()
     exit(1)
 
+  if "verbose" in DAQconfdict: 
+    verbose= DAQconfdict["verbose"] # Buffer Manager configuration file 
+  else:
+    verbose = 1
+ 
   if "PFfile" in DAQconfdict: 
     PFfile = DAQconfdict["PFfile"] # Buffer Manager configuration file 
   else:
@@ -210,7 +215,7 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
 
 # run PulseFilter: signal filtering and analysis
   print(' -> initializing PulseFilter')
-  PF = PulseFilter( BM, PFconfdict, 1)
+  PF = PulseFilter( BM, PFconfdict, verbose)
   #                 BM   config   verbose    
   PF.run()
   time.sleep(1.)

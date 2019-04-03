@@ -15,5 +15,5 @@ trgChan:    A
 trgThr:     70.E-3
 trgTyp:     Rising
 trgTO:      90000 # timeout
-pretrig:    0.05
+pretrig:    0.1
 
