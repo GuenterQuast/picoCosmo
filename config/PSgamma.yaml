@@ -9,10 +9,10 @@ ChanRanges:        [0.5]
 ChanOffsets:       [-0.4]
 
 sampleTime:   2.E-3    # scientific format with '.' and signed exponent 
-Nsamples:     800
+Nsamples:     400
 
 trgChan:    A
-trgThr:     70.E-3
+trgThr:     75.E-3
 trgTyp:     Rising
 trgTO:      90000 # timeout
 pretrig:    0.1

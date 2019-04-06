@@ -18,13 +18,13 @@ logFile2: null   # store double-pulse parameters, null to disable
 
 # shape for all pulses
 pulseShape:            # bipolar pulse
- - pheight: 0.120
-   taur   : 20.E-6
-   tauon  : 1.E-6 
+ - pheight: 0.100
+   taur   :  55.E-6
+   tauon  :  15.E-6 
    tauf   : 100.E-6 
    mode   : 1
    tauf2  : 100.E-6 
-   tauoff : 150.E-6
+   tauoff :  50.E-6
    taur2  : 300.E-6
 
 NminCoincidence: 1  # set number of Coincidences 
