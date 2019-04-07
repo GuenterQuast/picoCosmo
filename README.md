@@ -10,11 +10,12 @@ This is the **English Version** of the documentation.
 For German readers:  
 Die **deutsche Version** dieses Dokuments findet sich unter dem Link  [README_de.md](README_de.md).
 
-The software is tailored to identify short pulses from muon detectors (the scintillator panels of the *CosMO*-experiment by "Netzwerk Teilchenwelt",
-<http://www.teilchenwelt.de>, or the *Kamiokanne*-Experiment (a water-Cherenkov detector with photomultiplier readout) with a PicoScope USB oscilloscope with two or four channels.
+The software is tailored to identify short pulses from muon detectors (the scintillator panels of the *CosMO*-experiment by "Netzwerk Teilchenwelt", <http://www.teilchenwelt.de>, or the *Kamiokanne*-Experiment (a water-Cherenkov detector with photomultiplier readout) with a PicoScope USB oscilloscope with two or four channels.
 
-Data is read from the PicoScope device via a Buffer Manager, see project
-*picoDAQ* (<https://github.com/GuenterQuast/picoDAQ>), which records waveforms and distributes them to consumer processes. The consumers either provide real-time displays of a sub-set of the data or perform data analysis. *PiocoCosmo* is a specialised and extended version of the script *runDAQ.py* from project *picoDAQ*.
+Reading out Geiger Counters or detectors for gamma rays, e. g. the GDK 101 PIN diode counter, is also
+possible with the this software. 
+
+Data is read from the PicoScope device via a Buffer Manager, see project *picoDAQ* (<https://github.com/GuenterQuast/picoDAQ>), which records waveforms and distributes them to consumer processes. The consumers either provide real-time displays of a sub-set of the data or perform data analysis. *PiocoCosmo* is a specialised and extended version of the script *runDAQ.py* from project *picoDAQ*.
 
 The analysis proceeds in three steps. First, the trigger is validated by cross-correlation with a signal template located around the trigger time. Next, coincidences near a validated triggering pulse are searched for in all connected channels. The optional third step performs a search for additional pulses after the triggering event, indicating the decay of a stopped muon in or near the detector.
 

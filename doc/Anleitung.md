@@ -21,8 +21,12 @@ Dies sind die Szintillationszähler des CosMO-Experiments und der aus einer
 Kaffeekanne mit aufgesetzter Photoröhre bestehende Wasser-Cherenkov-Zähler
 "Kamiokanne".  Typisch für diese und ähnliche Detektoren sind kurze Signalpulse
 von ca. 100 ns Dauer und einigen 10 bis 100 mV Pulshöhe, die zu zufälligen
-Zeitpunkten entstehen. Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen
-folgen einer Exponentialverteilung, deren Zeitkonstante dem Kehrwert der mittleren
+Zeitpunkten entstehen.  Auch die Signale von Geigerzählern oder Strahlungsdetektoren mit
+Analogausgang, wie der PIN-Dioden-Detektor FTLAB GDK 101, können mit dieser
+Software ausgewertet werden. 
+
+Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen folgen einer
+Exponentialverteilung, deren Zeitkonstante dem Kehrwert der mittleren
 Ereignisrate entspricht. Mit einem Oszilloskop mit hinreichend hoher Bandbreite
 können die Signalpulse angezeigt werden. Wegen der zufälligen Natur der Signale
 ist dabei eine geeignete  Einstellung des Oszilloskop-Triggers wichtig.
@@ -751,6 +755,10 @@ und kann das Ergebnis verfälschen.
   - `config\*.yaml`    
      Konfigurationsdateien für Oszillosskop, Pulsfilter und BufferManager,  
      werden von den Dateien vom Typ *.daq* referenziert. 
+
+  - `Gamma.daq`, `config/PSgamma.yaml` und `config/PFgamma.yaml`  
+     Konfigurationsdateien zur Messung von β- und γ-Strahlung mit dem
+     PIN-Dioden-Detektor FTLAB GDK 101 
 
 ### Tutorial im Verzeichnis *doc/*  
 

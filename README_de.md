@@ -19,7 +19,10 @@ Dies sind die Szintillationszähler des CosMO-Experiments und der aus einer
 Kaffeekanne mit aufgesetzter Photoröhre bestehende Wasser-Cherenkov-Zähler
 "Kamiokanne". Diese Detektoren liefern kurze Signale von ca. 100 ns Dauer
 und einigen 10 bis 100 mV Pulshöhe, die mit einem Oszillographen sichtbar
-gemacht werden können.
+gemacht werden können. 
+
+Auch Geigerzähler oder Detektoren für Gammastrahlung, wie der GDK 101
+mit PIN-Dioden können mit dieser Software verwendet werden. 
 
 Moderne USB-Oszilloskope wie das PicoScope der Firma PichoTechnology,
 siehe <http://www.picotech.com>, erlauben es, die Pulsformen nicht nur
