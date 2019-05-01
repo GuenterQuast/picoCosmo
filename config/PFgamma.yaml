@@ -31,7 +31,7 @@ NminCoincidence: 1  # set number of Coincidences
 
 modules: [RMeter, Display, Hists]
 RMeterInterval:  60.  # update interval in sec.
-RMeterRate:  0.7  # max rate in Hz
+RMeterRate:  2.2  # max rate in Hz
 RMeterTitle: 'gamma rate history (s)'
 histograms:
  - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]

@@ -92,7 +92,7 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   print('    DAQconfiguration from file ' + DAQconfFile)
   try:
     with open(DAQconfFile) as f:
-      DAQconfdict=yaml.load(f)
+      DAQconfdict=yaml.load(f, Loader=yaml.Loader)
   except Exception as e:
     print('     failed to read DAQ configuration file ' + DAQconfFile)
     print(str(e))
@@ -138,7 +138,7 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   print('    Device configuration from file ' + DeviceFile)
   try:
     with open(DeviceFile) as f:
-      PSconfdict=yaml.load(f)
+      PSconfdict=yaml.load(f, Loader=yaml.Loader)
   except Exception as e:
     print('     failed to read scope configuration file ' + DeviceFile)
     print(str(e))
@@ -149,7 +149,7 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   print('    Buffer Manager configuration from file ' + BMfile)
   try:
     with open(BMfile) as f:
-        BMconfdict=yaml.load(f)
+        BMconfdict=yaml.load(f, Loader=yaml.Loader)
   except Exception as e:
     print('     failed to read BM input file ' + BMfile)
     print(str(e))
