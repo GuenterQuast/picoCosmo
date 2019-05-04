@@ -7,6 +7,8 @@ logFile2: dpFilt # store double-pulse parameters
 rawFile:  dpRaw  # store raw wave-forms
 pictFile: dpFigs # save pictures of double-pulses
 
+NminCoincidence: 1 # number of coincident pulses (1 if only one channel)
+
 # pulse parameters
 #         ____
 #        /    \  

@@ -324,9 +324,9 @@ class PulseFilter(object):
 
       if "NminCoincidence" in self.confDict:
         self.NmnCoinc = self.confDict['NminCoincidence']
+        print("PF: Number of coincidences to accept event: %i"%(self.NmnCoinc) ) 
       else:
-        self.NmnCoinc = 2      
-      print("Number of coincidences to accept event %i"%(self.NmnCoinc) )       
+        self.NmnCoinc = 2
   
       if "doublePulse" in self.confDict:
         self.DPanalysis = self.confDict['doublePulse']
@@ -437,7 +437,9 @@ class PulseFilter(object):
     pthrm = self.pthrm #  ... and relevant threshold(s)
     lref = self.lref  # length of reference pulse(s)
     NmnCoinc = min(self.NmnCoinc, NChan) 
-               # min. number of coincident pulses to accept event
+                # min. number of coincident pulses to accept event
+    if self.NmnCoinc > NChan:  
+      print("      PF: Number of coincidences to accept event set to %i"%(NmnCoinc) ) 
 
     if verbose:
       print("*==* Pulse Filter starting analysis")
