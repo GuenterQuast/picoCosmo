@@ -160,7 +160,7 @@ if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - - - -
   print('    Pulse Filter configuration from file ' + PFfile)
   try:   
     with open(PFfile) as f:
-      PFconfdict = yaml.load(f)
+      PFconfdict = yaml.load(f, Loader=yaml.Loader)
   except Exception as e:
     print('     failed to read Pulse Filter input file ' + PFfile)
     print(str(e))

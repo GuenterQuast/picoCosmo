@@ -217,10 +217,10 @@ class PulseFilter(object):
             '%s: τ_r: %.3gs, τ_on: %.3gs, τ_f: %.3gs, height: %.3gV'\
           %(self.ChanNames[iC],
             self.taur[idP], self.tauon[idP], self.tauf[idP], self.pheight[idP]) )
-        if self.mode[i]:
+        if self.mode[idP]:
           print(11*' ' + 'τ_f2: %.3gs, τ_off: %.3gs, τ_r2: %.3gs'\
-            %(refPulseDicts[i]['tauf2'], refPulseDicts[i]['tauoff'], 
-              refPulseDicts[i]['taur2']) )        
+            %(refPulseDicts[idP]['tauf2'], refPulseDicts[idP]['tauoff'], 
+              refPulseDicts[idP]['taur2']) )        
 
       if self.useTrgShape:
         print(6*' '+'Trigger pulse shape:')
