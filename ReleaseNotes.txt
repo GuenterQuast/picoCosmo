@@ -1,3 +1,12 @@
+v0.5.3p2 May 04, 2019
+      
+       - some optimazations in graphic display and printout
+       - added example for gamma counter GDK 101,
+           support for bi-polar pulse shape
+       - latest version of picodaqa and pico-python (May 04, 2018)
+       - print errors in caught exceptions
+       - improved German tutorial (Anleitung)
+
 v0.5.3  Nov. 18, 2018
 changes and additions:
        - v0.5.3rc0 refinements to GUI: saving and loading configs
