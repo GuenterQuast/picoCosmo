@@ -488,7 +488,7 @@ class PulseFilter(object):
     # ... check pulse shape by requesting match with time-averaged pulse
         evdt = evData[iCtrg, idtr:idtr+lref[idP]]
         evdtm = evdt - evdt.mean()  # center signal candidate around zero
-        cc = np.sum(evdtm * refPm[idP]) # convolute mean-corrected reference
+        cc = np.inner(evdtm, refPm[idP]) # convolute mean-corrected reference
         if cc > pthrm[idP]:
           validated = True # valid trigger pulse found, store
           Nval +=1
