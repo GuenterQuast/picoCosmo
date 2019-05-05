@@ -239,8 +239,8 @@ class PulseFilter(object):
     # norm of mean-subtracted reference pulse
     pthrm=[] 
     for i in range(Npulses):
-      pthr.append(np.sum(self.refP[i]*self.refP[i]) )
-      pthrm.append(np.sum(self.refPm[i] * self.refPm[i]) )
+      pthr.append(np.inner(self.refP[i], self.refP[i]) )
+      pthrm.append(np.inner(self.refPm[i], self.refPm[i]) )
     self.pthr = np.array(pthr)  
     self.pthrm = np.array(pthrm)
 
@@ -488,7 +488,7 @@ class PulseFilter(object):
     # ... check pulse shape by requesting match with time-averaged pulse
         evdt = evData[iCtrg, idtr:idtr+lref[idP]]
         evdtm = evdt - evdt.mean()  # center signal candidate around zero
-        cc = np.sum(evdtm * refPm[idP]) # convolute mean-corrected reference
+        cc = np.inner(evdtm, refPm[idP]) # convolute mean-corrected reference
         if cc > pthrm[idP]:
           validated = True # valid trigger pulse found, store
           Nval +=1
@@ -518,7 +518,7 @@ class PulseFilter(object):
             continue # no pulse near trigger, skip
           evd = evData[iC, id:id+lref[idP]]
           evdm = evd - evd.mean()   # center signal candidate around zero
-          cc = np.sum(evdm * refPm[idP]) # convolute mean-corrected reference
+          cc = np.inner(evdm, refPm[idP]) # convolute mean-corrected reference
           if cc > pthrm[idP]:
             NSig[iC] +=1
             Ncoinc += 1 # valid, coincident pulse
@@ -563,7 +563,7 @@ class PulseFilter(object):
           for id in idmx:
             evd = evData[iC, id:id+lref[idP]]
             evdm = evd - evd.mean()  # center signal candidate around zero
-            cc = np.sum(evdm * refPm[idP]) # convolute mean-corrected reference
+            cc = np.inner(evdm, refPm[idP]) # convolute mean-corrected reference
             if cc > pthrm[idP]: # valid pulse 
               iacc+=1
               NSig[iC] += 1
