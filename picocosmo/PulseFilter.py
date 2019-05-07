@@ -414,7 +414,6 @@ class PulseFilter(object):
     Nacc3=0  # triple coincidences
     Nacc4=0  # conincidence of four channels
     Ndble=0  # double pulses
-    T0 = time.time()
 
 # arrays for quantities to be histogrammed
     hnTrSigs = [] #  pulse height of noise signals
@@ -445,7 +444,13 @@ class PulseFilter(object):
       print("*==* Pulse Filter starting analysis")
 
 # event loop
+    T0 = time.time() # start time
+#    t0=T0            # start of loop 
     while self.BM.ACTIVE.value:
+## for timing
+#      print('PA loop time: ',time.time()-t0)
+#      t0=time.time() # reset loop time
+##
       validated = False
       accepted = False
       doublePulse = False
@@ -557,10 +562,11 @@ class PulseFilter(object):
         for iC in range(NChan):
           cor = np.correlate(evData[iC, offset:], refP[idP], mode='valid')
           cor[cor<pthr[idP]] = pthr[idP] # set values below threshold to threshold
-          idmx, = argrelmax(cor)+offset # find index of maxima in evData array
+          idmx, = argrelmax(cor)  # find index of maxima in evData array
 # clean-up pulse candidates by requesting match with time-averaged pulse
           iacc = 0
-          for id in idmx:
+          for id0 in idmx:
+            id = id0 + offset
             evd = evData[iC, id:id+lref[idP]]
             evdm = evd - evd.mean()  # center signal candidate around zero
             cc = np.inner(evdm, refPm[idP]) # convolute mean-corrected reference
@@ -593,7 +599,7 @@ class PulseFilter(object):
           Ndble += 1
           if self.histQ: hTaus.append( sumdT2 / N2nd )
     #   - end if self.DPanalysis
-    
+
 # eventually store results in file(s)
 # 1. all accepted events
       if self.logf is not None and accepted:
