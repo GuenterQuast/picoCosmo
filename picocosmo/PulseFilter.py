@@ -277,6 +277,12 @@ class PulseFilter(object):
       else:
         self.useTrgShape = False
 
+      if "OffsetSubtraction" in self.confDict:
+        self.OffsetSubtraction = self.confDict['OffsetSubtraction']
+        print("PF: Offset Subtraction: %s"%(self.OffsetSubtraction) )
+      else:
+        self.OffsetSubtraction = True
+        
       if "logFile" in self.confDict:
         logFile = self.confDict['logFile']
       else:
@@ -324,7 +330,7 @@ class PulseFilter(object):
 
       if "NminCoincidence" in self.confDict:
         self.NmnCoinc = self.confDict['NminCoincidence']
-        print("PF: Number of coincidences to accept event: %i"%(self.NmnCoinc) ) 
+        print("PF: Number of coincidences to accept event: %i"%(self.NmnCoinc) )
       else:
         self.NmnCoinc = 2
   
@@ -435,6 +441,7 @@ class PulseFilter(object):
     refPm = self.refPm # mean-subtacted reference pulse(s) ...
     pthrm = self.pthrm #  ... and relevant threshold(s)
     lref = self.lref  # length of reference pulse(s)
+    OffsetSub = self.OffsetSubtraction
     NmnCoinc = min(self.NmnCoinc, NChan) 
                 # min. number of coincident pulses to accept event
     if self.NmnCoinc > NChan:  
@@ -484,7 +491,8 @@ class PulseFilter(object):
                             refP[idP], mode='valid')
         # set all values below threshold to threshold
         cort[cort<pthr[idP]] = pthr[idP] 
-        idtr = np.argmax(cort) + offset # index of 1st maximum 
+        idtr0 = np.argmax(cort) # index of 1st maximum 
+        idtr = idtr0 + offset  
         if idtr > idT0 + (taur[idP] + tauon[idP])/dT + idTprec:
           if self.histQ: hnTrSigs.append(0.)
           continue #- while # no pulse near trigger, skip rest of event analysis
@@ -492,10 +500,12 @@ class PulseFilter(object):
    # pulse candidate in right time window found ...
     # ... check pulse shape by requesting match with time-averaged pulse
         evdt = evData[iCtrg, idtr:idtr+lref[idP]]
-        evdtm = evdt - evdt.mean()  # center signal candidate around zero
-        cc = np.inner(evdtm, refPm[idP]) # convolute mean-corrected reference
-        if cc > pthrm[idP]:
-          validated = True # valid trigger pulse found, store
+        if OffsetSub:
+      # convolute mean-corrected reference
+          validated = np.inner(evdt-evdt.mean(), refPm[idP])  > pthrm[idP]
+        else:
+          validated = cort[idtr0]> pthr[idP]
+        if validated:
           Nval +=1
           V = max(abs(evdt)) # signal Voltage  
           VSig[iCtrg][0] = V 
@@ -518,13 +528,18 @@ class PulseFilter(object):
           cor = np.correlate(evData[iC, offset:idT0+idTprec+lref[idP]], 
                  refP[idP], mode='valid')
           cor[cor<pthr[idP]] = pthr[idP] # set all values below threshold to threshold
-          id = np.argmax(cor)+offset # find index of (1st) maximum 
+          id0 = np.argmax(cor) # find index of (1st) maximum 
+          id = id0 +offset     # 
           if id > idT0 + (taur[idP] + tauon[idP])/dT + idTprec:
             continue # no pulse near trigger, skip
+
           evd = evData[iC, id:id+lref[idP]]
-          evdm = evd - evd.mean()   # center signal candidate around zero
-          cc = np.inner(evdm, refPm[idP]) # convolute mean-corrected reference
-          if cc > pthrm[idP]:
+          if OffsetSub:
+             # convolute mean-corrected reference
+            coinc = np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP]
+          else:
+            coinc = cor[id0]> pthr[idP]
+          if coinc:   
             NSig[iC] +=1
             Ncoinc += 1 # valid, coincident pulse
             V = max(abs(evd))
@@ -570,11 +585,14 @@ class PulseFilter(object):
         for id0 in idmx:
           id = id0 + offset
           evd = evData[iC, id:id+lref[idP]]
-          evdm = evd - evd.mean()  # center signal candidate around zero
-          cc = np.inner(evdm, refPm[idP]) # convolute mean-corrected reference
-          if cc > pthrm[idP]: # valid pulse 
+          if OffsetSub:
+              # convolute mean-corrected reference
+            acc=np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP] # valid pulse
+          else:  
+            acc=cor[id0]> pthr[idP] # valid pulse
+          if acc:   
             iacc+=1
-            NSig[iC] += 1
+            NSig[iC]+=1
             V = max(abs(evd)) # signal Voltage 
             if iacc == 1:
               VSig[iC][1] = V 
