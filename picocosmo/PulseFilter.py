@@ -571,38 +571,36 @@ class PulseFilter(object):
         Nacc4 += 1
 
 # search for double-pulses ?
-      if not (self.DPanalysis):
-        continue #- while 
-        
+      if self.DPanalysis:        
 #3. find subsequent pulses in accepted events
-      offset = idtr + lref[idP] # search after trigger pulse
-      for iC in range(NChan):
-        cor = np.correlate(evData[iC, offset:], refP[idP], mode='valid')
-        cor[cor<pthr[idP]] = pthr[idP] # set values below threshold to threshold
-        idmx, = argrelmax(cor)  # find index of maxima in evData array
+        offset = idtr + lref[idP] # search after trigger pulse
+        for iC in range(NChan):
+          cor = np.correlate(evData[iC, offset:], refP[idP], mode='valid')
+          cor[cor<pthr[idP]] = pthr[idP] # set values below threshold to threshold
+          idmx, = argrelmax(cor)  # find index of maxima in evData array
 # clean-up pulse candidates by requesting match with time-averaged pulse
-        iacc = 0
-        for id0 in idmx:
-          id = id0 + offset
-          evd = evData[iC, id:id+lref[idP]]
-          if OffsetSub:
+          iacc = 0
+          for id0 in idmx:
+            id = id0 + offset
+            evd = evData[iC, id:id+lref[idP]]
+            if OffsetSub:
               # convolute mean-corrected reference
-            acc=np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP] # valid pulse
-          else:  
-            acc=cor[id0]> pthr[idP] # valid pulse
-          if acc:   
-            iacc+=1
-            NSig[iC]+=1
-            V = max(abs(evd)) # signal Voltage 
-            if iacc == 1:
-              VSig[iC][1] = V 
-              TSig[iC][1] = id*dT*1E6   # signal time in musec
-            else: 
-              VSig[iC].append(V) # extend arrays if more than 1 extra pulse
-              TSig[iC].append(id*dT*1E6)   
-#       -- end for loop over pulse candidates
-#     -- end for loop over channels
-#   -- end while
+              acc=np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP] # valid pulse
+            else:  
+              acc=cor[id0] > pthr[idP] # valid pulse
+            if acc:   
+              iacc+=1
+              NSig[iC]+=1
+              V = max(abs(evd)) # signal Voltage 
+              if iacc == 1:
+                VSig[iC][1] = V 
+                TSig[iC][1] = id*dT*1E6   # signal time in musec
+              else: 
+                VSig[iC].append(V) # extend arrays if more than 1 extra pulse
+                TSig[iC].append(id*dT*1E6)   
+#         -- end for loop over pulse candidates
+#       -- end for loop over channels
+#     -- end dpAnalysis
 
 #  statistics on double pulses on either channel
         delT2s=np.zeros(NChan)
