@@ -1,7 +1,7 @@
 # example of a configuration file for PicoScope 2000 Series
 #    connected to a PM tube
 
-PSmodel: 2000a      # model type (default 2000a)
+PSmodel: '2000a'      # model type (default 2000a)
 
 picoChannels:      [A]
 ## picoChannels:     [A, B]

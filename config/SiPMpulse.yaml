@@ -1,6 +1,6 @@
 # PicoScope configuration for three channles with DESY Panels
 
-PSmodel: 2000a      # model type (2000a is default)
+PSmodel: '2000a'      # model type (2000a is default)
 
 picoChannels: [A, B]
 ## picoChannels: [A, B, C] #for 4-channel scope
