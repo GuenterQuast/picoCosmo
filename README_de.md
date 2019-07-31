@@ -70,7 +70,6 @@ Pulshöhen und der Myon-Lebensdauern. Zusätzlich können Mehrfach-Pulse
 als Rohdaten der registrierten Pulsformen oder als Bilder im *.png*-Format
 gespeichert werden.
 
-
 ###Abhängigkeiten von anderen Paketen
 
 Der hier bereit gestellte Code hängt von anderen Software-Paketen
@@ -104,17 +103,13 @@ müssen die folgenden Pakete installiert werden:
   - das picoDAQ Paket, vers. >= 0.7.2:  
     <https://github.com/GuenterQuast/picoDAQ>. 
 
-
 Zur Vereinfachung der Installation sind im Unterverzeichnis *libs/whl/* kompatible
-Versionen der Module *picoscope* aus dem Paket *pico-python*
-und *picodaqa* aus dem Paket *picoDAQ* als *python-wheels*
-enthalten; die Dateien für das picoscope 
+Versionen der Module *picoscope* aus dem Paket *pico-python* und *picodaqa* aus dem
+Paket *picoDAQ* als *python-wheels* enthalten; die Dateien für das picoscope können mit 
     pip install *.whl 
 installiert werden können. 
 
-Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi**
-sind im Verzeichnis *libs/picoscopelibs/* enthalten. Durch Ausführen
-des Scripts *installlibs.ls* werden alle für *picoCosmo* notwendigen
+Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs.sh* werden alle für *picoCosmo* notwendigen
 Komponenten auf der Rasbperry Pi installiert.
 
 

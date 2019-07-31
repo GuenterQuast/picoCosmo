@@ -52,7 +52,7 @@ python-wheels.
 The *PicoTech* driver libraries for the #Raspberry Pi# are located
  in the directory *libs/picoscopelibs*. Execute the script
   *installlibs.sh*
-to install all neccessary components on a Raspberry Pi.
+to install all necessary components on a Raspberry Pi.
 
 
 ## Program Execution
