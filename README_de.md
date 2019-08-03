@@ -70,7 +70,6 @@ Pulshöhen und der Myon-Lebensdauern. Zusätzlich können Mehrfach-Pulse
 als Rohdaten der registrierten Pulsformen oder als Bilder im *.png*-Format
 gespeichert werden.
 
-
 ###Abhängigkeiten von anderen Paketen
 
 Der hier bereit gestellte Code hängt von anderen Software-Paketen
@@ -89,6 +88,30 @@ ab, die zuvor auf Ihrem System installiert sein müssen:
   Auch auf dem Raspberry Pi können die Treiber installiert werden,
   die grafische Oberfläche *PicoScope* ist allerdings (noch) 
   nicht verfügbar.
+
+##Installation der Software
+
+Zunächst werden alle Dateien dieses Projekts über den Link
+<https://github.com/GuenterQuast/picoCosmo> herunter geladen
+und in einem Arbeitsverzeichnis abgelegt. Vor der Verwendung
+müssen die folgenden Pakete installiert werden: 
+
+  - PicoTech Software Development Kit:  
+    <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
+  - das *pico-pyhton* Paket:  
+    <https://github.com/colinoflynn/pico-python>.
+  - das picoDAQ Paket, vers. >= 0.7.2:  
+    <https://github.com/GuenterQuast/picoDAQ>. 
+
+Zur Vereinfachung der Installation sind im Unterverzeichnis *libs/whl/* kompatible
+Versionen der Module *picoscope* aus dem Paket *pico-python* und *picodaqa* aus dem
+Paket *picoDAQ* als *python-wheels* enthalten; die Dateien für das picoscope können mit 
+    pip install *.whl 
+installiert werden können. 
+
+Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs.sh* werden alle für *picoCosmo* notwendigen
+Komponenten auf der Rasbperry Pi installiert.
+
 
 ## Programmausführung
 
@@ -145,29 +168,6 @@ Konfigurationsdateien und die Programmausgaben werden in einem
 eigenen Verzeichnis abgelegt, deren Name aus dem Namen für die
 Datennahme und dem Startzeitpunkt abgeleitet wird.
 
-##Installation der Software
-
-Zunächst werden alle Dateien dieses Projekts über den Link
-<https://github.com/GuenterQuast/picoCosmo> herunter geladen
-und in einem Arbeitsverzeichnis abgelegt. Vor der Verwendung
-müssen die folgenden Pakete installiert werden: 
-
-  - PicoTech Software Development Kit:  
-    <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - das *pico-pyhton* Paket:  
-    <https://github.com/colinoflynn/pico-python>.
-  - das picoDAQ Paket, vers. >= 0.7.2:  
-    <https://github.com/GuenterQuast/picoDAQ>. 
-
-
-Zur Vereinfachung der Installation sind im Unterverzeichnis *whl/* kompatible
-Versionen der Module *picoscope* aus dem Paket *pico-python*
-und *picodaqa* aus dem Paket *picoDAQ* als *python-wheels*
-enthalten, die mittels
-
-        pip install *.whl
-
-installiert werden können. 
 
 ## Details zu Konfiguration
 

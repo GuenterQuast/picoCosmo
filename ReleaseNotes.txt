@@ -1,3 +1,6 @@
+
+       - analysis of mean-subtracted pulse as option
+
 v0.5.3p2 May 04, 2019
       
        - some optimazations in graphic display and printout

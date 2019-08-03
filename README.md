@@ -34,6 +34,26 @@ This code relies on
 
 The code also runs on a Raspberry Pi. 
 
+## Installation
+
+  - Install the PicoTech Software Development Kit from
+    <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
+  - Install the *pico-pyhton* package from
+    <https://github.com/colinoflynn/pico-python>.
+  - Install the picoDAQ package, vers. >= 0.7.2 from
+    <https://github.com/GuenterQuast/picoDAQ>.
+  - Download all files from this project
+    <https://github.com/GuenterQuast/picoCosmo>.
+
+For your convenience, the sub-directory *libs/whl/* contains compatible versions of
+*picoscope* from package *pico-python* and  *picodaqa* from package *picoDAQ* as
+python-wheels. 
+
+The *PicoTech* driver libraries for the #Raspberry Pi# are located
+ in the directory *libs/picoscopelibs*. Execute the script
+  *installlibs.sh*
+to install all necessary components on a Raspberry Pi.
+
 
 ## Program Execution
 
@@ -62,22 +82,6 @@ configuration:
 These files contain the names of files for the configurations of the PicoScope device, the Buffer Manager and the Pulse Filter.
 
 The graphical interface allows to inspect and modify the configurations, to select a working directory for the output files and to start a new run.  Configuration and output files are stored in a newly created sub-directory *<Run Tag>_<date>/* in the selected working directory, where a  specific *<Run Tag>* can be defined by the user.
-
-
-## Installation
-
-  - Install the PicoTech Software Development Kit from
-    <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - Install the *pico-pyhton* package from
-    <https://github.com/colinoflynn/pico-python>.
-  - Install the picoDAQ package, vers. >= 0.7.2 from
-    <https://github.com/GuenterQuast/picoDAQ>.
-  - Download all files from this project
-    <https://github.com/GuenterQuast/picoCosmo>.
-
-For your convenience, the sub-directory *whl/* contains compatible versions of
- *picoscope* from package *pico-python* and  *picodaqa* from package *picoDAQ* as
- python-wheels, which you may install via  `pip install package-<vers\>-<tags\>.whl`.
 
 
 ## Configuration and program execution
