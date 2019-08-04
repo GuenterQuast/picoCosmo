@@ -1,4 +1,8 @@
-
+v0.6.0 beta Aug 03, 2019
+       
+       - added script for stistical analysis of Rates
+       - installation script for Raspberry Pi
+       - added output/GammaDetektor
        - analysis of mean-subtracted pulse as option
 
 v0.5.3p2 May 04, 2019

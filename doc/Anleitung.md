@@ -815,21 +815,23 @@ und kann das Ergebnis verfälschen.
         - dpFilt_180514_1806.dat enthält die Daten von aufgezeichneten
           Doppelpulsen
         - rawDP_180403.zip enthält gepackte Rohdaten der Doppelpulse  
-
    - `output/Kanne_180403`  
      Beispielausgabe einer Datennahme mit einer Kanne
         - dpKanne2_180403.dat enthält die Daten von aufgezeichneten
           Doppelpulsen  
         - rawDP_180514.zip enthält gepackte Rohdaten der Doppelpulse  
-     
+   - `output/GammaDetektor`  
+     Beispielausgabe eine Datennahme mit GDK101 Gamma-Detektor und Uranglas
+     - pFilt_gamma_Uranglas.dat entält Daten von Gammas aus Uranglas
    - `output/fit_dpData.py`  
      *pyhton*-Skript zur Anpassung einer Exponentialfunktion an Daten in Dateien
      *dpFilt*.dat*
-     
    - `output/makeFigs.py`  
      Erzeugen von Grafiken aus Dateien *dpRaw*.dat*
-
    - `output/plotDoublePulses.py`  
      Anzeigen von Doppelpulsen aus Dateien *dpRaw.dat* als Grafiken auf dem
      Bildschirm
+   - `output/RateAnalysis.ps`  
+     python-Skrit zur statistischen Auswertung der Eintreffzeiten zufälliger Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
+     Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie Verteilung der Zeiten zwischen zwei Ereignissen
 
