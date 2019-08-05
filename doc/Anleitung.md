@@ -449,12 +449,8 @@ Verlauf der Koinzidenzrate angezeigt:
 
 
 
-Die  Fluktuationen der Rate sind eine
-Folge der zufälligen Natur der registrierten Ereignisse - man kann
-die angezeigte Kurve gut "per Auge" mitteln, um eine zuverlässige
-Ratenbestimmung vorzunehmen. Ein genaueres  Ergebnis erhält man, 
-wenn man die im Textfeld des RateDisplays angezeigte Anzahl akzeptierter
-Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.  
+Die  Fluktuationen der Rate sind eine Folge der zufälligen Natur der registrierten Ereignisse - man kann
+die angezeigte Kurve gut "per Auge" mitteln, um eine zuverlässige Ratenbestimmung vorzunehmen. Ein genaueres  Ergebnis erhält man,  wenn man die im Textfeld des RateDisplays angezeigte Anzahl akzeptierter Ereignisse durch die ebenfalls angezeigte Gesamtlaufzeit dividiert.  
 
 Wie in den Histogramen oben gezeigt, ist die Wahl einer Schwelle für
 akzeptierte Pulse wichtig, um eine hohe Effizienz für Myonen bei hinreichend
@@ -615,10 +611,7 @@ Daraus folgt:
    die sogenannte Wartezeit, *tw*, ist eine Exponentialverteilung,
    `f(tw) = Rµ · exp(-tw · Rµ)`.
 
-Aus den aufgezeichneten Daten aller registrierten Pulse können diese
-Zusammenhänge untersucht und bestätigt werden. 
-
-
+Aus den aufgezeichneten Daten aller registrierten Pulse können diese Zusammenhänge untersucht und bestätigt werden. Die Analyse einer Beispieldatei (*output/Kanne180403/pFilt_Kanne.dat* ) mit dem Script *RateAnalysis.py* ist hier gezeigt:  ![Myon-Rate](images/RateAnalysis.png)
 
 **Messung der Myon-Lebensdauer**
 
@@ -777,9 +770,11 @@ und kann das Ergebnis verfälschen.
 
 ### Module im Verzeichnis *picocosmo/*
 
-  - picocosmo/PulseFilter.py  
+  - `picocosmo/PulseFilter.py`  
     Analyse der vom Oszillographen gelieferten Pulsformen;  
     Auslese und Anzeige mittels der Module im Projekt *picoDAQ*
+
+
 
 ### Konfigurationsdateien
 
@@ -812,14 +807,14 @@ und kann das Ergebnis verfälschen.
 
    - `output/CosmoPanels_180514`  
      Beispielausgabe einer Datennahme mit den Cosmo-Panels  
-        - dpFilt_180514_1806.dat enthält die Daten von aufgezeichneten
+        - *dpFilt_180514_1806.dat* enthält die Daten von aufgezeichneten
           Doppelpulsen
-        - rawDP_180403.zip enthält gepackte Rohdaten der Doppelpulse  
+        - *rawDP_180403.zip* enthält gepackte Rohdaten der Doppelpulse  
    - `output/Kanne_180403`  
      Beispielausgabe einer Datennahme mit einer Kanne
-        - dpKanne2_180403.dat enthält die Daten von aufgezeichneten
-          Doppelpulsen  
-        - rawDP_180514.zip enthält gepackte Rohdaten der Doppelpulse  
+        - *pFilt_Kanne.dat* enthält die Daten von aufgezeichneten Pulsen mit einer Kanne
+        - *dpKanne2_180403.dat* enthält die Daten von aufgezeichneten Doppelpulsen  
+        - *rawDP_180514.zip* enthält gepackte Rohdaten der Doppelpulse  
    - `output/GammaDetektor`  
      Beispielausgabe eine Datennahme mit GDK101 Gamma-Detektor und Uranglas
      - pFilt_gamma_Uranglas.dat entält Daten von Gammas aus Uranglas
@@ -831,7 +826,7 @@ und kann das Ergebnis verfälschen.
    - `output/plotDoublePulses.py`  
      Anzeigen von Doppelpulsen aus Dateien *dpRaw.dat* als Grafiken auf dem
      Bildschirm
-   - `output/RateAnalysis.ps`  
-     python-Skrit zur statistischen Auswertung der Eintreffzeiten zufälliger Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
+   - `output/RateAnalysis.py`  
+     python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
      Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie Verteilung der Zeiten zwischen zwei Ereignissen
 

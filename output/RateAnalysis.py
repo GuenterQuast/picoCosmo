@@ -9,6 +9,10 @@
    - distribution of rates (Poisson)
    - distribution of time between events (exponential)
 
+   Parameters:
+     - file name
+     - time interval
+
 '''
 
 # -*- coding=utf-8 -*-
@@ -25,7 +29,10 @@ if len(sys.argv)>1:
 else:
   fname = "pFilt_gamma_Uranglas.dat"   #  input file
 
-Tinterval = 60                        #  time interval for rate
+if len(sys.argv)>2:
+  Tinterval = float(sys.argv[2])
+else:
+  Tinterval = 1                        #  time interval for rate
 
 fig = plt.figure(1, figsize=(6., 9.))
 fig.subplots_adjust(left=0.1, bottom=0.1, right=0.98, top=0.98,
@@ -36,8 +43,8 @@ ax_tw = fig.add_subplot(3, 1, 3)    # for wait-time
 mn=0. ; mx=75. ; nb=75 # minimum, maximum and number of bins
 
 # -*- Daten einlesen:
-data = np.loadtxt(fname, delimiter=',', unpack=True)              
-T = data[1] # 2nd column
+T = np.loadtxt(fname, usecols=(1), delimiter=',', unpack=True)
+#T = data[1] 
 
 Ttot = T[-1] - T[0]                # total time
 Nbins = int(Ttot/Tinterval)    # number of time intervals
@@ -48,7 +55,8 @@ meanTw=dT.mean()
 
 # -*-  Ausgabe der statistischen Daten
 print('\n*==* script ' + sys.argv[0]+ '\n',\
-      '     Zeiten aus Datei ' + fname) 
+      '     Zeiten aus Datei ' + fname)
+print(' Intervall: %.3gs'%(Tinterval))
 print('   mittlere Rate: %.3g Hz'%(meanRate))
 print('   mittlere Zeit zwischen zwei Ereignissen: %.3g s'%(meanTw) ) 
 print('\n')
@@ -62,8 +70,14 @@ ax_rate.set_ylabel('Anzahl Einträge', size='x-large')
 ax_rate.set_xlabel('$t$ [s]', size='x-large')
 
 # 2. Verteilung der Anzahlen n beobachteter Ereignisse pro Zeitintervall
-nRbins = 30
-bcP, beP, _ = ax_rdist.hist(bcR, nRbins) 
+#      Bereich festlegen
+meanEntries = int(meanRate * Tinterval)  
+nBins = int(5*np.sqrt(meanEntries))
+mn = max(meanEntries-nBins,0)
+mx = meanEntries + nBins
+bins=np.arange(mn, mx, 1)
+#      Verteilung als schmale Balken 
+bcP, beP, _ = ax_rdist.hist(bcR, bins, align='left', rwidth=0.3)
 ax_rdist.set_ylabel('Anzahl Einträge', size='x-large')
 ax_rdist.set_xlabel('$n$', size='x-large')
 
