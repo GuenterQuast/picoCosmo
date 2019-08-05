@@ -622,7 +622,7 @@ class PulseFilter(object):
 # eventually store results in file(s)
 # 1. all accepted events
       if self.logf is not None and accepted:
-        print('%i, %.2f'%(evNr, evTime), end='', file=self.logf)
+        print('%i, %.3f'%(evNr, evTime), end='', file=self.logf)
         for ic in range(NChan):
           v = VSig[ic][0]
           t = TSig[ic][0]
