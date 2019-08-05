@@ -83,7 +83,7 @@ ax_rdist.set_xlabel('$n$', size='x-large')
 
 # 3. Wartezeiten
 mn=0. ; mx=5*meanTw; nb=75 # minimum, maximum and number of bins
-ax_tw.hist(dT, bins=np.linspace(mn, mx, nb), log=True) # log. Darstellung
+ax_tw.hist(dT, bins=np.linspace(mn, mx, nb), log=True, rwidth=0.8) # log. Darstellung
 ax_tw.set_ylabel('Anzahl Einträge', size='x-large')
 ax_tw.set_xlabel('$\Delta$t [s]', size='x-large')
 
