@@ -379,7 +379,7 @@ class Ui_CosmoWindow(object):
         exit(1)
 
       try:
-        DAQconfdict=yaml.load(DAQconf)
+        DAQconfdict=yaml.load(DAQconf, Loader=yaml.Loader)
       except Exception as e:
         self.MB_Warning('Warning', 
           'DAQ configuration not valid yaml format ' + DAQconfFile +'\n' + str(e) ) 
@@ -402,7 +402,7 @@ class Ui_CosmoWindow(object):
       DAQconf = self.pTE_DAQConfig.toPlainText() 
       # check if valid yaml syntax
       try:
-        DAQconfDict = yaml.load(DAQconf)
+        DAQconfDict = yaml.load(DAQconf, Loader=yaml.Loader)
       except Exception as e:
         self.MB_Warning('Warning', 
           'DAQ config is not valid yaml format \n' + str(e) )       
@@ -482,7 +482,7 @@ class Ui_CosmoWindow(object):
         DAQconf = self.pTE_DAQConfig.toPlainText() 
         # check if valid yaml syntax
         try:
-          DAQconfDict = yaml.load(DAQconf)
+          DAQconfDict = yaml.load(DAQconf, Loader=yaml.Loader)
         except Exception as e:
           self.MB_Warning('Warning', 
                           'DAQ config is not valid yaml format \n' + str(e) )       
@@ -491,7 +491,7 @@ class Ui_CosmoWindow(object):
         PSconf = self.pTE_OsciConfig.toPlainText() 
         # check if valid yaml syntax
         try:
-          d = yaml.load(PSconf)
+          d = yaml.load(PSconf, Loader=yaml.Loader)
         except Exception as e:
           self.MB_Warning('Warning', 
             'PicoScope config is not valid yaml format\n' + str(e) )       
@@ -499,7 +499,7 @@ class Ui_CosmoWindow(object):
 
         BMconf = self.pTE_BMconfig.toPlainText() 
         try:
-          d = yaml.load(BMconf)
+          d = yaml.load(BMconf, Loader=yaml.Loader)
         except Exception as e:
           self.MB_Warning('Warning', 
             'Buffer Manager config is not valid yaml format \n'+ str(e) )       
@@ -507,7 +507,7 @@ class Ui_CosmoWindow(object):
 
         PFconf = self.pTE_PFconfig.toPlainText() 
         try:
-          d = yaml.load(PFconf)
+          d = yaml.load(PFconf, Loader=yaml.Loader)
         except Exception as e:
           self.MB_Warning('Warning', 
             'Pulse Filter config is not valid yaml format \n' + str(e) )       
