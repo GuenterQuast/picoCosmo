@@ -204,10 +204,10 @@ class PulseFilter(object):
       self.tauon[i] = refPulseDicts[i]['tauon'] 
       self.tauf[i] =  refPulseDicts[i]['tauf']
       self.pheight[i] = refPulseDicts[i]['pheight'] 
-    if 'mode' in refPulseDicts[i]:
-      self.mode.append(refPulseDicts[i]['mode'] )
-    else:
-      self.mode.append(0)
+      if 'mode' in refPulseDicts[i]:
+        self.mode.append(refPulseDicts[i]['mode'] )
+      else:
+        self.mode.append(0)
 
     if self.verbose:
       print('*==*  Pulse Filter   pulse parameters:')
