@@ -62,7 +62,7 @@ if __name__ == "__main__": # -----------------------------
   # read first block from file
   try:
     txt = readblock()   
-    obj = yaml.load(txt)
+    obj = yaml.load(txt, Loader=yaml.Loader)
     conf = obj['OscConf']
   except:
     print('     failed read oscillocope configuration ')
@@ -84,7 +84,7 @@ if __name__ == "__main__": # -----------------------------
     data = obj['data']
     for d in data:
       cnt += 1
-      evt = (3, cnt, time.time(), d)
+      evt = (3, cnt, time.time(), np.array(d))
       print("  storing picture %i"%(cnt))
       Osci(evt)
       figOs.savefig(dirname + '/DPfig%03i'%(cnt)+'.png')
@@ -92,7 +92,7 @@ if __name__ == "__main__": # -----------------------------
     txt = readblock()
     if txt == '':
       break # end of file
-    obj = yaml.load('data: \n' + txt)
+    obj = yaml.load('data: \n' + txt, Loader=yaml.Loader)
     data = obj['data']
 
   f.close()
