@@ -9,11 +9,11 @@ rawFile:  dpRaw    # store raw wave-forms
 pictFile: dpFigs   # save pictures of double pulses
 
 # pulse parameters
-#         ____
-#        /    \  
-#     _ /_ _ _ \_ _
-#                 
-#      r   on  f 
+#              ____
+#             /    \  
+#    ____, _ /_ _ _ \_ _ _ _ _ _  
+#                    \_______/   
+#      d     r  on f f2 off r2
 #                 
 
 pulseShape:
@@ -21,12 +21,17 @@ pulseShape:
  - pheight: -0.040
    taur   : 20.E-9
    tauon  : 12.E-9 
-   tauf   : 128.E-9 
+   tauf   : 128.E-9
+   delay  : 0.001          # optional, delay w.r.t. trigger channel in µs
+   OffsetSubtraction: true # opt., subtract dc offset for uni-polar pulse (default)
+
 # channel B: 
  - pheight: -0.040
    taur   : 20.E-9
    tauon  : 12.E-9 
    tauf   : 128.E-9 
+   delay  : 0.       # optional, no delay w.r.t. trigger channel
+   OffsetSubtraction: true # subtract dc offset for uni-polar pulse (default)
 
 trgPulseShape:
 # trigger pulse
@@ -38,6 +43,9 @@ trgPulseShape:
 NminCoincidence: 2 # min nbr of coincidences to accept event
 
 modules: [RMeter, Display, Hists]
+RMeterInterval:  2.5  # update interval in sec.
+RMeterRate:  12.  # max rate in Hz
+RMeterTitle: 'rate history (s)'
 
 histograms:
   # min max Nbins ymax    title              lin/log

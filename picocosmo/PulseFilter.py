@@ -12,7 +12,6 @@ from picodaqa.mpBDisplay import mpBDisplay
 from picodaqa.mpHists import mpHists
 from picodaqa.Oscilloscope import *
 
-
 class PulseFilter(object):
   '''
   Analyse data read from CosMO detectors of Netzwerk Teilchenwelt
@@ -39,8 +38,14 @@ class PulseFilter(object):
   Results are viszalised as on-line displays (rate information and
   histograms of pulse properties) or dumped as raw wave-form
   information to a .yaml file or as "event pictures", i.e.
-  oscilloscope displays, of wave-forms wiht delayed pulses 
+  oscilloscope displays, of wave-forms with delayed pulses 
   '''
+
+## Changelog:
+# GQ, 25-Aug-19: added optional time delay of channels w.r.t trigger channel
+# GQ: 11-May-19: off-set subtraction as option
+# GQ: 30-Apr-19: support of bipolar pulses, added gamma counter GDK101
+
 
   def __init__(self, BM, confDict = None, verbose=1):
     '''Args:    BufferManager instance as data provider
@@ -157,9 +162,11 @@ class PulseFilter(object):
     fpulse = interp1d(ti, ri, kind='linear', copy=False, assume_sorted= True)
     return fpulse(t)
 
-  def setRefPulse(self, dT, taur=20E-9, tauon=12E-9, tauf=128E-9, mode=0,
-                tauf2=0., tauoff=0., taur2=0.,
-                pheight=-0.030):
+  def setRefPulse(self, dT,
+                taur=20E-9, tauon=12E-9, tauf=128E-9,
+                mode=0, tauf2=0., tauoff=0., taur2=0.,
+                pheight=-0.030,
+                delay=None, OffsetSubtraction=None ):
     '''generate reference pulse shape for convolution filter
       Args: 
         time step
@@ -198,16 +205,21 @@ class PulseFilter(object):
     self.tauon = np.zeros(Npulses)
     self.tauf = np.zeros(Npulses)
     self.pheight = np.zeros(Npulses)
-    self.mode = []    
-    for i in range(Npulses):
-      self.taur[i] = refPulseDicts[i]['taur'] 
-      self.tauon[i] = refPulseDicts[i]['tauon'] 
-      self.tauf[i] =  refPulseDicts[i]['tauf']
-      self.pheight[i] = refPulseDicts[i]['pheight'] 
-      if 'mode' in refPulseDicts[i]:
-        self.mode.append(refPulseDicts[i]['mode'] )
-      else:
-        self.mode.append(0)
+    self.delay = np.zeros(Npulses)    # initalise default delay=0.    
+    self.mode = Npulses*[0]           # initalise default mode=0    
+    for i , d in enumerate(refPulseDicts):
+      self.taur[i] = d['taur'] 
+      self.tauon[i] = d['tauon'] 
+      self.tauf[i] =  d['tauf']
+      self.pheight[i] = d['pheight'] 
+      if 'mode' in d:
+        self.mode[i](d['mode'] )
+      if 'delay' in d:
+        self.delay[i] = d['delay']
+    # set default for offset subtraction (true for mode 0, fals for mode 1)
+      self.OffsetSubtraction = [not self.mode[i] for i in range(Npulses)]
+      if "OffsetSubtraction" in d:
+        self.OffsetSubtraction[i] =d['OffsetSubtraction']
 
     if self.verbose:
       print('*==*  Pulse Filter   pulse parameters:')
@@ -222,6 +234,13 @@ class PulseFilter(object):
             %(refPulseDicts[idP]['tauf2'], refPulseDicts[idP]['tauoff'], 
               refPulseDicts[idP]['taur2']) )        
 
+        if self.delay[idP] != 0.:
+          print(8*' ' + "delay: %s µs"%(self.delay[idP]) )
+
+        if self.OffsetSubtraction[idP]:
+          print(8*' ' + "Offset Subtraction active" ) 
+
+
       if self.useTrgShape:
         print(6*' '+'Trigger pulse shape:')
         print(8*' '\
@@ -232,6 +251,9 @@ class PulseFilter(object):
           print(11*' ' + 'τ_f2: %.3gs, τ_off: %.3gs, τ_r2: %.3gs'\
                 %(refPulseDicts[-1]['tauf2'], refPulseDicts[-1]['tauoff'], 
                   refPulseDicts[-1]['taur2']) )        
+        if self.OffsetSubtraction[-1]:
+          print(8*' ' + "Offset Subtraction active" ) 
+
 
 # calculate thresholds for correlation analysis
     # norm of reference pulse
@@ -277,12 +299,6 @@ class PulseFilter(object):
       else:
         self.useTrgShape = False
 
-      if "OffsetSubtraction" in self.confDict:
-        self.OffsetSubtraction = self.confDict['OffsetSubtraction']
-        print("PF: Offset Subtraction: %s"%(self.OffsetSubtraction) )
-      else:
-        self.OffsetSubtraction = True
-        
       if "logFile" in self.confDict:
         logFile = self.confDict['logFile']
       else:
@@ -312,7 +328,7 @@ class PulseFilter(object):
         if 'RMeterInterval' in self.confDict:
           self.RMeterInterval = self.confDict['RMeterInterval']
         else:
-          self.RMeterInterval = 2.5 # 2500 sec
+          self.RMeterInterval = 2.5 # 2500 ms
         if 'RMeterRate' in self.confDict:
           self.RMeterRate = self.confDict['RMeterRate']
         else:
@@ -432,9 +448,11 @@ class PulseFilter(object):
     NChan = self.NChan # number of Channels
     iCtrg = self.iCtrg # trigger Channel
     dT = self.dT       # time base
+    dTmu = dT * 1.E6   # time base in microseconds
     idT0 = self.idT0   # sample number of trigger point
     taur = self.taur   # pulse rise time
     tauon = self.tauon # pulse flat top
+    iDelay = np.intp(self.delay / dTmu)  # possible delay wrt. trigger channel
     idTprec = self.idTprec # precision of pulse timing
     refP = self.refP   # reference pulse(s)
     pthr = self.pthr   # pulse threshold(s)
@@ -500,7 +518,7 @@ class PulseFilter(object):
    # pulse candidate in right time window found ...
     # ... check pulse shape by requesting match with time-averaged pulse
         evdt = evData[iCtrg, idtr:idtr+lref[idP]]
-        if OffsetSub:
+        if OffsetSub[idP]:
       # convolute mean-corrected reference
           validated = np.inner(evdt-evdt.mean(), refPm[idP])  > pthrm[idP]
         else:
@@ -510,7 +528,7 @@ class PulseFilter(object):
           V = max(abs(evdt)) # signal Voltage  
           VSig[iCtrg][0] = V 
           if self.histQ: hvTrSigs.append(V)
-          T = idtr*dT*1E6      # signal time in musec
+          T = idtr*dTmu      # signal time in musec
           TSig[iCtrg][0] = T 
           tevt = T  # time of event
         else:   # no valid trigger
@@ -523,9 +541,12 @@ class PulseFilter(object):
       for iC in range(NChan):
         idP = min(iC, self.NShapes - 1) # Channel Pulse Shape 
         if iC != iCtrg:
+          # possilbe delay of channel w.r.t trigger pulse
+          idly = iDelay[iC]
           offset = max(0, idtr - idTprec)  # search around trigger pulse
     #  analyse channel to find pulse near trigger
-          cor = np.correlate(evData[iC, offset:idT0+idTprec+lref[idP]], 
+          cor = np.correlate(evData[iC,
+                 idly+offset:idly+idT0+idTprec+lref[idP]], 
                  refP[idP], mode='valid')
           cor[cor<pthr[idP]] = pthr[idP] # set all values below threshold to threshold
           id0 = np.argmax(cor) # find index of (1st) maximum 
@@ -533,19 +554,19 @@ class PulseFilter(object):
           if id > idT0 + (taur[idP] + tauon[idP])/dT + idTprec:
             continue # no pulse near trigger, skip
 
-          evd = evData[iC, id:id+lref[idP]]
-          if OffsetSub:
+          evd = evData[iC, id+idly:id+idly+lref[idP]]
+          if OffsetSub[idP]:
              # convolute mean-corrected reference
             coinc = np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP]
           else:
-            coinc = cor[id0]> pthr[idP]
+            coinc = cor[id0] > pthr[idP]
           if coinc:   
             NSig[iC] +=1
             Ncoinc += 1 # valid, coincident pulse
             V = max(abs(evd))
             VSig[iC][0] = V         # signal voltage  
             hVSigs.append(V)         
-            T = id*dT*1E6 # signal time in musec
+            T = id*dTmu # signal time in musec
             TSig[iC][0] = T 
             tevt += T
 
@@ -573,17 +594,19 @@ class PulseFilter(object):
 # search for double-pulses ?
       if self.DPanalysis:        
 #3. find subsequent pulses in accepted events
+        # possilbe delay of channel w.r.t trigger pulse
+        idly = iDelay[iC]
         offset = idtr + lref[idP] # search after trigger pulse
         for iC in range(NChan):
-          cor = np.correlate(evData[iC, offset:], refP[idP], mode='valid')
-          cor[cor<pthr[idP]] = pthr[idP] # set values below threshold to threshold
-          idmx, = argrelmax(cor)  # find index of maxima in evData array
+          cor = np.correlate(evData[iC, idly+offset:], refP[idP], mode='valid')
+          cor[cor<pthr[idP]] = pthr[idP]  # set values below threshold to threshold
+          idmx, = argrelmax(cor)          # find index of maxima in evData array
 # clean-up pulse candidates by requesting match with time-averaged pulse
           iacc = 0
           for id0 in idmx:
             id = id0 + offset
-            evd = evData[iC, id:id+lref[idP]]
-            if OffsetSub:
+            evd = evData[iC, id+idly:id+idly+lref[idP]]
+            if OffsetSub[idP]:
               # convolute mean-corrected reference
               acc=np.inner(evd-evd.mean(), refPm[idP]) > pthrm[idP] # valid pulse
             else:  
@@ -594,10 +617,10 @@ class PulseFilter(object):
               V = max(abs(evd)) # signal Voltage 
               if iacc == 1:
                 VSig[iC][1] = V 
-                TSig[iC][1] = id*dT*1E6   # signal time in musec
+                TSig[iC][1] = id*dTmu   # signal time in musec
               else: 
                 VSig[iC].append(V) # extend arrays if more than 1 extra pulse
-                TSig[iC].append(id*dT*1E6)   
+                TSig[iC].append(id*dTmu)   
 #         -- end for loop over pulse candidates
 #       -- end for loop over channels
 #     -- end dpAnalysis

@@ -1,3 +1,6 @@
+v0.6.0
+       - added option for channel delay w.r.t. trigger channel
+       
 v0.6.0 beta Aug 03, 2019
        
        - added script for stistical analysis of Rates
