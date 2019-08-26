@@ -287,7 +287,24 @@ class PulseFilter(object):
 # print information to log-window via BufferManager prlog
     self.prlog = self.BM.prlog
 
-  # read configuration dictionary
+# retrieve relevant configuration parameters from BufferManager
+    self.dT = self.BM.TSampling # get sampling interval
+    self.idTprec = 2 # precision on time resolution of pulse search
+    # precision on time resolution (in units of dT) 
+    self.dTprec = self.idTprec * self.dT  
+    self.NChan = self.BM.NChannels
+    self.NSamples = self.BM.NSamples
+    self.ChanNames = self.BM.DevConf.picoChannels   
+    self.trgChan = self.BM.DevConf.trgChan     # trigger Channel
+    # index of trigger T0
+    self.idT0 = int(self.BM.DevConf.NSamples * self.BM.DevConf.pretrig) 
+    self.iCtrg = -1
+    for i, C in enumerate(self.ChanNames):   
+      if C == self.trgChan: 
+        self.iCtrg = i       # number of trigger Channel
+        break
+    
+  # read PulseFilter configuration dictionary
     try: 
       refPulseDicts=self.confDict['pulseShape']    
       self.NShapes = len(refPulseDicts)
@@ -346,10 +363,14 @@ class PulseFilter(object):
 
       if "NminCoincidence" in self.confDict:
         self.NmnCoinc = self.confDict['NminCoincidence']
-        print("PF: Number of coincidences to accept event: %i"%(self.NmnCoinc) )
       else:
-        self.NmnCoinc = 2
-  
+        self.NmnCoinc = min(self.NChan, 2)
+
+      if "acceptPattern" in self.confDict:
+        self.acceptPattern = self.confDict['acceptPattern']
+      else:
+        self.acceptPattern = None
+        
       if "doublePulse" in self.confDict:
         self.DPanalysis = self.confDict['doublePulse']
       else:
@@ -400,23 +421,6 @@ class PulseFilter(object):
     else:
       self.pDir = None  
 
-# retrieve relevant configuration parameters from BufferManager
-    self.dT = self.BM.TSampling # get sampling interval
-    self.idTprec = 2 # precision on time resolution of pulse search
-    # precision on time resolution (in units of dT) 
-    self.dTprec = self.idTprec * self.dT  
-    self.NChan = self.BM.NChannels
-    self.NSamples = self.BM.NSamples
-    self.ChanNames = self.BM.DevConf.picoChannels   
-    self.trgChan = self.BM.DevConf.trgChan     # trigger Channel
-    # index of trigger T0
-    self.idT0 = int(self.BM.DevConf.NSamples * self.BM.DevConf.pretrig) 
-    self.iCtrg = -1
-    for i, C in enumerate(self.ChanNames):   
-      if C == self.trgChan: 
-        self.iCtrg = i       # number of trigger Channel
-        break
-
     # generate reference pulse and thresholds for PulseFilter  
     self.setReferencePulses(self.dT, refPulseDicts)
 
@@ -460,13 +464,19 @@ class PulseFilter(object):
     pthrm = self.pthrm #  ... and relevant threshold(s)
     lref = self.lref  # length of reference pulse(s)
     OffsetSub = self.OffsetSubtraction
-    NmnCoinc = min(self.NmnCoinc, NChan) 
-                # min. number of coincident pulses to accept event
-    if self.NmnCoinc > NChan:  
-      print("      PF: Number of coincidences to accept event set to %i"%(NmnCoinc) ) 
+    NmnCoinc = self.NmnCoinc
+    acceptPattern = self.acceptPattern
 
     if verbose:
-      print("*==* Pulse Filter starting analysis")
+      print("*==* Pulse Filter")
+      if acceptPattern:
+        print(10*' ', "signal patterns to accept event")
+        for p in acceptPattern:
+          print(10*' ', p)
+      else:
+        print(10*' ', "number of coincidences to accept event", NmnCoinc)
+
+      print("\n =====>>>> starting analysis")
 
 # event loop
     T0 = time.time() # start time
@@ -479,6 +489,7 @@ class PulseFilter(object):
       validated = False
       accepted = False
       doublePulse = False
+      accChan = NChan * [0]
     # get event as obligatory consumer (sees all events)
       e = self.BM.getEvent(self.cId, mode=0)
       if e == None:
@@ -525,6 +536,9 @@ class PulseFilter(object):
           validated = cort[idtr0]> pthr[idP]
         if validated:
           Nval +=1
+          NSig[iCtrg] +=1
+          accChan[iCtrg] = 1
+          Ncoinc = 1
           V = max(abs(evdt)) # signal Voltage  
           VSig[iCtrg][0] = V 
           if self.histQ: hvTrSigs.append(V)
@@ -534,10 +548,8 @@ class PulseFilter(object):
         else:   # no valid trigger
           hnTrSigs.append( max(abs(evdt)) )
           continue #- while # skip rest of event analysis
-      NSig[iCtrg] +=1
 
 # 2. find coincidences
-      Ncoinc = 1
       for iC in range(NChan):
         idP = min(iC, self.NShapes - 1) # Channel Pulse Shape 
         if iC != iCtrg:
@@ -563,6 +575,7 @@ class PulseFilter(object):
           if coinc:   
             NSig[iC] +=1
             Ncoinc += 1 # valid, coincident pulse
+            accChan[iC] = 1
             V = max(abs(evd))
             VSig[iC][0] = V         # signal voltage  
             hVSigs.append(V)         
@@ -571,9 +584,17 @@ class PulseFilter(object):
             tevt += T
 
 # check wether event should be accepted 
-      if (validated and Ncoinc >= NmnCoinc):
-        accepted = True
-        Nacc += 1
+      
+      if acceptPattern:  # compare accepted signals with pattern
+        for p in acceptPattern:
+          if p == accChan:
+            accepted = True  # accept if any one matches
+            Nacc += 1
+            continue
+      else:             # if no pattern given, check nbr of coincidences
+        if Ncoinc >= NmnCoinc:
+          accepted = True
+          Nacc += 1
 
 # provide information to RateMeter
       if self.filtRateQ and self.filtRateQ.empty(): 
