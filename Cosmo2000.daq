@@ -1,6 +1,6 @@
 # configuration files for CosMO Panlels and PS2204A
 
-DeviceFile:     config/SiPMpulse2000.yaml
+DeviceFile:     config/PScosmo2000.yaml
 BMfile:         config/BMconfig.yaml
 PFfile:         config/PFcosmo2000.yaml
 

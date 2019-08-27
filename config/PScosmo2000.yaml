@@ -1,0 +1,19 @@
+# PicoScope configuration for three channles with DESY Panels
+
+#PSmodel: '2000a'     # PS2x0yB (default)
+PSmodel: '2000'      # model PS2x0yA 
+
+picoChannels: [A, B]
+ChanModes:     [AC, AC]
+ChanRanges: [0.2, 0.2]
+ChanColors: [darkblue, sienna]
+
+Nsamples:   750
+sampleTime: 15.E-6
+
+trgChan: A
+trgThr: -15.E-3
+trgTyp: Falling
+#pretrig: 0.05
+
+

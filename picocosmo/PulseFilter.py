@@ -42,6 +42,7 @@ class PulseFilter(object):
   '''
 
 ## Changelog:
+# GQ, 27-Aug-19: option for critera to accept events
 # GQ, 25-Aug-19: added optional time delay of channels w.r.t trigger channel
 # GQ: 11-May-19: off-set subtraction as option
 # GQ: 30-Apr-19: support of bipolar pulses, added gamma counter GDK101
@@ -507,7 +508,10 @@ class PulseFilter(object):
       VSig = [ [0., 0.] for i in range(NChan)]  # signal height in Volts
       TSig = [ [0., 0.] for i in range(NChan)]  # time of valid pulse
       NSig = [0 for i in range(NChan)]
-
+      Ncoinc = 0
+      idtr = idT0 # initialize time of event to time of trigger
+      tevt = 0    # for mean event time over all valid pulses
+      
 # 1. validate trigger pulse
       if iCtrg >= 0:  
         if(self.useTrgShape): # use trgger pulse shape if given ...
@@ -538,7 +542,7 @@ class PulseFilter(object):
           Nval +=1
           NSig[iCtrg] +=1
           accChan[iCtrg] = 1
-          Ncoinc = 1
+          Ncoinc += 1
           V = max(abs(evdt)) # signal Voltage  
           VSig[iCtrg][0] = V 
           if self.histQ: hvTrSigs.append(V)
@@ -548,7 +552,7 @@ class PulseFilter(object):
         else:   # no valid trigger
           hnTrSigs.append( max(abs(evdt)) )
           continue #- while # skip rest of event analysis
-
+        
 # 2. find coincidences
       for iC in range(NChan):
         idP = min(iC, self.NShapes - 1) # Channel Pulse Shape 
@@ -558,7 +562,7 @@ class PulseFilter(object):
           offset = max(0, idtr - idTprec)  # search around trigger pulse
     #  analyse channel to find pulse near trigger
           cor = np.correlate(evData[iC,
-                 idly+offset:idly+idT0+idTprec+lref[idP]], 
+                 idly+offset:idly+idtr+idTprec+lref[idP]], 
                  refP[idP], mode='valid')
           cor[cor<pthr[idP]] = pthr[idP] # set all values below threshold to threshold
           id0 = np.argmax(cor) # find index of (1st) maximum 
@@ -670,13 +674,13 @@ class PulseFilter(object):
         for ic in range(NChan):
           v = VSig[ic][0]
           t = TSig[ic][0]
-          if v>0: t -=tevt
+          if v>0: t -= tevt
           print(', %.3f, %.3f'%(v,t), end='', file=self.logf)
         if doublePulse:
           for ic in range(NChan):
             v = VSig[ic][1]
             t = TSig[ic][1]
-            if v>0: t -=tevt
+            if v>0: t -= tevt
             print(', %.3f, %.3f'%(v,t), end='', file=self.logf)
           for ic in range(NChan):
             if len(VSig[ic]) > 2:

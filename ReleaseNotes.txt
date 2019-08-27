@@ -1,4 +1,5 @@
 v0.6.0
+       - option for better choice of patterns to accept events
        - added option for channel delay w.r.t. trigger channel
        
 v0.6.0 beta Aug 03, 2019
