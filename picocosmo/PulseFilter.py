@@ -290,9 +290,6 @@ class PulseFilter(object):
 
 # retrieve relevant configuration parameters from BufferManager
     self.dT = self.BM.TSampling # get sampling interval
-    self.idTprec = 2 # precision on time resolution of pulse search
-    # precision on time resolution (in units of dT) 
-    self.dTprec = self.idTprec * self.dT  
     self.NChan = self.BM.NChannels
     self.NSamples = self.BM.NSamples
     self.ChanNames = self.BM.DevConf.picoChannels   
@@ -379,8 +376,16 @@ class PulseFilter(object):
       if not self.DPanalysis:  
         print("PF: no double pulse search")
 
-    except:
+      # precision on time resolution (in units of dT) 
+      if "timingPrecision" in self.confDict:
+        self.idTprec = self.confDict["timingPrecision"]
+      else:
+        self.idTprec = 2 # precision on time resolution of pulse search
+      self.dTprec = self.idTprec * self.dT  
+
+    except Exception as e:
       print('!!! PulseFilter failed to read pulseFilter configuration ')
+      print(str(e))
       exit(1)
 
 # now start sub-processes for live-displays

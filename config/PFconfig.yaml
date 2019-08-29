@@ -40,8 +40,11 @@ trgPulseShape:
    tauon  : 12.E-9 
    tauf   : 128.E-9 
 
+# precision of timing between channels
+timingPrecision: 2 # in units of sampling interval, default is 2
+
 ## criteria to accept event (optional)
-#NminCoincidence: 1 # min nbr of coincidences to accept event
+NminCoincidence: 1 # min nbr of coincidences to accept event
 #   # pulses required near trigger pulse (overwrites NminCoincience)
 #acceptPattern:     
 # - [1, 1]  # chanA and ChanB

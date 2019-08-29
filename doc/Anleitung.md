@@ -790,12 +790,12 @@ und kann das Ergebnis verfälschen.
      Messung der Myon-Lebensdauer mit zwei oder mehr CosMO-Panels
   - `config/BMconfig.yaml`  
     Konfiguration für den Puffermanager
-  - `SiPMpulse.yaml`  
+  - `PScosmo.yaml`  
     Konfiguration des Picoscopes für SiPM-Pulse 
+  - `PScosmo2000.yaml`  
+    Konfiguration eines Picoscopes 2202A für SiPM-Pulse 
   - `PMpulse.yaml`  
     Konfiguration des Picoscopes für Photomultiplier-Pulse 
-  - `SiPMpulse2000.yaml`  
-    Konfiguration eines Picoscopes 2202A für SiPM-Pulse 
   - `PFcosmo.yaml`  
     Konfiguration des PulseFilters für Cosmo-Panels 
   - `PFKanne.yaml`  
