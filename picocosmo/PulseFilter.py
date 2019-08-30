@@ -462,7 +462,7 @@ class PulseFilter(object):
     idT0 = self.idT0   # sample number of trigger point
     taur = self.taur   # pulse rise time
     tauon = self.tauon # pulse flat top
-    iDelay = np.intp(self.delay / dTmu)  # possible delay wrt. trigger channel
+    iDelay = np.intp(self.delay / dTmu + 0.5)  # possible delay wrt. trigger channel
     idTprec = self.idTprec # precision of pulse timing
     refP = self.refP   # reference pulse(s)
     pthr = self.pthr   # pulse threshold(s)
