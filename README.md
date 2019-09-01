@@ -95,97 +95,152 @@ The helper scripts, *plotDoublePulses.py* and *makeFigs.py*, allow to read store
 
 The configuration for *runCosmo.py* is defined in several *.yaml* files contained in sub-directory *config/**. The files used for a specific configuration are listed in files of type *.daq* , e. g. *Kanne.daq* for Kamiokanne and *Cosmo.daq* for a run with the CosMo panels.
 
-The  *.yaml* files specify configurations for the oscilloscope, the BufferManager and the Pulse Filter. Here is the example to run with Kamiokanne:
+The  *.yaml* files specify configurations for the oscilloscope, the BufferManager and the Pulse Filter. Here is a general example:
 
-    # file Kanne.daq
-    # --------------------
-    # configuration files for Kamiokanne 
-    
-    DeviceFile: config/PMpulse.yaml   # Oscilloscope configuration file
-    BMfile:     config/BMconfig.yaml  # Buffer Manager configuration
-    PFfile:     config/PFKanne.yaml   # Pulse Filter Configuration 
+```yaml
+# file default.daq
+# --------------------
+# configuration files for Kamiokanne 
 
-The oscilloscope configuration specifies the oscilloscope model,
-the active channels and the trigger conditions:
+DeviceFile: config/PSconfig.yaml    # Oscilloscope configuration file
+BMfile:     config/BMconfig.yaml   # Buffer Manager configuration
+PFfile:     config/PFconfig.yaml   # Pulse Filter Configuration 
+```
 
-    # file PMpulse.yaml
-    # -----------------
-    # configuration file for PicoScope 2000 Series connected to a PM tube
-    
-    PSmodel: 2000a      # model type here (2000a is default)
-    
-    picoChannels:      [A]
-    ChanRanges:        [0.5, 0.2]
-    ChanOffsets:       [0.4, 0.45]
-    
-    sampleTime:   16.E-6  # scientific format with '.' and signed exponent 
-    Nsamples:     3500
-    
-    trgChan:    A
-    trgThr:     -45.E-3
-    trgTyp:     Falling
-    trgTO:      5000    #   time-out after which read-out occurs
-    pretrig:    0.05
-    ChanColors: [darkblue, sienna, indigo]
+The oscilloscope configuration specifies the oscilloscope model, the active channels, trigger condition and the number of samples and total sampling time for each trigger:
+
+```yaml
+# file PSconfig.yaml
+# ------------------   
+# PicoScope configuration for two channles (~150ns pulses, <300mV)
+
+PSmodel: '2000a'                  # model type (2000a is default, for PS 220xB and 240xB)
+
+# Channel configuration  
+picoChannels: [A, B]              # active channels
+## picoChannels: [A, B, C]        # for 4-channel scope
+ChanModes:     [AC, AC, AC]       # AC or DC coupling
+ChanRanges: [0.2, 0.2, 0.2]       # range 
+ChanOffsets: [0.14, 0.16, 0.15]   # offset (not for model 2204x)
+ChanColors: [darkblue, sienna, indigo]  # opional: colors for graphical display
+
+## Trigger configuration
+trgChan: A
+trgThr: -40.E-3
+trgTyp: Falling
+pretrig: 0.05                     # % of samples stored before trigger (not for model 2204x)
+
+## data acquition 
+Nsamples: 4000                    # number of samplings per trigger
+sampleTime: 16.E-6                # total sampling time; time distance between two sampling
+#     in seconds, scientific      #  is nearest valid setting given by sampleTime/Nsamples
+#     format with . and
+
+```
 
 The configuration for the Buffer manager allows to specify the number of buffers, the display modules for raw data and the logging level:
 
-    # file BMconfig.yaml
-    # ------------------
-    # configuration of picoDAQ Buffer Manager 
-    
-    NBuffers: 16         # number of buffers to store raw waveforms
-    BMmodules: [mpOsci]  # BufferMan modules to start
-    verbose: 1   # set verbosity level
-    LogFile: BMsum # write log-file entries with current statistics
+```yaml
+# file BMconfig.yaml
+# ------------------
+# configuration of picoDAQ Buffer Manager 
 
-The configuration for running with the CosMO detectors or Kamiokanne are specified in the PulseFilter configuration file. It contains the specification of desired output files, the pulse shapes and pulse heights for every connected channel, the display modules to be started and and the definition of real-time histograms for pulse heights, muon rate and muon life-time. An example is shown here: 
+NBuffers: 16         # number of buffers to store raw waveforms
+BMmodules: [mpOsci]  # BufferMan modules to start
+verbose: 1           # set verbosity level
+LogFile: BMsum       # name of log-file, null to disabl
+```
 
-    # file PFKanne.yaml
-    # -------------------
-    # Configuration file for PulseFilter with Kamiokanne
-    
-    #logFile: pFilt     # store all pulses, put Null if no output wanted
-    logFile: Null      # store all pulses, put Null if no output wanted
-    logFile2: dpFilt   # store double-pulses only, put Null if not
-    rawFile:  rawDP    # store raw wave forms, put Null if not wanted
-    pictFile: pictDP   # save pictures of double-pulse wave forms
-    
-    # pulse parameters
-    #         ______
-    #        /      \
-    #     _ /_ _ _ _ \_
-    #        r  on   f
-    #
-    
-    # pulse shape(s) for channels
-    #    if only one given, it is used for all channels
-    pulseShape:
-     - pheight: -0.035
-       taur   : 20.E-9
-       tauon  : 12.E-9 
-       tauf   : 128.E-9 
-    
-    # pulse shape for trigger signal
-    #   optional - if not given, uses pulseShape
-    trgPulseShape:
-     - pheight: -0.045
-       taur   : 20.E-9
-       tauon  : 12.E-9 
-       tauf   : 128.E-9 
-    
-    # Display Modules to be started  
-    modules: [RMeter, Display, Hists]
-    
-    # Definition of Histograms
-    histograms:
-     # min  max Nbins ymax    title              lin/log
-     - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
-     - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
-     - [0., 15.,  45, 7.5, "Tau (µs)", 1]
-     - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
-    
-    doublePulse: True  # switch for double-pulse search
+The configuration for running with the CosMO detectors or Kamiokanne are specified in the PulseFilter configuration file. It contains 
+
+- the specification of desired output files;
+
+- the pulse parameters (shapes, pulse heights and possibly a delay) for every connected channel;
+
+-  the display modules to be started:  rate meter of accepted events,  a pulse height display, and the definition of  histograms for pulse heights, muon rate and muon life-time.  
+
+  A general example with all presently implemented configuration options is shown here: 
+
+```yaml
+# file PFconfig.yaml
+# -------------------
+# demo configuration file for PulseFilter
+#    documents all options
+
+## output files  (specify null to disable)
+logFile: pFilt    # store parameters of all pulses
+logFile2: dpFilt  # store parameters of identified double-pulse
+# special for double pulse search:
+rawFile:  dpRaw    # store raw wave-forms
+pictFile: dpFigs   # save pictures of double pulses
+
+## pulse parameters 
+#              ____
+#             /    \  
+#    ____, _ /_ _ _ \_ _ _ _ _ _  
+#                    \_______/   
+#      d     r  on f f2 off r2
+#                 
+#       d is optional, as well as f2, off and r2 for bipolar pulses
+#
+# list of dictionaries for pulse shapes per channel
+pulseShape:
+# channel A:
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9
+   OffsetSubtraction: true # opt., subtract dc offset for uni-polar pulse (default)
+
+# channel B: 
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+   delay  : 0.000       # optional: delay w.r.t. trigger channel
+   OffsetSubtraction: true # subtract dc offset for uni-polar pulse (default)
+
+# possibly a dedicated shape for the triggering pulse
+trgPulseShape:
+# trigger pulse
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+
+# precision of timing between channels (optional)
+timingPrecision: 2 # in units of sampling interval, default is 2
+
+## criteria to accept event (optional)
+# remove '#' to enable one of the keys below
+#NminCoincidence: 2 # min nbr of coincidences to accept event, default is 2
+#    alternatively: 
+#    pattern of pulses required near trigger pulse (overwrites NminCoincience)
+#acceptPattern:     
+# - [1, 1]  # valid pulse chanA and ChanB
+# - [0, 1]  # not ChanA and ChanB
+# - [1, 0]  # ChanA and not ChanB
+
+## display modules to start and options
+modules: [RMeter, Display, Hists]
+#    rate meter, display of signal size, historgrams
+# --- for rate meter
+RMeterInterval:  2.5  # update interval in sec.
+RMeterRate:  12.      # max rate in Hz
+RMeterTitle: 'rate history (s)'
+# --- for histograms
+histograms:
+  # min max Nbins ymax    title              lin/log
+ - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
+ - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
+ - [0., 15.,  45, 7.5, "Tau (µs)", 1]
+ - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
+
+## analysis options
+doublePulse: true  # switch to control double-pulse search
+
+```
+
 
 
 ## Example output
@@ -197,8 +252,7 @@ The parameters of events containing double-pulses are stored in file *dpKanne2_1
 
 ## Running on Raspberry Pi
 
-*picoCosmo* also runs on the very popular Rasbperry Pi single board computer. After setting up your Raspberry Pi, the following steps should be taken to update and
-install all necessary packages (Debian release *stretch*):
+*picoCosmo* also runs on the very popular Rasbperry Pi single board computer. After setting up your Raspberry Pi, the following steps should be taken to update and install all necessary packages (latest Debian releases *stretch* and *buster*):
 
 ```bash
 sudo apt-get update
@@ -232,10 +286,14 @@ sudo useradd -G pico $USER
 
 Create the subdirectory  `picoCosmo` in the home directory, where all the output and modified configuration files will be stored:
 
-     cd 
-     mkdir picoCosmo
+```sh
+ cd 
+ mkdir picoCosmo
+```
 
 Now you are ready to execute the graphical interface of `picoCosmo`:
 
-    <picoCosmo install directory >/CosmoGui.py
+```shell
+<picoCosmo install directory >/CosmoGui.py
+```
 

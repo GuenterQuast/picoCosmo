@@ -1,7 +1,7 @@
 #         Configuration Files    
-DeviceFile: config/SiPMpulse.yaml    # Oscilloscope
-PFfile: config/PFconfig.yaml         # PulseFilter
-BMfile: config/BMconfig.yaml         # Buffer Manager
+DeviceFile: config/PSconfig.yaml     # for Oscilloscope device
+BMfile: config/BMconfig.yaml         # for Buffer Manager
+PFfile: config/PFconfig.yaml         # for PulseFilter
 
 
 
