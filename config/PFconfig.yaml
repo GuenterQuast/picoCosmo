@@ -1,21 +1,25 @@
+# file PFconfig.yaml
+# -------------------
 # demo configuration file for PulseFilter
 #    documents all options
 
-## output files 
-logFile: pFilt   # store all pulses, Null to disable
-logFile2: dpFilt  # store double-pulse parameters
-
+## output files  (specify null to disable)
+logFile: pFilt    # store parameters of all pulses
+logFile2: dpFilt  # store parameters of identified double-pulse
+# special for double pulse search:
 rawFile:  dpRaw    # store raw wave-forms
 pictFile: dpFigs   # save pictures of double pulses
 
-## pulse parameters
+## pulse parameters 
 #              ____
 #             /    \  
 #    ____, _ /_ _ _ \_ _ _ _ _ _  
 #                    \_______/   
 #      d     r  on f f2 off r2
 #                 
-
+#       d is optional, as well as f2, off and r2 for bipolar pulses
+#
+# list of dictionaries for pulse shapes per channel
 pulseShape:
 # channel A:
  - pheight: -0.040
@@ -32,6 +36,7 @@ pulseShape:
    delay  : 0.000       # optional: delay w.r.t. trigger channel
    OffsetSubtraction: true # subtract dc offset for uni-polar pulse (default)
 
+# possibly a dedicated shape for the triggering pulse
 trgPulseShape:
 # trigger pulse
  - pheight: -0.040
@@ -39,24 +44,27 @@ trgPulseShape:
    tauon  : 12.E-9 
    tauf   : 128.E-9 
 
-# precision of timing between channels
+# precision of timing between channels (optional)
 timingPrecision: 2 # in units of sampling interval, default is 2
 
 ## criteria to accept event (optional)
-NminCoincidence: 1 # min nbr of coincidences to accept event
-#   # pulses required near trigger pulse (overwrites NminCoincience)
+# remove '#' to enable one of the keys below
+#NminCoincidence: 2 # min nbr of coincidences to accept event, default is 2
+#    alternatively: 
+#    pattern of pulses required near trigger pulse (overwrites NminCoincience)
 #acceptPattern:     
-# - [1, 1]  # chanA and ChanB
+# - [1, 1]  # valid pulse chanA and ChanB
 # - [0, 1]  # not ChanA and ChanB
 # - [1, 0]  # ChanA and not ChanB
 
 ## display modules to start and options
 modules: [RMeter, Display, Hists]
-
+#    rate meter, display of signal size, historgrams
+# --- for rate meter
 RMeterInterval:  2.5  # update interval in sec.
-RMeterRate:  12.  # max rate in Hz
+RMeterRate:  12.      # max rate in Hz
 RMeterTitle: 'rate history (s)'
-
+# --- for histograms
 histograms:
   # min max Nbins ymax    title              lin/log
  - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
@@ -66,3 +74,4 @@ histograms:
 
 ## analysis options
 doublePulse: true  # switch to control double-pulse search
+
