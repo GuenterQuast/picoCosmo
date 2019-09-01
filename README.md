@@ -22,6 +22,10 @@ The analysis proceeds in three steps. First, the trigger is validated by cross-c
 The software provides real-time displays of waveforms, detector signals and rates. Optionally, parameters of identified pulses or of double-pulses are written to files in CSV format. In addition, raw waveforms or pictures in *.png* format of identified double pulses can optionally be stored for off-line analysis or for an instructive analysis "by hand" based on the waveform pictures. From this information, the mean muon lifetime in the muon rest frame (2.2 µs) can be derived. 
 
 
+
+
+
+
 ## Dependence on other packages
 
 This code relies on
@@ -100,7 +104,7 @@ The  *.yaml* files specify configurations for the oscilloscope, the BufferManage
 ```yaml
 # file default.daq
 # --------------------
-# configuration files for Kamiokanne 
+# configuration files for data acquisition and real-time analysis 
 
 DeviceFile: config/PSconfig.yaml    # Oscilloscope configuration file
 BMfile:     config/BMconfig.yaml   # Buffer Manager configuration
@@ -122,7 +126,7 @@ picoChannels: [A, B]              # active channels
 ChanModes:     [AC, AC, AC]       # AC or DC coupling
 ChanRanges: [0.2, 0.2, 0.2]       # range 
 ChanOffsets: [0.14, 0.16, 0.15]   # offset (not for model 2204x)
-ChanColors: [darkblue, sienna, indigo]  # opional: colors for graphical display
+ChanColors: [darkblue, sienna, indigo]  # optional: colors for graphical display
 
 ## Trigger configuration
 trgChan: A
@@ -135,8 +139,10 @@ Nsamples: 4000                    # number of samplings per trigger
 sampleTime: 16.E-6                # total sampling time; time distance between two sampling
 #     in seconds, scientific      #  is nearest valid setting given by sampleTime/Nsamples
 #     format with . and
-
+#     and signed exponent
 ```
+
+
 
 The configuration for the Buffer manager allows to specify the number of buffers, the display modules for raw data and the logging level:
 
@@ -150,6 +156,8 @@ BMmodules: [mpOsci]  # BufferMan modules to start
 verbose: 1           # set verbosity level
 LogFile: BMsum       # name of log-file, null to disabl
 ```
+
+
 
 The configuration for running with the CosMO detectors or Kamiokanne are specified in the PulseFilter configuration file. It contains 
 
@@ -249,6 +257,18 @@ The directory *./output* contains the results from a long run of almost 20 days 
 format of the waveforms.
 
 The parameters of events containing double-pulses are stored in file *dpKanne2_180403.dat*. An unbinned log-likelihood fit of measured lifetimes between 1.5 µs and 15. µs with the script *fit_dpData.py* yields the result shown in figure *life-ofMU_<date>.png*.
+
+The *pyhton* script *RateAnalysis.py* provides a statistical analysis of the arrival times of the recorded events
+Input is the  *PulseFilter* logfile. The file
+ *Kanne_180403/pFilt_Kanne.dat*
+contains the results for a short run; the command 
+*./RateAnalysis.py Kanne_180403/pFilt_Kanne.dat* displays the graphs.
+
+
+
+
+
+
 
 ## Running on Raspberry Pi
 

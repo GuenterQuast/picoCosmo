@@ -43,9 +43,12 @@ ax_tw = fig.add_subplot(3, 1, 3)    # for wait-time
 mn=0. ; mx=75. ; nb=75 # minimum, maximum and number of bins
 
 # -*- Daten einlesen:
-T = np.loadtxt(fname, usecols=(1), delimiter=',', unpack=True)
-#T = data[1] 
-
+try:
+  T = np.loadtxt(fname, usecols=(1), delimiter=',', unpack=True)
+except Exception as e:
+  print(' no input file given - abort')
+  sys.exit(1)
+  
 Ttot = T[-1] - T[0]                # total time
 Nbins = int(Ttot/Tinterval)    # number of time intervals
 meanRate = len(T) / Ttot           # mean rate

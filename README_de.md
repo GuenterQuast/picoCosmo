@@ -196,124 +196,177 @@ Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom
 Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für
 die CosMO-Panels.
 
-Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht
-die in den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*.
+
+
+
+
+Die folgenden Beispiele für Konfigurationsdateien gelten für eine Datennahme mit
+zwei CosMO-Panles. Die in den Konfigurationsdateien verwendete Syntax entspricht
+der Markup-Sprache *yaml*.
 Insbesondere kennzeichnet Text nach einem `#` -Zeichen erklärende Kommentare 
 oder enthält alternative, auskommentierte Konfigurationsoptionen, die durch
 Löschen des `#` -Zeichens aktiviert werden können.
 
-**Inhalt der Datei Kanne.daq:**
+**Inhalt der Datei default.daq:**
 
-    # file Kanne.daq
-    # --------------------
-    # Konfigurationsdateien für den Kamiokanne-Detektor
-    
-    DeviceFile: config/PMpulse.yaml   # Konfiguration des Oszilloskops
-    BMfile:     config/BMconfig.yaml  # Konfiguration des Puffer-Managers
-    PFfile:     config/PFconfig.yaml  # Konfiguration des Pulsfilters
+```yaml
+# file default.daq
+# --------------------
+# Konfigurationsdatei für Datennahme und Echtzeit-Auswertung 
 
-Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops, 
-die aktiven Kanäle und zum Trigger.
+DeviceFile: config/PSconfig.yaml   # Konfigurationsdatei Oszilloskop 
+BMfile:     config/BMconfig.yaml   #     Buffer Manager
+PFfile:     config/PFconfig.yaml   #     Pulsfilter 
+```
 
-**Inhalt der Datei PMpulse.yaml:**
 
-    # file PMpulse.yaml
-    # -----------------
-    # Konfigurationsdatei für PicoScope an Photoroehre
-    
-    PSmodel: 2000a      # Modeltyp (2000a ist voreingestellt)
-    
-    picoChannels:      [A]         # aktiver Kanal, [A,B] aktiviert beide Kanaele
-    ChanRanges:        [0.5, 0.2]  # Messbereich
-    ChanOffsets:       [0.4, 0.45] # analoger Offset, der vor Anzeige addiert wird.
-    
-    sampleTime:   16.E-6 #  Zeitdauer einer einzelnen Datenaufnahme
-         # Zahl im wissenschaftlichen Format mit '.' und Exponent mit Vorzeichen
-    Nsamples:     3500   # Anzahl der aufzunehmenden Messpunkte 
-    
-    trgChan:    A        # Kanal, auf den der Trigger wirkt
-    trgThr:     -45.E-3  # Schwelle
-    trgTyp:     Falling  # fallend (Falling) oder ansteigend (Rising)
-    trgTO:      5000     # Timeout, nach dieser Zeit wird einmal ausgelesen
-    pretrig:    0.05     # Anteil der vor dem Trigger ausgelesenen Daten
-    ChanColors: [darkblue, sienna, indigo] # Farben für Darstellung der Kanäle
 
-Die Datei für den Puffer-Manager gibt an, wie viele Puffer verwendet
-werden, welche Anzeige-Module gestartet werden und ob ein Log-File
-erstellt werden soll:
+
+
+Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops und legt die
+aktiven Kanäle und die Triggerbedingung für die Auslese fest. 
+
+**Inhalt der Datei PSconfig.yaml:**
+
+```yaml
+# file PSconfig.yaml
+# ------------------   
+# Konfiguration für zwei Kanäle (~150ns Pulsdauer, <300mV Pulshöhe)
+
+PSmodel: '2000a'           # model type (2000a ist Vorgabe, für Moedlle PS 220xB and 240xB)
+
+# Konfiguration der Kanäle
+picoChannels: [A, B]              # aktive Kanäle
+## picoChannels: [A, B, C]        # optional für Osciloskop mit >2 Kanälen
+ChanModes:     [AC, AC, AC]       # AC- oder DC-Kopplung
+ChanRanges: [0.2, 0.2, 0.2]       # Eingangsbereich 
+ChanOffsets: [0.14, 0.16, 0.15]   # Offset (nicht für Modell 2204x)
+ChanColors: [darkblue, sienna, indigo]  # optional: Kanalfarben für Anzeige
+
+## Trigger 
+trgChan: A          # Kanalname
+trgThr: -40.E-3     # Schwelle
+trgTyp: Falling     # Typ: Falling, Rising, Above, Below
+pretrig: 0.05       # % der vor Trigger gewpeicherten Samples (nicht für Model 2204x)
+
+## Datenaufnahme
+Nsamples: 4000                    # Zahl der Datenpunkte pro Auslese
+sampleTime: 16.E-6                # Zeitdauer; Zeitabstand zwischen zwei Datenpunkte ist
+#     in s, wiss. Format          #  sampleTime/Nsamples (bzw. nächstkleiner gültiger Wert)
+#     mit . und vorzeichen-
+#     behafteten Exponenten
+```
+
+
+
+Die Konfigurationsdatei für den Puffer-Manager gibt an, wie viele Puffer verwendet werden, welche Anzeige-Module gestartet werden und ob ein Log-File erstellt werden soll. Hier sind meist keine
+Änderungen notwendig.
 
 **Inhalt der Datei BMconfig.yaml:**
 
-    # file BMconfig.yaml
-    # ------------------
-    # Konfigurationsdatei des picoDAQ Puffermanagers
-    
-    NBuffers: 16         # Anzahl der Puffer für aufgezeichnete Pulsformen
-    BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
-    verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
-    LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
+```yaml
+# file BMconfig.yaml
+# ------------------
+# Konfigurationsdatei des picoDAQ Puffermanagers
 
-Die Konfiguration der Pulsanalyse spezifiziert die gewünschten
-Ausgabedateien und gibt  die Pulsform und die Pulshöhe
-für jeden Kanal sowie die zu startenden Anzeige-Module an.
-Sie enthält auch die Spezifikation der Echtzeit-Histogramme für
-Pulshöhen, Myon-Rate und Lebensdauer. Ein Beispiel ist hier gezeigt:
+NBuffers: 16         # Anzahl der Puffer für aufgezeichnete Pulsformen
+BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
+verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
+LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
+```
 
-**Inhalt der Datei PMconfig.yaml:**
+Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Sie enthält auch die Spezifikation der Echtzeit-Histogramme für Pulshöhen, Myon-Rate und Lebensdauer, sowie einge optionale Eintäge. Ein Beispiel ist hier gezeigt:
 
-    # file PFKanne.yaml
-    # -------------------
-    # Konfigurationsdtei für den PulseFilter mit Kamiokanne
-    
-    #logFile: pFilt     # speichere Angaben zu allen gefundenen Pulsen
-    logFile: Null      #     Null falls keine Ausgebe erwuenscht
-    logFile2: dpFilt   # speichere nur  Doppelpulse, Null falls nicht erwuenscht
-    rawFile:  rawDP    # speichere Rohdaten von Doppelpulsen, put Null if not wanted
-    pictFile: pictDP   # Speichere Bilder von Doppelpulsen
-    
-    # Puls-Parameter
-    #         ______
-    #        /      \ 
-    #     _ /_ _ _ _ \_ 
-    #      r    on  f 
-    #  r = rise (Anstiegszeit), on (Haltezeit), f = falling (Abfallzeit)
-    
-    # Pulsformen für die aktiven Kanaele
-       #      falls nur eine angegeben, gilt sie fuer all Kanaele
-    pulseShape:
-     - pheight: -0.035   # Pulshoehe
-       taur   : 20.E-9   # Anstiegszeit
-       tauon  : 12.E-9   # Haltezeit
-       tauf   : 128.E-9  # Abfallzeit
-    
-    # Pulsform fuer Triggerpuls
-    #         optional - falls nicht angegeben, nutze pulseShape
-    trgPulseShape:
-     - pheight: -0.045   # Pulshoehe
-       taur   : 20.E-9   # Anstiegszeit
-       tauon  : 12.E-9   # Haltezeit
-       tauf   : 128.E-9  # Abfallzeit
+**Inhalt der Datei PFconfig.yaml:**
+
+```yaml
+# file PFconfig.yaml
+# -------------------
+# Konfiguration des Pulsfilters und der Echtzweit-Auswertung
+#           dokumentiert alle z. Zt. verfügbaren Optionen
+
+## Ausgabedateien  (null setzen falls keine Ausgab erwünscht)
+logFile: pFilt    # Abspeichern der Parameter aller gültigen Pulse
+logFile2: dpFilt  # Pulsparameter für identifizierte Doppelpulse
+# special for double pulse search:
+rawFile:  dpRaw    # Abspeichern der Roh-Wellenformen für Doppelpulse
+pictFile: dpFigs   # Speichern von Oszilloskop-Bildern der Doppelpulsereignissse
+
+## Puls-Parameter 
+#              ____
+#             /    \  
+#    ____, _ /_ _ _ \_ _ _ _ _ _  
+#                    \_______/   
+#      d     r  on f f2 off r2
+#                 
+#       d ist optional, so wie f2, off und r2 für bipolare Pulse
+#
+# List mit Dictionaries für Pulsform pro Kanal
+pulseShape:
+# channel A:
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9
+   OffsetSubtraction: true # opt., Abziehen des DC-Offsets für uni-polare Pulse
+
+# channel B: 
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+   delay  : 0.000       # optional: Verzögerung relativ zum Triggerkanal
+   OffsetSubtraction: true # # opt., Abziehen des DC-Offsets für uni-polare Pulse
+
+# eventuell spezielle Pulsform für Trigger-Puls
+trgPulseShape:
+# trigger pulse
+ - pheight: -0.040
+   taur   : 20.E-9
+   tauon  : 12.E-9 
+   tauf   : 128.E-9 
+
+# Prözision des Timings zwischen Kanälten (optional)
+timingPrecision: 2 # in Einheiten der Sampling-Zeit, default is 2
+
+## Kriterien für akzeptierte Ereignisse (optional)
+# '#' entfernen, um Option einzuschalten
+#NminCoincidence: 2 # min. Anzahl koinzidenter Signale, Vorgabe ist 2
+#    alternativ: 
+#    Angabe von Mustern von Pulses  (überscheibt NminCoincience)
+#acceptPattern:     
+# - [1, 1]  # gültiger Puls chanA and ChanB
+# - [0, 1]  # nicht ChanA und ChanB
+# - [1, 0]  # ChanA und nicht ChanB
+
+## Anzeigemodule Optionen
+modules: [RMeter, Display, Hists]
+#   Retenmessung, Amzeige der Signalhöhen, Histogramme
+# --- für Ratenmessung
+RMeterInterval:  2.5  # Update-Interval in Sec.
+RMeterRate:  12.      # max Rate in Hz
+RMeterTitle: 'rate history (s)'
+# --- für Histogramme
+histograms:
+  # min max Nbins ymax    title              lin/log
+ - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
+ - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
+ - [0., 15.,  45, 7.5, "Tau (µs)", 1]
+ - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
+
+## Analyse options
+doublePulse: true  # Suche nach Doppelpulsen ein- (Vorgabe) bzw. ausschalten
+```
 
 
-    # Anzeigen, die gestartet werden sollen
-    modules: [RMeter, Display, Hists]  # Rate, Pulsform, Histogramme
-    
-    # Definition der Histogramme
-    histograms:
-     # min  max Nbins ymax    title              lin/log
-     - [0., 0.4, 50, 20., "noise Trg. Pulse (V)", 0]
-     - [0., 0.8, 50, 15., "valid Trg. Pulse (V)", 0]
-     - [0., 15.,  45, 7.5, "Tau (µs)", 1]
-     - [0., 0.8, 50, 15., "Pulse Height (V)", 0]
-    
-    doublePulse: True  # Doppelpulssuche ein, False falls nicht erwuenscht
 
 
-## Beispielausgabe
+
+## Beispielausgaben
 
 Das Verzeichnis *./output* enthält Ergebnisse einer Langzeitmessung
 (ca. 20 Tage) mit der Kanne und einer etwa eintägigen Messung mit
-zwei Cosmo-Panels. 
+zwei Cosmo-Panels.  
 
 Die gepackte Datei *rawDP_<date>.dat.zip* enthält die Rohdaten der
 aufgezeichneten Pulsformen für erkannte Doppelpulse. Die Scripte
@@ -324,13 +377,28 @@ Doppelpulsen bestimmten Lebensdauern sind in der Datei
 *dpKanne2_180403.dat* enthalten. Eine Anpassung einer Exponentialfunktion
 an gemessene Lebensdauern zwischen 1.5 µs and 15. µs kann mit dem Skript
 *fit_dpData.py* ausgeführt werden; das Ergebnis zeigt die Grafikdatei
-*life-ofMU_180403.png*.
+*life-ofMU_180403.png*. 
+
+Das *pyhton*-Skript *RateAnalysis.py* dient zur statistischen Analyse der Zeitpunkte
+des Entreffens registrierter Ereignisse dar und nutzt als Eingabe die *PulseFilter*
+Log-Datei.  Dargestellt weden die Ereignisrate als Fuktion der Zeit, die
+Verteilung dieser Rate und die Differenzen der Zeitpunkte von nacheinander
+eintreffenden Ereignissen (die sog. "Wartezeit").  Die Datei
+ *Kanne_180403/pFilt_Kanne.dat*
+enthält eine Beispieldatei für eine kurze Datennahme; der Befehl 
+*./RateAnalysis.py Kanne_180403/pFilt_Kanne.dat* zeigt die entsprechenden
+Grafiken an. 
+
+
+
+
 
 ## Ausführen auf dem  Raspberry Pi
 
 *picoCosmo* läuft auch auf dem Einplatinen-Computer Rasbperry Pi unter
 dem Betriebssystem Raspbian. Nach dem Aufsetzen des Raspberry Pi sind
-die folgenden Schritte notwendig  um alle benötigten Pakete zu installieren (*stretch* Release):
+die folgenden Schritte notwendig  um alle benötigten Pakete zu installieren 
+(*stretch* und *buster* Release):
 
 ```bash
 sudo apt-get update
