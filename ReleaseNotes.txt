@@ -1,16 +1,15 @@
-v0.6.0
+v0.6.0 beta1 Sep 01, 2019
+       - updated documentation
        - option for better choice of patterns to accept events
        - added option for channel delay w.r.t. trigger channel
        
 v0.6.0 beta Aug 03, 2019
-       
        - added script for stistical analysis of Rates
        - installation script for Raspberry Pi
        - added output/GammaDetektor
        - analysis of mean-subtracted pulse as option
 
-v0.5.3p2 May 04, 2019
-      
+v0.5.3p2 May 04, 2019      
        - some optimazations in graphic display and printout
        - added example for gamma counter GDK 101,
            support for bi-polar pulse shape
