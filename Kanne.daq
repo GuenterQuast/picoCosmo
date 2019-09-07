@@ -1,7 +1,7 @@
-#         Configuration Files    
+#         Configuration Files - for PM with 100ns pulse length    
 DeviceFile: config/PMpulse.yaml      # Oscilloscope
-PFfile: config/PFKanne.yaml               # PulseFilter
-BMfile: config/BMconfig.yaml            # Buffer Manager
+PFfile: config/PFKanne.yaml          # PulseFilter
+BMfile: config/BMconfig.yaml         # Buffer Manager
 
 
 

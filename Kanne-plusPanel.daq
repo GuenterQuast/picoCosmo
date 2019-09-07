@@ -1,0 +1,7 @@
+#         Configuration Files    
+DeviceFile: config/PS_KP.yaml   # Oscilloscope
+PFfile: config/PF_KP.yaml       # PulseFilter
+BMfile: config/BMconfig.yaml      # Buffer Manager
+
+
+

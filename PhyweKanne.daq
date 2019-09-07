@@ -1,0 +1,8 @@
+#         Configuration Files - Kamiokanne by Phywe 
+#                               with ~1µs pulse length    
+DeviceFile: config/PSPhywe.yaml      # Oscilloscope
+PFfile: config/PFPhywe.yaml          # PulseFilter
+BMfile: config/BMconfig.yaml         # Buffer Manager
+
+
+

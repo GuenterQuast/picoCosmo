@@ -1,0 +1,20 @@
+# PicoScope configuration Kanne + Panel
+
+PSmodel: '2000a'      # model type (2000a is default)
+
+picoChannels: [A, B]
+## picoChannels: [A, B, C] #for 4-channel scope
+ChanModes:     [AC, AC, AC]
+ChanRanges: [0.5, 0.5, 0.5]
+ChanOffsets: [0.48, 0.45, 0.42]
+ChanColors: [darkblue, sienna, indigo]
+
+Nsamples: 4000
+sampleTime: 16.E-6
+
+trgChan: A
+trgThr: -40.E-3
+trgTyp: Falling
+pretrig: 0.075
+
+
