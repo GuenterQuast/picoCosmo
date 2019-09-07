@@ -11,6 +11,8 @@
 
 Ein ausführliches Tutorium befindet sich unter dem Link [Anleitung.pdf](https://github.com/GuenterQuast/picoCosmo/blob/master/doc/Anleitung.pdf).
 
+
+
 ## Kurzbeschreibung der Funktionalität
 
 Das Netzwerk Teilchenwelt, <http://www.Teilchenwelt.de> stellt Experimente
@@ -89,7 +91,9 @@ ab, die zuvor auf Ihrem System installiert sein müssen:
   die grafische Oberfläche *PicoScope* ist allerdings (noch) 
   nicht verfügbar.
 
-##Installation der Software
+
+
+# Installation der Software
 
 Zunächst werden alle Dateien dieses Projekts über den Link
 <https://github.com/GuenterQuast/picoCosmo> herunter geladen
@@ -111,6 +115,17 @@ installiert werden können.
 
 Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs.sh* werden alle für *picoCosmo* notwendigen
 Komponenten auf der Rasbperry Pi installiert.
+
+Druch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis ~/picoCosmo erzeugt,
+das ausführbare Dateien und Konfiguarionsbeispiele enthält für verschiedne Detektoren oder Kombinationen davon enthält:
+
+- für die the Phywe-Version der Kamiokanne (*PhyweKanne.daq*)
+- für Kamiokanne mit schnellem signal von einer Fotoröhre oder einem Silizium-Photomultiplier (SiPM)  (*Kanne.daq*)
+- für die CosMO-Panels (*Cosmo.daq* oder *Cosmo2000.daq* für ein PicoScope der A-Serie)
+- für ein CosMo-Panel mit einer  Kamikanne (*Kanne-plusPanel.daq*)
+- für den Gammadetektor GDK 10 (*GammaCounter.daq* oder GammaCounter2000.daq für die A-Serie)
+
+
 
 
 ## Programmausführung

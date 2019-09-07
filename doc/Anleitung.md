@@ -87,8 +87,7 @@ in Echtzeit bestimmten Signal-Parameter werden optional kontinuierlich in
 Dateien geschrieben. Zusätzlich können Mehrfach-Pulse als Rohdaten der
 registrierten Pulsformen oder als Bilder im *.png*-Format gespeichert werden.
 
-Details zur Installation  von *picoCosmo* finden sich in der Datei
-[README_de.md](../README_de.md).
+Details zur Installation  von *picoCosmo* finden sich in der Datei [README_de.md](../README_de.md).
 
 
 

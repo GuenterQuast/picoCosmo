@@ -58,6 +58,18 @@ The *PicoTech* driver libraries for the #Raspberry Pi# are located
   *installlibs.sh*
 to install all necessary components on a Raspberry Pi.
 
+By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. Initally, this
+directory contains examples of configuration files for different detectors or combinations
+of detectors: 
+
+- the Phywe version of Kamiokanne (*PhyweKanne.daq*)
+- Kamiokanne with a fast signal from a photomultiplier or a silicon photomultiplier (SiPM)  (*Kanne.daq*)
+- the CosMO panels (*Cosmo.daq* or *Cosmo2000.daq* for a PicoScope A series)
+- for one CosMo-panel with Kamikanne (*Kanne-plusPanel.daq*)
+- for the GDK 101 gamma ray detector (*GammaCounter.daq* or GammaCounter2000.daq for the A-series)
+
+
+
 
 ## Program Execution
 
