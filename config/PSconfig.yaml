@@ -16,6 +16,7 @@ ChanColors: [darkblue, sienna, indigo]  # opional: colors for graphical display
 trgChan: A
 trgThr: -40.E-3
 trgTyp: Falling
+trgTO:  0                         # no trigger time-out        
 pretrig: 0.05                     # % of samples stored before trigger (not for model 2204x)
 
 ## data acquition 
