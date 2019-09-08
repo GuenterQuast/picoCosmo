@@ -16,12 +16,12 @@ if [ -d $DIR ]; then
   # enter here, if direcotry exists
 #
     # create desktop icon
-  cp -auv *.desktop $HOME/Desktop
+    # cp -auv *.desktop $HOME/Desktop
 
     # copy documentation
   mkdir -p $DIR/doc
   cp -auv doc/Anleitung.pdf $DIR/doc/
-  cp -auv README_de.pdf $DIR
+  cp -auv doc/README_de.pdf $DIR
   cp -auv doc/*.html $DIR/doc/
 #
     #copy python code
