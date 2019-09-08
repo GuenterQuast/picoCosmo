@@ -26,6 +26,6 @@ __version__ = _version_info._get_version_string()
 __version__ += _version_suffix
 
 # Import components to be callabel at package level
-__all__ = ["PulseFilter"]
+__all__ = ["PulseFilter", "runCosmoUi.py", "CosmoGuiUi.py"]
 
 
