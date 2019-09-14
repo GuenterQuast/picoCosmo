@@ -19,15 +19,36 @@
 #python 2/3 compatibility
 from __future__ import print_function, unicode_literals, division, absolute_import
 
-import sys, numpy as np, matplotlib.pyplot as plt
+import sys, numpy as np, matplotlib.pyplot as plt, scipy.special as sp
 
 # -*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --*-
+#
+# -*- relevante Verteilungen
+#
+def fUniform(x, const = None):
+  '''Gleichvderteilung'''
+  if hasattr(x,"__iter__"):
+    return const * np.ones(len(x))
+  else:
+    return const
+
+def fExponential(x, tau = None , N=1.):
+  '''Exponenitalverteilung'''
+  return N/tau*np.exp(-x/tau)
+
+def fPoisson(x, mu=None, N=1.):
+  '''Poissonverteilung'''
+  k=np.around(x)
+  return N*(mu**k)/np.exp(mu)/sp.gamma(k+1.)
+
+def getHistDistribution(bc, bw, f, **kwargs):
+  return bw*f(bc, **kwargs)
 
 # -*- Eingabe-Parameter
 if len(sys.argv)>1:
   fname = sys.argv[1]
 else:
-  fname = "pFilt_gamma_Uranglas.dat"   #  input file
+  fname = "pFilt.dat"   #  input file
 
 if len(sys.argv)>2:
   Tinterval = float(sys.argv[2])
@@ -48,10 +69,11 @@ try:
 except Exception as e:
   print(' no input file given - abort')
   sys.exit(1)
-  
+
+N = len(T)  
 Ttot = T[-1] - T[0]                # total time
 Nbins = int(Ttot/Tinterval)    # number of time intervals
-meanRate = len(T) / Ttot           # mean rate
+meanRate = N / Ttot           # mean rate
 meanN = meanRate * Tinterval       # number of events per time interval
 dT = T[1:] - T[:-1]                # Zeiten zwischen zwei Ereignissen
 meanTw=dT.mean()
@@ -71,6 +93,12 @@ tmn=0.; tmx= Nbins*Tinterval
 bcR, beR, _ = ax_rate.hist(T, bins=np.linspace(tmn, tmx, Nbins)) 
 ax_rate.set_ylabel('Anzahl Einträge', size='x-large')
 ax_rate.set_xlabel('$t$ [s]', size='x-large')
+# Mittelpunkt und Breite der Bins
+bc = (beR[:-1]+beR[1:])/2.
+bw = beR[1]-beR[0]
+# zeichne Gleichverteilung ein
+hDist = getHistDistribution(bc, bw, fUniform, const=meanRate)
+ax_rate.plot(bc, hDist, 'g--')
 
 # 2. Verteilung der Anzahlen n beobachteter Ereignisse pro Zeitintervall
 #      Bereich festlegen
@@ -83,12 +111,24 @@ bins=np.arange(mn, mx, 1)
 bcP, beP, _ = ax_rdist.hist(bcR, bins, align='left', rwidth=0.3)
 ax_rdist.set_ylabel('Anzahl Einträge', size='x-large')
 ax_rdist.set_xlabel('$n$', size='x-large')
+# Mittelpunkt und Breite der Bins
+bc = (bins[:-1]+bins[1:])/2.
+bw = bins[1]-bins[0]
+# zeichne Gleichverteilung ein
+hDist = getHistDistribution(bins[:-1], bw, fPoisson, mu=meanN, N=len(beR)-1 )
+ax_rdist.plot(bins[:-1], hDist, 'g--')
 
 # 3. Wartezeiten
 mn=0. ; mx=5*meanTw; nb=75 # minimum, maximum and number of bins
-ax_tw.hist(dT, bins=np.linspace(mn, mx, nb), log=True, rwidth=0.8) # log. Darstellung
+bcW, beW, _ = ax_tw.hist(dT, bins=np.linspace(mn, mx, nb), log=True, rwidth=0.8) # log. Darstellung
 ax_tw.set_ylabel('Anzahl Einträge', size='x-large')
 ax_tw.set_xlabel('$\Delta$t [s]', size='x-large')
+# Mittelpunkt und Breite der Bins
+bc = (beW[:-1]+beW[1:])/2.
+bw = beW[1]-beW[0]
+# zeichne Gleichverteilung ein
+hDist = getHistDistribution(bc, bw, fExponential, tau=1./meanRate, N=N )
+ax_tw.plot(bc, hDist, 'g--')
 
-# Grafik anzeigen
+# Grafiken anzeigen
 plt.show()
