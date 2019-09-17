@@ -563,7 +563,7 @@ class PulseFilter(object):
         idP = min(iC, self.NShapes - 1) # Channel Pulse Shape 
         if iC != iCtrg:
           # possilbe delay of channel w.r.t trigger pulse
-          idly = iDelay[iC]
+          idly = iDelay[idP]
           offset = max(0, idtr - idTprec)  # search around trigger pulse
     #  analyse channel to find pulse near trigger
           cor = np.correlate(evData[iC,
@@ -625,7 +625,7 @@ class PulseFilter(object):
       if self.DPanalysis:        
 #3. find subsequent pulses in accepted events
         # possilbe delay of channel w.r.t trigger pulse
-        idly = iDelay[iC]
+        idly = iDelay[idP]
         offset = idtr + lref[idP] # search after trigger pulse
         for iC in range(NChan):
           cor = np.correlate(evData[iC, idly+offset:], refP[idP], mode='valid')
