@@ -373,9 +373,6 @@ def runCosmoUi():
   ui = ComoGuiUiInterface()
   ui.init(MainWindow, DAQconfFile)
 
-# call initialization
-  ui.init(MainWindow, DAQconfFile)
-
 # start pyqt event loop
   MainWindow.show()
   sys.exit(app.exec_())
