@@ -118,7 +118,6 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       self.pTE_BMconfig.setPlainText(open(self.iwd + '/' + self.BMfile, 'r').read() )
       self.pTE_PFconfig.setPlainText(open(self.iwd + '/' + self.PFfile, 'r').read() )
 
-
     def initDAQ(self, DAQconfFile):
       # initialize DAQ from config files - need absolute path
       path = os.path.dirname(DAQconfFile)
@@ -169,13 +168,17 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       self.readConfigs(DAQconfDict)
 
     def setOptions(self):
-# set font for plainTextEdit to monospace
+      # set font for plainTextEdit to monospace
       monofont = QtGui.QFont()
       monofont.setStyleHint(QtGui.QFont.TypeWriter)
       monofont.setFamily("unexistentfont")        
       self.pTE_OsciConfig.setFont(monofont)
       self.pTE_BMconfig.setFont(monofont)
       self.pTE_PFconfig.setFont(monofont)
+      # no line wrap, horizontal scroll bar instead
+      self.pTE_OsciConfig.setLineWrapMode(0)
+      self.pTE_BMconfig.setLineWrapMode(0)
+      self.pTE_PFconfig.setLineWrapMode(0)
 
     def setHelp_DE(self):
       self.TE_Help.setText(open('doc/Hilfe.html', 'r').read() ) 
