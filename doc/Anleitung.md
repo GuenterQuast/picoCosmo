@@ -1,6 +1,6 @@
 # Tutorial zu picoCosmo
 
-									  Vers. 0.5.3  		    Günter Quast, Nov. 2018
+									  Vers. 0.6.0  		                Günter Quast, Aug. 2018
 
 ### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
