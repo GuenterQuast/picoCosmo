@@ -310,7 +310,7 @@ sudo apt-get install libps2000
 mkdir git
 cd git
 git pull https://github.com/GuenterQuast/picoCosmo
-cd picoCosmo/whl
+cd picoCosmo/libs/whl
 sudo pip3 install *.whl
 # put current user in group pico to grant acces to USB ports
 sudo useradd -G pico $USER
