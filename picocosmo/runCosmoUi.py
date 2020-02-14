@@ -50,7 +50,7 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       msg.setStandardButtons(QMessageBox.Ok)
       return msg.exec_()
 
-    def init(self, Window, DAQconfFile):
+    def init(self, Window, DAQconfFile, ConfDir=None, WDname=None):
  # initialisation 
       super().setupUi(Window) # initialize base class
       self.Window = Window
@@ -61,14 +61,29 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
 # set help 
       self.setHelp_EN()
 
-# find user home directory and create directory 'picoCosmo' 
+# find user home directory and create directory 'PhyPi' 
       self.homedir = os.getenv('HOME')
-      self.ConfDir = self.homedir + '/picoCosmo' 
+      if ConfDir != None:
+        if ConfDir[0] != '/':    # relative path
+          self.ConfDir = self.homedir + '/' + ConfDir
+        else:                     # absolute path          
+          self.ConfDir = ConfDir
+      else:
+        if self.ConfDir == None: self.ConfDir = self.homedir + '/picoCosmo' 
       if not os.path.exists(self.ConfDir): 
         os.makedirs(self.ConfDir)
 
 # set initial working Directory
-      self.WDname = self.ConfDir 
+      if WDname != None:
+        if WDname[0] != '/':    # relative path
+          self.WDname = self.homedir + '/' + WDname          
+        else:                   # absolute path
+          self.WDname = WDname          
+      else:
+        if self.WDname == None: self.WDname = self.ConfDir
+      if not os.path.exists(self.WDname): 
+        os.makedirs(self.WDname)
+
       self.lE_WorkDir.setText(self.WDname)
 
 # define actions
@@ -414,7 +429,7 @@ def runCosmoUi():
   conf_directory = cfg_dict['config_directory']
   if conf_directory == '~':  conf_directory = homedir
   if conf_directory == '.':  conf_directory = os.getcwd()
-  if conf_directory == ' ':  conf_directory = path_to_PhyPi
+  if conf_directory == ' ':  conf_directory = path_to_picoCosmo
   DAQconfFile = conf_directory + '/' + cfg_dict['daq_file']
   
 # check for / read command line arguments
@@ -422,10 +437,6 @@ def runCosmoUi():
   if len(sys.argv)==2:
     DAQconfFile = os.path.abspath(sys.argv[1]) # with full path to file
     print (DAQconfFile)
-  elif os.path.exists(homedir + '/picoCosmo/default.daq'): 
-    DAQconfFile = homedir + '/picoCosmo/default.daq'
-  else:
-    DAQconfFile = 'default.daq'
 
 # start GUI
   if path_to_picoCosmo!= '':
@@ -433,7 +444,8 @@ def runCosmoUi():
   app = QtWidgets.QApplication(sys.argv)
   MainWindow = QtWidgets.QMainWindow()
   ui = ComoGuiUiInterface()
-  ui.init(MainWindow, DAQconfFile)
+  ui.init(MainWindow, DAQconfFile,
+           ConfDir=conf_directory, WDname = work_directory)
 
 # start pyqt event loop
   MainWindow.show()
