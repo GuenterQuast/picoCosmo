@@ -214,7 +214,7 @@ class PulseFilter(object):
       self.tauf[i] =  d['tauf']
       self.pheight[i] = d['pheight'] 
       if 'mode' in d:
-        self.mode[i](d['mode'] )
+        self.mode[i]=(d['mode'] )
       if 'delay' in d:
         self.delay[i] = d['delay']
     # set default for offset subtraction (true for mode 0, fals for mode 1)
