@@ -54,8 +54,8 @@ For your convenience, the sub-directory *libs/whl/* contains compatible versions
 python-wheels. 
 
 The *PicoTech* driver libraries for the #Raspberry Pi# are located
- in the directory *libs/picoscopelibs*. Execute the script
-  *installlibs.sh*
+ in the directory *libs/RasPi/picoscopelibs*. Execute the script
+  *installlibs_RasPi.sh*
 to install all necessary components on a Raspberry Pi.
 
 By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. Initally, this

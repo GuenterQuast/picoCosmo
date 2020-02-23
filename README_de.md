@@ -113,7 +113,7 @@ Paket *picoDAQ* als *python-wheels* enthalten; die Dateien für das picoscope k�
     pip install *.whl 
 installiert werden können. 
 
-Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs.sh* werden alle für *picoCosmo* notwendigen
+Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/RasPi/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs_RasPi.sh* werden alle für *picoCosmo* notwendigen
 Komponenten auf der Rasbperry Pi installiert.
 
 Druch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis ~/picoCosmo erzeugt,
