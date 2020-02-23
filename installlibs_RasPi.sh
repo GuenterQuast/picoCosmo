@@ -13,6 +13,10 @@ sudo apt-get install libatlas-base-dev # needed to build nupmy
 sudo pip3 install libs/whl/*.whl # python wheels
 #sudo pip3 install libs/tgz/*.tar.gz # python packages 
 
-# libraries by Pico Technology for Picoscope 
-#   see  https://www.picotech.com/downloads
+# install PicoScope C libraries for USB oscilloscope
+sudo dpkg -i libs/RasPi/picoscopelibs/*.deb # picoscope 
+sudo usermod -a -G tty pi # grant acces to USB for user pi
+
+# generate desktop icons
+cp libs/RasPi/*.desktop ~/Desktop
 
