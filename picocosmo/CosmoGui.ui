@@ -281,7 +281,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="OsciConfig">
        <attribute name="title">
@@ -492,9 +492,9 @@
       <property name="geometry">
        <rect>
         <x>11</x>
-        <y>26</y>
+        <y>36</y>
         <width>601</width>
-        <height>621</height>
+        <height>611</height>
        </rect>
       </property>
       <property name="undoRedoEnabled">
@@ -511,7 +511,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>0</y>
+        <y>3</y>
         <width>88</width>
         <height>31</height>
        </rect>
@@ -527,8 +527,8 @@
      <widget class="QPushButton" name="pB_Hilfe">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>0</y>
+        <x>112</x>
+        <y>3</y>
         <width>88</width>
         <height>31</height>
        </rect>

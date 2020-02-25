@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'CosmoGui.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_CosmoWindow(object):
     def setupUi(self, CosmoWindow):
@@ -163,19 +165,19 @@ class Ui_CosmoWindow(object):
         self.Tab_Help = QtWidgets.QWidget()
         self.Tab_Help.setObjectName("Tab_Help")
         self.TE_Help = QtWidgets.QTextEdit(self.Tab_Help)
-        self.TE_Help.setGeometry(QtCore.QRect(11, 26, 601, 621))
+        self.TE_Help.setGeometry(QtCore.QRect(11, 36, 601, 611))
         self.TE_Help.setUndoRedoEnabled(False)
         self.TE_Help.setReadOnly(True)
         self.TE_Help.setPlaceholderText("")
         self.TE_Help.setObjectName("TE_Help")
         self.pB_Help = QtWidgets.QPushButton(self.Tab_Help)
-        self.pB_Help.setGeometry(QtCore.QRect(10, 0, 88, 31))
+        self.pB_Help.setGeometry(QtCore.QRect(10, 3, 88, 31))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("images/flagUK.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pB_Help.setIcon(icon2)
         self.pB_Help.setObjectName("pB_Help")
         self.pB_Hilfe = QtWidgets.QPushButton(self.Tab_Help)
-        self.pB_Hilfe.setGeometry(QtCore.QRect(110, 0, 88, 31))
+        self.pB_Hilfe.setGeometry(QtCore.QRect(112, 3, 88, 31))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap("images/flagDE.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pB_Hilfe.setIcon(icon3)
@@ -203,7 +205,7 @@ class Ui_CosmoWindow(object):
 
         self.retranslateUi(CosmoWindow)
         self.tab_Main.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(CosmoWindow)
 
     def retranslateUi(self, CosmoWindow):
@@ -248,4 +250,3 @@ class Ui_CosmoWindow(object):
         self.lE_RunTag.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Name for the run</p></body></html>"))
         self.lE_RunTag.setText(_translate("CosmoWindow", "CosmoRun"))
         self.label.setText(_translate("CosmoWindow", "Run Tag:"))
-
