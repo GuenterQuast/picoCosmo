@@ -7,7 +7,7 @@
 if [ "$1" != "" ]; then
     USERDIR=$1
 else
-    USERDIR="PhyPi"
+    USERDIR="picoCosmo"
 fi
 
 # -----------------------------------------
