@@ -3,7 +3,7 @@
 # script CosmoGui.py
 from __future__ import print_function, division, unicode_literals
 from __future__ import absolute_import
-
+from builtins import super
 ''' 
   A GUI to control runCosmo.py 
 
@@ -30,6 +30,15 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       msg.setWindowTitle(Title)
       msg.setText(Text)       
       msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+      return msg.exec_()
+
+    def MB_YesNo(self, Title, Text):
+    # wrapper for QMessageBox Question yes/abort
+      msg = QMessageBox()
+      msg.setIcon(QMessageBox.Question)
+      msg.setWindowTitle(Title)
+      msg.setText(Text)       
+      msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
       return msg.exec_()
 
     def MB_Info(self, Title, Text):
@@ -382,13 +391,18 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
 
     # close GUI window and start runCosmo 
       print('\n*==* CosmoGui: closing window and starting runCosmo.py')
-      self.Window.close()
+#      self.Window.close()
+      self.Window.hide()
 
       # start runCosmo
       self.start_runCosmo()
 
-      QtCore.QCoreApplication.instance().quit()
-      print('*==* CosmoGui: exit \n')
+    # exit or continue ? 
+      if self.MB_YesNo('End Dialog','Exit picoCosmo ? ') == QMessageBox.Yes:
+        QtCore.QCoreApplication.instance().quit()
+        print('*==* picoCosmo: exit \n')
+      else:
+        self.Window.show()
               
     def start_runCosmo(self):
         CosmoDir = os.getcwd()
@@ -404,6 +418,7 @@ def runCosmoUi():
 
   # get relevant paths
   path_to_picoCosmo = os.path.dirname(script)
+  if path_to_picoCosmo=='': path_to_picoCosmo='./' # python2 work-around
   homedir = os.getenv('HOME')
   # ... and find name of work directory
   cfgname = homedir + '/' + CONFIG_ENVIRONMENT_file
