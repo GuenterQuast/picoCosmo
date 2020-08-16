@@ -81,7 +81,7 @@ print('   tau=%.4gµs  UG-Anteil = %.2g'%(tau, bg) )
 # histogram data 
 bins=np.linspace(dtmin, dtmax, int(2*(dtmax-dtmin))+1)
 bw = bins[1]-bins[0]
-bc, be =np.histogram(dT, bins, normed=0) 
+bc, be =np.histogram(dT, bins, density=False) 
 bcent=(be[:-1]+be[1:])/2
 norm=np.sum(bc)
 
