@@ -38,4 +38,9 @@ if [ -d $DIR ]; then
   cp -auv config/ $DIR
   cp -auv *.daq $DIR
 #
+  # for Raspberry pi
+     # create desktop icon
+  #!cp -auv libs/RasPi/*.desktop $HOME/Desktop
+  #!chmod a+x $HOME/Desktop/*.desktop
+ 
 fi
