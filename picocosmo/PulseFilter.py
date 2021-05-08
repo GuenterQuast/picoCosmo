@@ -352,7 +352,7 @@ class PulseFilter(object):
         if 'RMeterTitle' in self.confDict:
           self.RMeterTitle = self.confDict['RMeterTitle']
         else:
-          self.RMeterTitle = "signal rate history" 
+          self.RMeterTitle = "filter rate history" 
 
       if "histograms" in self.confDict:
         histograms = self.confDict['histograms']
