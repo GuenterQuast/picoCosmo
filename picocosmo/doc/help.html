@@ -1,0 +1,92 @@
+<html><head><title>README</title></head><body><p><span style=" font-size:14pt;">
+
+Short description of  </span><span style=" font-size:xx-large; font-weight:600;">picoCosmo  </span></p>
+
+<p>
+This software is tailored to identify short pulses from muon detectors,  
+e. g. the scintillator panels of the  
+<span style=" font-style:italic;">CosMO</span>-experiment by &quot;Netzwerk Teilchenwelt&quot;,
+<a href="http://www.teilchenwelt.de"><span style=" text-decoration: underline; color:#0057ae;">
+http://www.teilchenwelt.de</span></a>, or the 
+<span style=" font-style:italic;"> Kamiokanne</span>-Experiment (a water cherenkov detector
+with photomultiplier readout).</p>
+
+<p>
+Data is read from the PicoScope device via a Buffer Manager, which collects
+recorded waveforms and distributes them to consumer processes. The consumers
+either provide real-time displays of a sub-set of the data or perform data analysis.</p>
+ 
+<p>
+The analysis proceeds in three steps. 
+First, the trigger is validated by cross-correlation with a signal template located
+around the trigger time. Next, coincidences near a validated triggering
+pulse are searched for in all connected channels. The optional third step performs 
+a search for additional pulses after the triggering event, indicating the decay of a
+stopped muon in or near the detector. </p>
+ 
+<p>
+The software provides real-time displays of waveforms, detector signals and rates. 
+Optionally, parameters of identified pulses or of double-pulses are written to 
+files in <span style="font-family:'Hack';">CSV</span> format. 
+In addition, raw waveforms or pictures in <span style="font-family:'Hack';">.png</span> 
+format of identified double pulses can optionally  be stored for off-line analysis
+or for an instructive analysis &quot;by hand&quot; based on the waveform pictures. 
+From this information, the mean muon lifetime in the muon rest frame (2.2 µs) can
+be derived.
+</p>
+ 
+<p>
+<span style=" font-size:x-large; font-weight:600;">Configuration and program execution</span></p>
+ 
+<p>
+Data Acquisition and Analysis is started using the graphical interface by typing 
+<span style=" font-family:'Hack';">./CosmoGui.py xxx.daq</span>, or optionally, by
+directly starting the pyhton script for run execution with the command 
+<span style=" font-family:'Hack';">./runCosmo xxxx.daq</span>.</p>
+
+<p>
+The configuration for <span style=" font-family:'Hack';">runCosmo.py</span> 
+is defined in several '.yaml' files contained in sub-directory
+<span style=" font-family:'Hack';">config/</span>. 
+
+The configuration files applicable to a specific experimental set-up are
+listed in files of type  <span style=" font-family:'Hack';">.daq</span>, 
+e.g. <span style=" font-family:'Hack';">Kanne.daq</span> for Kamiokanne and 
+<span style=" font-family:'Hack';">Cosmo.daq</span> for a run with the CosMo panels.</p>
+
+<p>
+The  <span style=" font-family:'Hack';">.yaml</span> files specify configurations for the
+oscilloscope, the BufferManager and the Pulse Filter. Here is the example to run with
+Kamiokanne:</p>
+
+<p><span style=" font-family:'Hack';"># file Kanne.daq --------------------<br/>
+# configuration files for Kamiokanne<br/>
+DeviceFile: config/PMpulse.yaml   # Oscilloscope configuration<br/>
+BMfile:     config/BMconfig.yaml  # Buffer Manager configuration<br/>
+PFfile:     config/PFKanne.yaml  # Pulse Filter Configuration</span></p>
+
+<p>
+These configuration files are loaded into the Configuration tab at program start.</p>
+
+<p>The graphical interface allows to inspect and modify the configuration and to start
+a data acquitistion run by starting the script 
+<span style=" font-family:'Hack';">runComso.py</span> as a subprocess. 
+Configuration and output files are stored in a newly created directory
+<span style=" font-family:'Hack';">&lt;Run Tag&gt;_&lt;date&gt;/</span>, 
+where a specific <span style=" font-family:'Hack';">&lt;Run Tag&gt;</span> 
+can be specified by the user.</p>
+
+<p>
+After run start, control is performed via the main window of the Buffer
+Manager, which contains the options 
+<span style=" font-family:'Hack';">Pause</span>, 
+<span style=" font-family:'Hack';">Resume</span>,
+<span style=" font-family:'Hack';">Stop</span> and 
+<span style=" font-family:'Hack';">EndRun</span>. 
+
+In stopped state, all windows remain open, so that graphs may be saved and log
+output inspected. In End-state, all processes are stopped, and consequently all
+windows disappear. Resume running from Stop-state is presently not foreseen.</p>
+
+</body>
+</html>

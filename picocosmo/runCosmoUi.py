@@ -153,20 +153,22 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       try:
         with open(DAQconfFile) as f:
           DAQconf = f.read()
+          try:
+            DAQconfdict=yaml.load(DAQconf, Loader=yaml.Loader)
+          except Exception as e:
+           # self.MB_Warning('Warning', 
+           #   'DAQ configuration not valid yaml format ' + DAQconfFile +'\n' + str(e) ) 
+           print('     DAQ configuration not valid yaml format' + DAQconfFile)
+         # exit(1)
+           return   
       except Exception as e:
-        self.MB_Warning('Warning', 
-          'failed to read DAQ configuration file ' + DAQconfFile +'\n' + str(e)) 
-        print('     failed to read DAQ configuration file ' + DAQconfFile)
-        exit(1)
-
-      try:
-        DAQconfdict=yaml.load(DAQconf, Loader=yaml.Loader)
-      except Exception as e:
-        self.MB_Warning('Warning', 
-          'DAQ configuration not valid yaml format ' + DAQconfFile +'\n' + str(e) ) 
-        print('     DAQ configuration not valid yaml format' + DAQconfFile)
-        exit(1)
-
+        print('   DAQ configuration file ' + DAQconfFile + ' not found')
+     # self.MB_Warning('Warning', 
+     #     'failed to read DAQ configuration file ' + DAQconfFile +'\n' + str(e))
+     # exit(1)
+        DAQconf = "missing !"
+        return
+      
       self.lE_DAQConfFile.setText(DAQconfFile)
       RunTag = os.path.split(DAQconfFile)[1].split('.')[0]
       self.lE_RunTag.setText(RunTag)

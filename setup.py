@@ -24,6 +24,9 @@ setup(
     author='Guenter Quast',
     author_email='Guenter.Quast@online.de',
     packages=['picocosmo'],
+    inlcude_package_data=True,
+    package_data={'picocosmo': ['images/*', 'doc/*']},
+
     scripts=[],
     classifiers=[
     'Development Status :: 5 - stable',
