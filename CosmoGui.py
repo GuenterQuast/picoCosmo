@@ -5,7 +5,13 @@
 ''' run graphical user interface of picoCosmo
 '''
 
-from picocosmo.runCosmoUi import *
+import sys, subprocess
 
 if __name__ == "__main__": # - - - - - - - - - - - - - - - - - - - -
-  runCosmoUi()
+  # get commandline arguments 
+  arg = '' if len(sys.argv)<2 else sys.argv[1]    
+  # sys.executable is the present python interpreter,
+  #  restart it and run GUI of PhyPiDAQ 
+  subprocess.run(args =
+    [sys.executable, '-m', 'picocosmo.runCosmoUi', arg])
+

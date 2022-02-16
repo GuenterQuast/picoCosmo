@@ -452,8 +452,9 @@ def runCosmoUi():
 # check for / read command line arguments
   # get DAQ configuration file
   if len(sys.argv)==2:
-    DAQconfFile = os.path.abspath(sys.argv[1]) # with full path to file
-    print (DAQconfFile)
+    if sys.argv[1] != '':
+      DAQconfFile = os.path.abspath(sys.argv[1]) # with full path to file
+      print (DAQconfFile)
 
 # start GUI
   if path_to_picoCosmo!= '':
