@@ -408,8 +408,9 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
               
     def start_runCosmo(self):
         CosmoDir = os.getcwd()
-        subprocess.call([CosmoDir + '/runCosmo.py ' + self.DAQfile],
-                      cwd = self.WDname + '/' + self.runDir, shell = True)
+        subprocess.run(args =
+            [sys.executable, '-m', 'picocosmo.runCosmo', self.DAQfile],
+                      cwd = self.WDname + '/' + self.runDir)
         
 # - end Class Ui_CosmoWindow
 
