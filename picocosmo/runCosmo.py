@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-# script runCosmo.py
 '''
   **runCosmo** run Data Aquisition with Picoscpe 
    (modified version of runDAQ from picoDAQ project) 
