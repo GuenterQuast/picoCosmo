@@ -29,7 +29,7 @@
 
 """
 
-from picocosmo.runCosmo import *
+from picocosmo.runCosmoDAQ import *
 import sys, subprocess
 
 if __name__ == "__main__":  # - - - - - - - - - - - - - - - - - - - -
@@ -41,5 +41,5 @@ if __name__ == "__main__":  # - - - - - - - - - - - - - - - - - - - -
     arg = sys.argv[1]
     
     subprocess.run(args=
-        [sys.executable, '-m', 'picocosmo.runCosmo', arg])
+        [sys.executable, '-m', 'picocosmo.runCosmoDAQ', arg])
 

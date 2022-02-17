@@ -180,15 +180,15 @@ class runCosmoDAQ(object):
       exit(1)
     
     # copy some of the important configuration variables ...
-    self.NChannels = PSconf.NChannels # number of channels in use
-    self.TSampling = PSconf.TSampling # sampling interval
-    self.NSamples = PSconf.NSamples   # number of samples
+    self.NChannels = self.PSconf.NChannels # number of channels in use
+    self.TSampling = self.PSconf.TSampling # sampling interval
+    self.NSamples = self.PSconf.NSamples   # number of samples
   
   # configure Buffer Manager  ...
     print(' -> initializing BufferMan')
     self.BM = BMan.BufferMan(self.BMconfdict, self.PSconf)
   # ... tell device what its buffer manager is ...
-    self.PSconf.setBufferManagerPointer(BM)
+    self.PSconf.setBufferManagerPointer(self.BM)
 
   # ... and start data acquisition thread.
     if self.verbose:
@@ -204,13 +204,13 @@ class runCosmoDAQ(object):
   #
 
     if 'modules' in self.PFconfdict:
-      self.PFmodules = PFconfdict['modules']
+      self.PFmodules = self.PFconfdict['modules']
     else:
       self.PFmodules = ['RMeter', 'Hists', 'Display' ]
 
   # run PulseFilter: signal filtering and analysis
     print(' -> initializing PulseFilter')
-    PF = PulseFilter( BM, PFconfdict, self.verbose)
+    PF = PulseFilter( self.BM, self.PFconfdict, self.verbose)
     #                 BM   config   verbose    
     PF.run()
     time.sleep(1.)
@@ -234,9 +234,9 @@ class runCosmoDAQ(object):
 
     except KeyboardInterrupt:
       print(sys.argv[0]+': keyboard interrupt - closing down ...')
-      BM.end()  # shut down BufferManager
+      self.BM.end()  # shut down BufferManager
       time.sleep(3.)
-      PF.end()
+      self.PF.end()
 
     finally:
     # END: code to clean up
