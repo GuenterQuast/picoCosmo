@@ -26,7 +26,8 @@ setup(
     packages=['picocosmo'],
     inlcude_package_data=True,
     package_data={'picocosmo': ['images/*', 'doc/*']},
-
+    install_requires = [
+         'picodaqa @ git+https://github.com/GuenterQuast/picoDAQ'],
     scripts=[],
     classifiers=[
     'Development Status :: 5 - stable',
@@ -40,7 +41,7 @@ setup(
     description=' Analysis of waveforms from cosmic ray detectors',
     long_description=open('README.md').read(),
     setup_requires=[\
-        "NumPy >= 1.13.3",
-        "SciPy >= 0.18.1",
-        "matplotlib >= 2.0.0",]
+        "NumPy >= 1.14.4",
+        "SciPy >= 1.5.4",
+        "matplotlib >= 3.0.0",]
 )

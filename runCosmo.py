@@ -25,7 +25,7 @@
     - live plot of data rates, storage of filtered data (raw data and oscilloscope
       pictures, double-pulse features)
 
-    This code simply calls the exeutable part of module picocosmo.runCosmo
+    This code simply calls the executable part of module picocosmo.runCosmoDAQ
 
 """
 
