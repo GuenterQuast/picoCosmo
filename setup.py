@@ -34,14 +34,17 @@ setup(
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.
     'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     ],
     url='http://www.ekp.kit.edu/~quast/',
     license='GNU Public Licence',
     description=' Analysis of waveforms from cosmic ray detectors',
     long_description=open('README.md').read(),
     setup_requires=[\
-        "NumPy >= 1.14.4",
-        "SciPy >= 1.5.4",
+        "NumPy >= 1.16.2",
+        "SciPy >= 1.1.0",
         "matplotlib >= 3.0.0",]
 )
