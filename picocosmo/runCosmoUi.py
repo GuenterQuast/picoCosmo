@@ -239,8 +239,8 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
         self.pTE_PFconfig.setPlainText(open(FileName, 'r').read() )
 
     def selectConfigFile(self):
-      path2File = QtWidgets.QFileDialog.getOpenFileName(None,
-         'DAQ config', './', 'DAQ(*.daq)')
+      path2File = QtWidgets.QFileDialog.getOpenFileName(parent=None,
+         caption='DAQ config', directory=self.WDname, filter='DAQ(*.daq)')
       FileName = str(path2File[0]).strip()
       if FileName != '' :
         # print('selected File ' + str(FileName) )
