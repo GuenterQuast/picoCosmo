@@ -44,7 +44,7 @@ setup(
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     ],
-    url='http://www.ekp.kit.edu/~quast/',
+    url='https://www.etp.kit.edu/~quast/',
     license='GNU Public Licence',
     description=' Analysis of waveforms from cosmic ray detectors',
     long_description=open('README.md').read(),
