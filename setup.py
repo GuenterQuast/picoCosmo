@@ -28,7 +28,7 @@ setup(
     package_data={'picocosmo': ['images/*', 'doc/*']},
     install_requires = [
          'picodaqa @ git+https://github.com/GuenterQuast/picoDAQ'],
-    scripts=[],
+    scripts=['CosmoGui.py', 'runCosmo.py'],
     classifiers=[
     'Development Status :: 5 - stable',
     # Specify the Python versions you support here. In particular, ensure

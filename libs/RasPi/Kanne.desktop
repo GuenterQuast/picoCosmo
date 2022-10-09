@@ -3,7 +3,7 @@ Type=Application
 Encoding=UTF-8
 Name=PicoKanne
 Comment=PicoCosmo Configuration
-Icon=/home/pi/git/picoCosmo/images/CosmoKanne_icon.png
-Exec=lxterminal -t "CosmoGui" -e /home/pi/git/picoCosmo/CosmoGui.py /home/pi/git/picoCosmo/Kanne.daq
+Icon=picoCosmo/images/CosmoKanne_icon.png
+Exec=lxterminal -t "CosmoGui" -e CosmoGui.py picoCosmo/Kanne.daq
 Terminal=false
 
