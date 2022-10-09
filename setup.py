@@ -31,8 +31,7 @@ setup(
     packages=['picocosmo'],
     inlcude_package_data=True,
     package_data={'picocosmo': ['images/*', 'doc/*']},
-    install_requires = [
-         'picodaqa @ git+https://github.com/GuenterQuast/picoDAQ'],
+    install_requires = [],
     scripts=['CosmoGui.py', 'runCosmo.py'],
     classifiers=[
     #'Development Status :: 5 - Stable',
@@ -47,8 +46,9 @@ setup(
     url='https://www.etp.kit.edu/~quast/',
     license='GNU Public Licence',
     description=' Analysis of waveforms from cosmic ray detectors',
-    long_description=open('README.md').read(),
+    long_description=open('README').read(),
     setup_requires=[\
+        "picodaqa",
         "NumPy >= 1.16.2",
         "SciPy >= 1.1.0",
         "matplotlib >= 3.0.0",]
