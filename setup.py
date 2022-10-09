@@ -1,8 +1,13 @@
-import picocosmo  # from this directory
-import sys
+"""
+Setup script for picoCosmo 
+"""
 
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
+
+import picocosmo  # from this directory
+import sys
+
 
 # class for running unit tests
 # from: https://pytest.org/latest/goodpractices.html
@@ -33,7 +38,6 @@ setup(
     'Development Status :: 5 - stable',
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.
-    'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
