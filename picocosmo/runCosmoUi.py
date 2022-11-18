@@ -308,10 +308,15 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
           if self.MB_Question('Question', 
             'saving Config to file ' + fullDAQfile) == QMessageBox.Cancel:
             return 1
-        fDAQ = open(fullDAQfile, 'w')
-        print(DAQconf, file = fDAQ )
-        self.DAQfile = DAQfile
-        fDAQ.close()     
+        try:
+          fDAQ = open(fullDAQfile, 'w')
+          print(DAQconf, file = fDAQ )
+          self.DAQfile = DAQfile
+          fDAQ.close()     
+        except Exception as e:
+          self.MB_Warning('Warning', 
+            'Failed to save '+ fullDAQfile + '\n' + str(e) )       
+          return 1
 
         # store all other configuration files   
 
@@ -319,28 +324,45 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
         dir, fn = os.path.split(fnam)
         if dir != '': 
           if not os.path.exists(confdir + '/' + dir):
-            os.makedirs(confdir + '/' + dir) 
-        fPS = open(confdir + '/' + fnam, 'w')
-        print(PSconf, file = fPS )
-        fPS.close()
+            os.makedirs(confdir + '/' + dir)
+        try: 
+          fPS = open(confdir + '/' + fnam, 'w')
+          print(PSconf, file = fPS )
+          fPS.close()
+        except Exception as e:
+          self.MB_Warning('Warning', 
+            'Failed to store ' + fnam + ' in directory ' + confdir + '\n' + str(e) )       
+          return 1
 
         fnam = DAQconfDict['BMfile']
         dir, fn = os.path.split(fnam)
         if dir != '': 
           if not os.path.exists(confdir + '/' + dir):
             os.makedirs(confdir + '/' + dir) 
-        fBM = open(confdir + '/' + fnam, 'w')
-        print(BMconf, file = fBM )
-        fBM.close()
+        try:
+          fBM = open(confdir + '/' + fnam, 'w')
+          print(BMconf, file = fBM )
+          fBM.close()
+        except Exception as e:
+          self.MB_Warning('Warning', 
+            'Failed to store ' + fnam + ' in directory ' + confdir + '\n' + str(e) )       
+          return 1
 
         fnam = DAQconfDict['PFfile']
         dir, fn = os.path.split(fnam)
         if dir != '': 
           if not os.path.exists(confdir + '/' + dir):
-            os.makedirs(confdir + '/' + dir) 
-        fPF = open(confdir + '/' + fnam, 'w')
-        print(PFconf, file = fPF )
-        fPF.close()
+            os.makedirs(confdir + '/' + dir)
+        try: 
+          fPF = open(confdir + '/' + fnam, 'w')
+          print(PFconf, file = fPF )
+          fPF.close()
+        except Exception as e:
+          self.MB_Warning('Warning', 
+            'Failed to store ' + fnam + ' in directory ' + confdir + '\n' + str(e) )       
+          return 1
+
+        return 0
 
     def saveDefaultConfig(self):
     # save configuration
@@ -355,10 +377,16 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
         self.ConfDir = os.path.dirname(fullDAQfile)
         DAQfile = os.path.basename(fullDAQfile)
       else:
+        print("   abort - no file name given") 
         return 1
      # set name and save all configs
       self.lE_DAQConfFile.setText(fullDAQfile)
-      return self.saveConfigs(self.ConfDir, DAQfile=DAQfile, verbose=0)
+      if self.saveConfigs(self.ConfDir, DAQfile=DAQfile, verbose=0):
+        print("   !!! failed to save configuration files")
+        return 1
+      else:
+        print("   - configuration fiels stored in directory " + self.ConfDir)
+        return 0 
 
     def saveEnvironment(self):
       '''
@@ -385,8 +413,11 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
       if not os.path.exists(self.path_to_WD): 
         os.makedirs(self.path_to_WD)
       # store config in working directory 
-      if self.saveConfigs(self.path_to_WD): return
-      print("   - files for this run stored in directory " + self.path_to_WD) 
+      if self.saveConfigs(self.path_to_WD):
+          print("   !!! failed to save Config files for this run") 
+          return 
+      else: 
+          print("   - files for this run stored in directory " + self.path_to_WD) 
 
       # save changes to picocosmo environment
       self.saveEnvironment()
