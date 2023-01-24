@@ -385,7 +385,7 @@ class ComoGuiUiInterface(Ui_CosmoWindow):
         print("   !!! failed to save configuration files")
         return 1
       else:
-        print("   - configuration fiels stored in directory " + self.ConfDir)
+        print("   - configuration files stored in directory " + self.ConfDir)
         return 0 
 
     def saveEnvironment(self):
