@@ -49,7 +49,7 @@ setup(
     long_description=open('README').read(),
     setup_requires=[\
         "picodaqa",
-        "NumPy >= 1.16.2",
+        "NumPy >= 1.17.0",
         "SciPy >= 1.1.0",
-        "matplotlib >= 3.0.0",]
+        "matplotlib >= 3.4.0",]
 )
