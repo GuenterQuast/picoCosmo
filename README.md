@@ -22,10 +22,6 @@ The analysis proceeds in three steps. First, the trigger is validated by cross-c
 The software provides real-time displays of waveforms, detector signals and rates. Optionally, parameters of identified pulses or of double-pulses are written to files in CSV format. In addition, raw waveforms or pictures in *.png* format of identified double pulses can optionally be stored for off-line analysis or for an instructive analysis "by hand" based on the waveform pictures. From this information, the mean muon lifetime in the muon rest frame (2.2 µs) can be derived. 
 
 
-
-
-
-
 ## Dependence on other packages
 
 This code relies on
@@ -54,9 +50,8 @@ For your convenience, the sub-directory *libs/whl/* contains compatible versions
 python-wheels. 
 
 The *PicoTech* driver libraries for the #Raspberry Pi# are located
- in the directory *libs/RasPi/picoscopelibs*. Execute the script
-  *installlibs_RasPi.sh*
-to install all necessary components on a Raspberry Pi.
+in the directory *libs/RasPi/picoscopelibs*. Execute the script
+*installlibs_RasPi.sh* to install all necessary components on a Raspberry Pi.
 
 By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. Initally, this
 directory contains examples of configuration files for different detectors or combinations
@@ -67,8 +62,6 @@ of detectors:
 - the CosMO panels (*Cosmo.daq* or *Cosmo2000.daq* for a PicoScope A series)
 - for one CosMo-panel with Kamikanne (*Kanne-plusPanel.daq*)
 - for the GDK 101 gamma ray detector (*GammaCounter.daq* or GammaCounter2000.daq for the A-series)
-
-
 
 
 ## Program Execution
@@ -89,7 +82,7 @@ Alternatively you may change to the *picoCosmo* installation directory
 
 and start *./runCosmo.py*  from the command line.
 
-Both scripts are controlled by an input file in *.daq*` format, which specifies the
+Both scripts are controlled by an input file in *.daq* format, which specifies the
 configuration:
 
   - Cosmo.daq : configuration for Cosmo-Panels
@@ -113,12 +106,12 @@ The configuration for *runCosmo.py* is defined in several *.yaml* files containe
 
 The  *.yaml* files specify configurations for the oscilloscope, the BufferManager and the Pulse Filter. Here is a general example:
 
-```yaml
+```
 # file default.daq
 # --------------------
 # configuration files for data acquisition and real-time analysis 
 
-DeviceFile: config/PSconfig.yaml    # Oscilloscope configuration file
+DeviceFile: config/PSconfig.yaml   # Oscilloscope configuration file
 BMfile:     config/BMconfig.yaml   # Buffer Manager configuration
 PFfile:     config/PFconfig.yaml   # Pulse Filter Configuration 
 ```

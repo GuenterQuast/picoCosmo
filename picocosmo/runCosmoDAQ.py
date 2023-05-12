@@ -210,9 +210,9 @@ class runCosmoDAQ(object):
 
   # run PulseFilter: signal filtering and analysis
     print(' -> initializing PulseFilter')
-    PF = PulseFilter( self.BM, self.PFconfdict, self.verbose)
+    self.PF = PulseFilter( self.BM, self.PFconfdict, self.verbose)
     #                 BM   config   verbose    
-    PF.run()
+    self.PF.run()
     time.sleep(1.)
 
   def run(self):
