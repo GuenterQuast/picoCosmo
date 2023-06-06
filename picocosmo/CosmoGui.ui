@@ -161,7 +161,7 @@
      <widget class="QPushButton" name="pB_abort">
       <property name="geometry">
        <rect>
-        <x>505</x>
+        <x>570</x>
         <y>0</y>
         <width>41</width>
         <height>41</height>
