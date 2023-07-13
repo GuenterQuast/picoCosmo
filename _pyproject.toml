@@ -1,0 +1,52 @@
+
+# initial version created with pdm import setup.py
+# additions:
+#  - dynamic versioning
+#  - build sysetem 
+#  - package scrips
+
+
+[project]
+name = "picocosmo"
+dynamic = ["version"]
+description = " Analysis of waveforms from cosmic ray detectors"
+readme = "README.md"
+authors = [
+    {name = "Guenter Quast", email = "Guenter.Quast@online.de"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = []
+license = {text = "GNU Public Licence"}
+requires-python = ">=3.6"
+
+[tool.setuptools]
+script-files = [
+    "runCosmo.py", "CosmoGui.py" ]
+
+[tool.setuptools.package-data]
+picocosmo = ["images/*", "doc/*"]
+
+[project.urls]
+Homepage = "https://www.etp.kit.edu/~quast/"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.distutils.bdist_wheel]
+universal = false
+
+[tool.setuptools.packages.find]
+include = ["picocosmo.*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "picocosmo.__version__"}
+
