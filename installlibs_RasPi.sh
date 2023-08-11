@@ -11,7 +11,7 @@ sudo apt-get install python3-pyqt5
 sudo apt-get install libatlas-base-dev # needed to build nupmy
 
 # install this package (picoCosmo) 
-sudo pip3 install .
+## sudo pip3 install .
 
 sudo pip3 install libs/whl/*.whl # python wheels
 #sudo pip3 install libs/tgz/*.tar.gz # python packages 
