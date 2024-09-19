@@ -2,35 +2,24 @@
 Setup script for picoCosmo 
 """
 
-from setuptools import setup
-from setuptools.command.test import test as TestCommand
-
-import picocosmo  # from this directory
 import sys
+from setuptools import setup
 
+pkg_name = "picocosmo"
+# import _version_info from package
+sys.path[0] = pkg_name
+import _version_info
 
-# class for running unit tests
-# from: https://pytest.org/latest/goodpractices.html
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = []
-
-    def run_tests(self):
-        import pytest
-        errcode = pytest.main(self.pytest_args)
-        sys.exit(errcode)
+_version = _version_info._get_version_string()
 
 setup(
-    name='picocosmo',
-    version=picocosmo.__version__,
+    name=pkg_name,
+    version=_version,
     author='Guenter Quast',
     author_email='Guenter.Quast@online.de',
-    packages=['picocosmo'],
+    packages=[pkg_name],
     inlcude_package_data=True,
-    package_data={'picocosmo': ['images/*', 'doc/*']},
+    package_data={pkg_name: ['images/*', 'doc/*']},
     install_requires = [],
     scripts=['CosmoGui.py', 'runCosmo.py'],
     classifiers=[
