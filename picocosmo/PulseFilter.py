@@ -743,7 +743,7 @@ class PulseFilter(object):
           self.prlog ('*==* PF: %i, %i, %i, %i, %i, %.3g'\
               %(evcnt, Nval, Nacc, Nacc2, Nacc3, Nacc4, tevt) )
 
-      if(verbose and evcnt%1000==0):
+      if(verbose and Nacc%1000==0):
         if NChan == 1:
           self.prlog("*==* PF: evt %i, Nval: %i"\
               %(evcnt, Nval))
