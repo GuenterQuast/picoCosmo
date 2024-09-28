@@ -382,6 +382,7 @@ ist heir gezeigt:
   doublePulse: true  # switch to control double-pulse search
 ``` 
 
+
 **Konfiguration des Puffer-Managers**
 
 Die Konfigurationsdatei für den Puffer-Manager muss meist nicht geändert werden.
@@ -610,23 +611,24 @@ der dritte Detektor zwischen den beiden anderen befinden.
 
 Zur groben Bestimmung werden im Text-Fenster des BufferManagers
 die Zahlen der registrierten Zwei- und Dreifachkoinzidenzen angezeigt.
-Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
-werden, findet sich diese Information. 
 
-In jeweils einer Zeile der Datei im CSV-Format werden für jedes registrierte
-Ereignis die Ereignis-Nummer, der Zeitpunkt relativ zum Run-Start sowie
-die Pulshöhen und Zeitpunkte relativ zum Trigger für Pulse auf jedem Kanal
-angegeben:
+Auch am Ende der log-Datei, in der die Pulsparameter abgespeichert
+werden, findet sich diese Information. In dieser Datei im CSV-Format
+werden in jeweils einer Zeile für jedes registrierte Ereignis die 
+Ereignis-Nummer, der Zeitpunkt relativ zum Programmstart sowie
+die Pulshöhen und Zeitpunkte relativ zum Trigger für Pulse auf 
+jedem Kanal angegeben:
 
 `EvNr,    EvT,    V(1),    T(1),    ... ,   V(NC),    T(NC)`
 
-Eine Pulshöhe von Null bedeutet dabei, das kein Signal gefunden wurde.
+Eine Pulshöhe von Null bedeutet dabei, dass kein Signal gefunden wurde.
 
 Eine genaue Bestimmung der Effizienz erfordert eine spezielle Konfiguration
-bei der Datennahme, bei der nur Ereignisse akzeptiert werden, die Pulse
-oberhalb der Schwelle in den beiden Tag-Detetkoren enthalten. 
-Das Verhältnis der Anzahl mit Pulsen auch im Probe-Detektor und der 
-Gesamtanzahl registrierter Ereignisse ist die Effizienz des Probe-Detektors.  
+bei der Datennahme (s. Konfigurationsdatei *CosmoEfficiency.daq*), bei der
+nur Ereignisse akzeptiert werden, die Pulse oberhalb der Schwelle in den
+beiden Tag-Detetkoren enthalten. Das Verhältnis der Anzahl mit Pulsen auch 
+im Probe-Detektor und der Gesamtanzahl registrierter Ereignisse ist die 
+Effizienz des Probe-Detektors.  
 Mit Hilfe des Scripts *PanelEfficiency.py* kann eine detaillierte 
 Auswertung vorgenommen werden. Als Beispiel können die im Verzeichnis
 *output/Efficiency_2409* hinterlegten Dateien verwendet werden:

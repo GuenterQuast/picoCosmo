@@ -1,0 +1,15 @@
+#  Configuration Files for measurement of panel efficiencies
+#
+# for three panels on top of each other, efficiency of middle one is measured
+#
+DeviceFile: config/PScosmoEfficiency.yaml   # Oscilloscope
+PFfile: config/PFcosmoEfficiency.yaml       # PulseFilter
+BMfile: config/BMconfig.yaml                # Buffer Manager
+
+
+
+
+
+
+
+

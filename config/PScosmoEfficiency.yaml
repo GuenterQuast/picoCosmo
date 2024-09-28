@@ -1,0 +1,33 @@
+# PicoScope configuration for three CosMO panels
+
+PSmodel: '2000a'      # model type (2000a is default)
+
+picoChannels: [A, B, C] # for 4-channel scope
+ChanModes:     [DC, DC, DC]
+ChanRanges: [0.2, 0.2, 0.2]
+ChanOffsets: [0.14, 0.16, 0.15]
+ChanColors: [darkblue, sienna, indigo]
+
+# for rate:
+Nsamples: 500
+sampleTime: 2.E-6
+
+trgChan: A
+trgThr: -15.E-3
+trgTyp: Falling
+pretrig: 0.05
+
+##  trigger on Panel B if noise level is to be measrued
+#trgChan: B
+#trgThr: -15.E-3
+#trgTyp: Falling
+#pretrig: 0.05
+
+
+
+
+
+
+
+
+
