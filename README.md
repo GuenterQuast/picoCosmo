@@ -53,9 +53,13 @@ The *PicoTech* driver libraries for the #Raspberry Pi# are located
 in the directory *libs/RasPi/picoscopelibs*. Execute the script
 *installlibs_RasPi.sh* to install all necessary components on a Raspberry Pi.
 
-By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. Initally, this
-directory contains examples of configuration files for different detectors or combinations
-of detectors: 
+On other systems, the installation of the *picoCosmo* package with its start-up scripts
+*CosmoGui.py* and *runCosmo.py* can be installed by executing the shell script 
+*installibs.sh*. Note that a virtual Python environment must be activated on modern
+Linux versions. 
+
+By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. 
+Initially, this directory contains examples of configuration files for different detectors
 
 - the Phywe version of Kamiokanne (*PhyweKanne.daq*)
 - Kamiokanne with a fast signal from a photomultiplier or a silicon photomultiplier (SiPM)  (*Kanne.daq*)

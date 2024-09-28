@@ -113,11 +113,17 @@ Paket *picoDAQ* als *python-wheels* enthalten; die Dateien für das picoscope k�
     pip install *.whl 
 installiert werden können. 
 
-Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis *libs/RasPi/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs_RasPi.sh* werden alle für *picoCosmo* notwendigen
-Komponenten auf der Rasbperry Pi installiert.
+Die Treiberdateien der Firma *PicoTech* für den **Raspberry Pi** sind im Verzeichnis 
+*libs/RasPi/picoscopelibs/* enthalten. Durch Ausführen des Scripts *installlibs_RasPi.sh* 
+werden alle für *picoCosmo* notwendigen Komponenten auf der Rasbperry Pi installiert.
 
-Druch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis ~/picoCosmo erzeugt,
-das ausführbare Dateien und Konfiguarionsbeispiele enthält für verschiedne Detektoren oder Kombinationen davon enthält:
+Auf anderen Systemen kann as Shell-Script *installlibs.sh* verwendet werden, um das 
+Paket *picoCosmo* mit den Python-Scripts *CosmoGui.py* und *runCosmo.py* zu installieren.
+Dabei bitte beachten, dass auf modernen Linux-Systemen eine virtuelle *Python*-Umgebung
+aktiv sein muss. 
+
+Durch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis ~/picoCosmo erzeugt,
+das ausführbare Dateien und Konfiguarionsbeispiele enthält für verschiedene Detektoren oder Kombinationen davon enthält:
 
 - für die the Phywe-Version der Kamiokanne (*PhyweKanne.daq*)
 - für Kamiokanne mit schnellem signal von einer Fotoröhre oder einem Silizium-Photomultiplier (SiPM)  (*Kanne.daq*)
