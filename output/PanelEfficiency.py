@@ -95,8 +95,6 @@ N_tot = len(H)
 H_seen = H[H > ph_cut]
 N_seen = len(H_seen)
 
-print(H_seen)
-
 # calculate efficiency and uncertainty
 eff = N_seen/N_tot
 eeff = np.sqrt(eff * (1.-eff)/N_tot)
@@ -116,7 +114,6 @@ col = 'darkred' if veto else 'darkgreen'
 bc, be, _p = ax_ph.hist(H, NHbins, rwidth=0.75, color=col)
 bw = be[1]-be[0]
 idx_cut = int((ph_cut-be[0])/bw + 0.5)
-print(idx_cut)
 ax_ph.set_ylabel("Anzahl Einträge")
 ax_ph.set_xlabel("Pulshöhe (V)")
 ax_ph.vlines(ph_cut, 0.9, max(bc), color = "orangered", lw=2)
