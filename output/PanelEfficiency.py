@@ -12,11 +12,19 @@ These requirements can be achieved with the picoCosmo pulse filter with
 the the configuration option:
 
 ```
-logFiel: pFilt
+logFile: pFilt
 acceptPattern:     
  - [1, 1, 1]  # valid pulse in channel A, B and C
  - [1, 0, 1]  # pulse in A and C but not in B
 ```
+for the efficiency determination and
+
+```
+logFile: pFilt
+acceptPattern:     
+ - [0, 1, 0]  # no pulses in A and C
+```
+for the determination of noise levls. 
 
 Alternatively, the tag panels can be used as veto-counters to
 study signals not related to muons, i.e. noise and ambient radiation. 
@@ -49,7 +57,6 @@ inFileName = args.file  # input file
 info_tag = args.tag
 NHbins = args.bins # number of bins for pulse-height histogram
 ph_cut = args.cut  # pulse height for probe panel 
-min_ph = 0.030     # minimum pulse height for tag panels
 veto = args.veto   # use tagging counters as veto
 
 if inFileName == '':
@@ -81,12 +88,14 @@ except Exception as e:
 
 # -*- selektiere Daten mit großer Pulshöhe
 if veto: 
-    H = Hprobe[(HTaga < min_ph) & (HTagb < min_ph)]
+    H = Hprobe[(HTaga < ph_cut) & (HTagb < ph_cut)]
 else: 
-    H = Hprobe[(HTaga > min_ph) & (HTagb > min_ph)]
+    H = Hprobe[(HTaga > ph_cut) & (HTagb > ph_cut)]
 N_tot = len(H)
 H_seen = H[H > ph_cut]
 N_seen = len(H_seen)
+
+print(H_seen)
 
 # calculate efficiency and uncertainty
 eff = N_seen/N_tot
@@ -107,6 +116,7 @@ col = 'darkred' if veto else 'darkgreen'
 bc, be, _p = ax_ph.hist(H, NHbins, rwidth=0.75, color=col)
 bw = be[1]-be[0]
 idx_cut = int((ph_cut-be[0])/bw + 0.5)
+print(idx_cut)
 ax_ph.set_ylabel("Anzahl Einträge")
 ax_ph.set_xlabel("Pulshöhe (V)")
 ax_ph.vlines(ph_cut, 0.9, max(bc), color = "orangered", lw=2)
