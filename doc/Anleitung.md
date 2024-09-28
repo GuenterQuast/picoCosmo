@@ -629,20 +629,20 @@ Das Verhältnis der Anzahl mit Pulsen auch im Probe-Detektor und der
 Gesamtanzahl registrierter Ereignisse ist die Effizienz des Probe-Detektors.  
 Mit Hilfe des Scripts *PanelEfficiency.py* kann eine detaillierte 
 Auswertung vorgenommen werden. Als Beispiel können die im Verzeichnis
-*output\Efficiency_2409* hinterlegten Dateien verwendet werden:
+*output/Efficiency_2409* hinterlegten Dateien verwendet werden:
 
 > `python PanelEfficiency.py -f Efficiency_2409/pFilt_2409.csv` 
 
 Die grafische Ausgabe zeigt die Pulshöhen im Probe-Detektor für alle
 Ereignisse: 
 
-> ![Efficiency determination of one of the new (Series III) CosMO-Panles
-(Sept. 2024)](images/PanelEfficiency.png)
+> ![Signalpulse von Myonen in einem der neuen (Serie III)
+CosMO-Panles(Sept. 2024)](images/PanelEfficiency.png)
 
-Man sieht, das echte Myonen mit einer Effizenz von  ε = 99,5 % erkannt werden,
+Man sieht, das echte Myonen mit einer Effizienz von  ε = 99,5 % erkannt werden,
 wenn wenn die Schwelle oberhalb von 50 mV gewählt wird. 
 
-Eine zweite Datei zur Bestimmung der Untergrundpulse wrude erzeugt, 
+Eine zweite Datei zur Bestimmung der Untergrundpulse wurde erzeugt, 
 indem sowohl der Trigger als auch die Pulsanalyse nur auf das Probe-Panel 
 angewandt wurden. Die Option *--veto* sowie eine niedrige Pulsschwelle in 
 den Probe-Detektoren mit der Option *--cut 0.001* sorgen dafür, dass bei 
@@ -651,8 +651,9 @@ in den Tag-Detektoren registriert wurden. Die Eingabe von
 
 > `python PanelEfficiency.py -f Efficiency_2409/pFilt_2409_Noise.csv --veto --cut 0.001`
 
-erzeugt die grafische Ausgabe 
-> ![Noise pulses in of one of the new (Series III) CosMO-Panles
+erzeugt die grafische Ausgabe
+
+> ![Rausch-Pulse in einem der neuen (Serie III) CosMO-Panles
 (Sept. 2024)](images/PanelNoise.png)
 
 Die Verteilung der Pulshöhen der Untergrund-Pulse zeigt zwei Komponenten:
@@ -664,15 +665,15 @@ Die Verteilung der Pulshöhen der Untergrund-Pulse zeigt zwei Komponenten:
 
 Damit ist klar, dass Myon-Ereignisse zuverlässig nur durch Koinzidenzen in mindestens
 zwei der Detektoren nachgewiesen werden können. Wenn die 
-Die Myon-Rate ergibt sich durch Korrektur der gemessenen Koinzidenzraten auf die Ansprechwahrscheinlichkeit. Verwendet man zwei Panels mit gleicher 
+Die Myon-Rate ergibt sich durch Korrektur der gemessenen Koinzidenzraten auf die
+Ansprechwahrscheinlichkeit. Verwendet man zwei Panels mit gleicher 
 Ansprechwahrscheinlichkeit ε, so ist die Rauschrate praktisch Null, die 
 Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen als 
 N_µ = N_2 /  ε² . 
 
 Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
 angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik
-aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu 
-
+aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu  
     N_µ = (N_2 + N_3)  /  (2·ε² - ε³  ) 
 
 
@@ -701,16 +702,27 @@ Damit lässt sich direkt die um die Totzeit korrigierte Rate berechnen:
 
      R = N / T_life.
 
+Da die Effizienzen der Panels
 
 
 Betrachten wir zum Abschluss ein typisches **Beispiel** mit 3 CosMO-Panels, 
-Triggerschwelle 27.5 mV,  PulseFilter 30 mV:   
-​    →   11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)   
-​    N_2 = 635, N_3 = 2376   
-​    →  ε = 88.2 ,  2·ε² - ε³  = 0.870   
-Auf Effizienz und Totzeit korrigierte Myon-Rate:  3.9 Hz / 0.870 / 0.798 = **5.6 Hz**  
-​    Fläche der Panels: 20 x 20 cm²   
-​    →  Myon-Rate  **Rµ = 0.014 / cm² / s**
+Triggerschwelle 27.5 mV,  PulseFilter 30 mV:
+
+​  → 11.9 Hz Trigger Rate,  3.9 Hz Myon Rate, 79,8% Totzeit (auf Raspberry Pi)
+
+​ε = 0.985 ,  2·ε² - ε³  = 0.985  
+
+Auf Effizienz und Totzeit korrigierte Myon-Rate:
+
+  → 3.9 Hz / 0.985 / 0.798 = **5.02 Hz**
+    
+​Fläche der Panels: 20 x 20 cm²
+
+​  →  Myon-Rate  **Rµ = 0.013 / cm² / s**
+
+
+
+
 
 
 
