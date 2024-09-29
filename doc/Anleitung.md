@@ -898,7 +898,6 @@ und kann das Ergebnis verfälschen.
     Auslese und Anzeige mittels der Module im Projekt *picoDAQ*
 
 
-
 ### Konfigurationsdateien
 
   - `default.daq`  
@@ -911,6 +910,8 @@ und kann das Ergebnis verfälschen.
      Ratenmessungen mit zwei oder mehr CosMO-Panels
   - `CosmoLife.daq`  
      Messung der Myon-Lebensdauer mit zwei oder mehr CosMO-Panels
+  - `CosmoEfficiency.daq`  
+     Messung der Nachweiseffizienz eines CosMO-Panels mit drei Panels
   - `config/BMconfig.yaml`  
     Konfiguration für den Puffermanager
   - `PScosmo.yaml`  
@@ -918,13 +919,18 @@ und kann das Ergebnis verfälschen.
   - `PScosmo2000.yaml`  
     Konfiguration eines Picoscopes 2202A für SiPM-Pulse 
   - `PMpulse.yaml`  
-    Konfiguration des Picoscopes für Photomultiplier-Pulse 
+    Konfiguration des Picoscopes für Photomultiplier-Pulse
+  - `PScosmoEfficiency.yaml`  
+    Konfiguration des Picoscopes zur Effizienzmessung mit drei Panels
   - `PFcosmo.yaml`  
     Konfiguration des PulseFilters für Cosmo-Panels 
   - `PFKanne.yaml`  
     Konfiguration des PulseFilters für eine Kanne
   - `PFcosmo2000.yaml`  
     Konfiguration des PulseFilters für Cosmo-Panels an Picoscope 2202A 
+  - `PFcosmoEfficiency.yaml`  
+    Konfiguration des Pulsfilters zur Effizienzmessung mit drei Panels
+
 
 ### Beispiele
 
@@ -950,6 +956,10 @@ und kann das Ergebnis verfälschen.
      Anzeigen von Doppelpulsen aus Dateien *dpRaw.dat* als Grafiken auf dem
      Bildschirm
    - `output/RateAnalysis.py`  
-     python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
-     Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie Verteilung der Zeiten zwischen zwei Ereignissen
-
+     Python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger
+     Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
+     Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie Verteilung der Zeiten
+     zwischen zwei Ereignissen
+   - `output/PanelEfficiency.py`  
+     Pyhton-Skript zur Bestimmung der Nachweiseffizienz eines CosMO-Panels; nutzt die 
+     Dateien *pFilt_2409.csv*  und *pFilt_2409_Noise.csv* im Verzeichnis *output/Efficiency_2409*
