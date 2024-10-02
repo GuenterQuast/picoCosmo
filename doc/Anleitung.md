@@ -666,24 +666,19 @@ Die Verteilung der Pulshöhen der Untergrund-Pulse zeigt zwei Komponenten:
   ebenfalls große Pulsehöhen im Signalbereich enthält.
 
 Damit ist klar, dass Myon-Ereignisse zuverlässig nur durch Koinzidenzen in mindestens
-zwei der Detektoren nachgewiesen werden können. Wenn die 
-Die Myon-Rate ergibt sich durch Korrektur der gemessenen Koinzidenzraten auf die
-Ansprechwahrscheinlichkeit. Verwendet man zwei Panels mit gleicher 
-Ansprechwahrscheinlichkeit ε, so ist die Rauschrate praktisch Null, die 
-Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen als 
-N_µ = N_2 /  ε² . 
-
-Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
+zwei der Detektoren nachgewiesen werden können. Die Myon-Rate ergibt sich durch Korrektur
+der gemessenen Koinzidenzraten auf die Ansprechwahrscheinlichkeit. Verwendet man zwei 
+Panels mit gleicher Ansprechwahrscheinlichkeit ε, so ist die Rauschrate
+praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen
+als N_µ = N_2/ε². Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
 angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik
-aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu  
-    N_µ = (N_2 + N_3)  /  (2·ε² - ε³  ) 
-
+aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu  N_µ = (N_2 + N_3) / (2·ε² - ε³) 
 
 
 *Anmerkung*:  
 Prinzipiell kann die Ansprechwahrscheinlichkeit auch mit nur zwei Panels
 gemessen werden. Dazu wählt man für den Triggerkanal eine sehr hohe
-Schwelle, so dass nur echte Myonen den Trigger auslösen.  Im Pulsfilter kann
+Schwelle, so dass nur echte Myonen den Trigger auslösen. Im Pulsfilter kann
 über die Einstellung `NminCoincidence: 1` erreicht werden, dass ein validiertes
 Triggersignal ausreicht, um ein Ereignis zu akzeptieren. Die Zahl der
 Zweifachkoinzidenzen dividiert durch die Zahl der akzeptierten Ereignisse
@@ -905,7 +900,7 @@ und kann das Ergebnis verfälschen.
   - `Cosmo.daq`  
      Konfiguration für zwei Cosmo-Panels
   - `Kanne.daq`  
-     Konfiguration für eine Kanne mit Photoröhre und Pulslänge 150 ns  
+     Konfiguration für eine Kanne mit Photoröhre und Pulslänge 150 ns
   - `CosmoRate.daq`  
      Ratenmessungen mit zwei oder mehr CosMO-Panels
   - `CosmoLife.daq`  
