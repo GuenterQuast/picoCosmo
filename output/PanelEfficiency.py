@@ -72,31 +72,34 @@ except Exception as e:
     print(" Problem reading input - ", e)
     sys.exit(1)
 
-
 # -*- selektiere Daten mit großer Pulshöhe
 if veto:
     H = Hprobe[(HTaga < ph_cut) & (HTagb < ph_cut)]
+    selection_mode = "veto"
 else:
     H = Hprobe[(HTaga > ph_cut) & (HTagb > ph_cut)]
+    selection_mode = "tag"
+    
 N_tot = len(H)
-H_seen = H[H > ph_cut]
-N_seen = len(H_seen)
+H_selected = H[H > ph_cut]
+N_selected = len(H_selected)
 T = EvT[-1] - EvT[0]
-rate = N_seen / T
+rate = N_selected / T
 
 # calculate efficiency and uncertainty
-eff = N_seen / N_tot
-eeff = np.sqrt(eff * (1.0 - eff) / N_tot)
+eff = 0. if N_tot == 0 else N_selected / N_tot
+eeff = 0 if N_tot == 0 else np.sqrt(eff * (1.0 - eff) / N_tot)
 
 # print summary
 print("reading ", inFileName)
 print(f"records read {len(Hprobe)}, selected {N_tot},  duration {T:.1f} s, rate {rate:.1f} Hz")
-print(f"  mean pulse height {H_seen.mean():.3g} V")
+print(f"  mean pulse height {H_selected.mean():.3g} V")
 txt_eff = f"({eff*100.:.2f} +/- {eeff*100.:.2f})%"
 print(" ==>   efficiency " + txt_eff)
 
 # Grafik für Pulshöhen erzeugen
 figH = plt.figure("PulseHeight", figsize=(8.0, 5.0))
+figH.suptitle("Pulse-height spectrum with muon " + selection_mode)
 ax_ph = figH.add_subplot(1, 1, 1)  # for pulse-height histogram
 ax_ph.grid()
 col = 'darkred' if veto else 'darkgreen'
@@ -108,7 +111,7 @@ ax_ph.set_xlabel("Pulshöhe (V)")
 ax_ph.vlines(ph_cut, 0.9, max(bc), color="orangered", lw=2)
 # set logarithmic scale
 ax_ph.text(0.66, 0.96, info_tag, transform=ax_ph.transAxes)
-ax_ph.text(0.66, 0.90, f" mean pluse height {H_seen.mean():.3g} V", transform=ax_ph.transAxes)
+ax_ph.text(0.66, 0.90, f" mean pluse height {H_selected.mean():.3g} V", transform=ax_ph.transAxes)
 if not veto:
     ax_ph.text(0.70, 0.85, r"$\epsilon$ = " + txt_eff, transform=ax_ph.transAxes)
 for i in range(idx_cut):
