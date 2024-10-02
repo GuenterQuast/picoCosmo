@@ -21,7 +21,9 @@ class Ui_CosmoWindow(object):
         sizePolicy.setHeightForWidth(CosmoWindow.sizePolicy().hasHeightForWidth())
         CosmoWindow.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(CosmoWindow)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -58,7 +60,7 @@ class Ui_CosmoWindow(object):
         self.lE_DAQConfFile = QtWidgets.QLineEdit(self.Tab_Control)
         self.lE_DAQConfFile.setGeometry(QtCore.QRect(160, 420, 371, 32))
         self.lE_DAQConfFile.setText("")
-        self.lE_DAQConfFile.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.lE_DAQConfFile.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.lE_DAQConfFile.setReadOnly(True)
         self.lE_DAQConfFile.setObjectName("lE_DAQConfFile")
         self.pB_FileSelect = QtWidgets.QPushButton(self.Tab_Control)
@@ -212,27 +214,55 @@ class Ui_CosmoWindow(object):
     def retranslateUi(self, CosmoWindow):
         _translate = QtCore.QCoreApplication.translate
         CosmoWindow.setWindowTitle(_translate("CosmoWindow", "CosmoGui"))
-        self.tab_Main.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Output  / Configuration / Help</p></body></html>"))
+        self.tab_Main.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>Output  / Configuration / Help</p></body></html>")
+        )
         self.Tab_Control.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Control Panel</p></body></html>"))
         self.label_caption.setText(_translate("CosmoWindow", "Kamiokanne & CosMO Detector with PicoScope"))
         self.label_DAQconfig.setText(_translate("CosmoWindow", "DAQ config:"))
-        self.lE_DAQConfFile.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>DAQ configuration file (type .daq)</p></body></html>"))
-        self.pB_FileSelect.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>selecd daq configuration file</p></body></html>"))
+        self.lE_DAQConfFile.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>DAQ configuration file (type .daq)</p></body></html>")
+        )
+        self.pB_FileSelect.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>selecd daq configuration file</p></body></html>")
+        )
         self.pB_abort.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Exit CosmoGui</p></body></html>"))
         self.label_WorkDir.setText(_translate("CosmoWindow", "Work Dir:"))
-        self.pB_WDselect.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>select working directory (where ouput is stored)</p></body></html>"))
+        self.pB_WDselect.setToolTip(
+            _translate(
+                "CosmoWindow",
+                "<html><head/><body><p>select working directory (where ouput is stored)</p></body></html>",
+            )
+        )
         self.tab_Main.setTabText(self.tab_Main.indexOf(self.Tab_Control), _translate("CosmoWindow", "Control"))
         self.Tab_Config.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Config Panel</p></body></html>"))
-        self.tabWidget.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Configuration Files</p></body></html>"))
-        self.pTE_OsciConfig.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Configuration File for Oscilloscope</p></body></html>"))
+        self.tabWidget.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>Configuration Files</p></body></html>")
+        )
+        self.pTE_OsciConfig.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>Configuration File for Oscilloscope</p></body></html>")
+        )
         self.pB_loadPSconf.setToolTip(_translate("CosmoWindow", "Load PicoScope configuration"))
         self.pB_loadPSconf.setText(_translate("CosmoWindow", "load PS config"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.OsciConfig), _translate("CosmoWindow", "Oscilloscope"))
-        self.pTE_PFconfig.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Configuration File for Pulse Filter and Analysis</p></body></html>"))
-        self.pB_loadPFconf.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Load PulseFilter configuration from File</p></body></html>"))
+        self.pTE_PFconfig.setToolTip(
+            _translate(
+                "CosmoWindow",
+                "<html><head/><body><p>Configuration File for Pulse Filter and Analysis</p></body></html>",
+            )
+        )
+        self.pB_loadPFconf.setToolTip(
+            _translate(
+                "CosmoWindow", "<html><head/><body><p>Load PulseFilter configuration from File</p></body></html>"
+            )
+        )
         self.pB_loadPFconf.setText(_translate("CosmoWindow", "load PF config"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.PulseFilterConfig), _translate("CosmoWindow", "PulseFilter"))
-        self.pTE_BMconfig.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Configuration File for Buffer Manager</p></body></html>"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.PulseFilterConfig), _translate("CosmoWindow", "PulseFilter")
+        )
+        self.pTE_BMconfig.setToolTip(
+            _translate("CosmoWindow", "<html><head/><body><p>Configuration File for Buffer Manager</p></body></html>")
+        )
         self.pB_loadBMconf.setToolTip(_translate("CosmoWindow", "Load Buffer Manager configuration"))
         self.pB_loadBMconf.setText(_translate("CosmoWindow", "load BM config"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.BMconfig), _translate("CosmoWindow", "BufferManager"))
@@ -246,7 +276,12 @@ class Ui_CosmoWindow(object):
         self.pB_Help.setText(_translate("CosmoWindow", "English"))
         self.pB_Hilfe.setText(_translate("CosmoWindow", "Deutsch"))
         self.tab_Main.setTabText(self.tab_Main.indexOf(self.Tab_Help), _translate("CosmoWindow", "Help / Hilfe"))
-        self.pB_StartRun.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Start Runinng Oscilloscope, Buffer Manager and Pulse Filter</p></body></html>"))
+        self.pB_StartRun.setToolTip(
+            _translate(
+                "CosmoWindow",
+                "<html><head/><body><p>Start Runinng Oscilloscope, Buffer Manager and Pulse Filter</p></body></html>",
+            )
+        )
         self.pB_StartRun.setText(_translate("CosmoWindow", "  StartRun"))
         self.lE_RunTag.setToolTip(_translate("CosmoWindow", "<html><head/><body><p>Name for the run</p></body></html>"))
         self.lE_RunTag.setText(_translate("CosmoWindow", "CosmoRun"))
