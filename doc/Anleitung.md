@@ -642,23 +642,22 @@ Ereignisse:
 CosMO-Panles(Sept. 2024)](images/PanelEfficiency.png)
 
 Man sieht, das echte Myonen mit einer Effizienz von  ε = 99,5 % erkannt werden,
-wenn wenn die Schwelle oberhalb von 50 mV gewählt wird. 
+wenn die Schwelle oberhalb von 50 mV gewählt wird. 
 
 Eine zweite Datei zur Bestimmung der Untergrundpulse wurde erzeugt, 
 indem sowohl der Trigger als auch die Pulsanalyse nur auf das Probe-Panel 
-angewandt wurden. Die Option *--veto* sowie eine niedrige Pulsschwelle in 
-den Probe-Detektoren mit der Option *--cut 0.001* sorgen dafür, dass bei 
-der Analyse nur Ereignisse berücksichtigt werden, bei denen keine Signale
-in den Tag-Detektoren registriert wurden. Die Eingabe von 
+angewandt wurden. Mit Hilfe der ebenfalls ausgelesenen Tag-Panels kann
+zwischen Signalpulsen von Myon-Spuren und Rauschen bzw. Signalen von 
+Untergrundstrahlung unterschieden werden. Die Grafik unten wrude 
+erzeugt durch Eingabe von
 
-> `python PanelEfficiency.py -f Efficiency_2409/pFilt_2409_Noise.csv --veto --cut 0.001`
+> `python PanelSpectrum.py pFilt_selectProbe.csv`
 
-erzeugt die grafische Ausgabe
+> ![Pulshöhenspektrum in einem der neuen (Serie III) CosMO-Panles
+(Sept. 2024)](images/PulseHeight_Spectrum.png)
 
-> ![Rausch-Pulse in einem der neuen (Serie III) CosMO-Panles
-(Sept. 2024)](images/PanelNoise.png)
 
-Die Verteilung der Pulshöhen der Untergrund-Pulse zeigt zwei Komponenten:
+Die Verteilung der Pulshöhen der (roten) Untergrund-Pulse zeigt zwei Komponenten:
 
   - eine, die von Rauschpulsen der Elektronik bzw. im optischen Sensor herrührt 
   und von Null ausgehend steil abfällt und   

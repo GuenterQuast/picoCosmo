@@ -26,16 +26,17 @@ acceptPattern:
 ```
 for the determination of noise levls.
 
-Alternatively, the tag panels can be used as veto-counters to
-study signals not related to muons, i.e. noise and ambient radiation.
-
-
 Running this script on the output file
 
-  `python PanelEfficiency.py -f pFilt.dat`
+  `python PanelEfficiency.py pFilt.dat`
 
 produces the pulse-height spectrum of the panel in the middle
 and calculates its efficiency and mean pulse height.
+
+Alternatively, the tag panels can be used as veto-counters to
+study signals not related to muons, i.e. noise and ambient radiation.
+Using the option `--veto` shows the pulse spectrum for signals with 
+a muon veto in the tag channels A and C.
 
 """
 

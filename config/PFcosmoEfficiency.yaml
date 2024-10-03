@@ -1,7 +1,7 @@
 # Configuration file for PulseFilter (efficiency measurement)
 
 # three Panels A, B and C on top of each other
-#  efficiency of middel one is measured
+#  efficiency of middle one , B, is measured
 
 # output files 
 logFile: pFilt   # store all pulses, Null to disable
@@ -24,14 +24,16 @@ pulseShape:   # for new (Series III) CosMO panels
    tauon  : 50.E-9 
    tauf   : 750.E-9 
 
-# require signals in A and C for efficiency
+# for efficincy: require signals in A and C (trigger on A or C)
 acceptPattern:     
  - [1, 1, 1]  # valid pulse A and B and C OR 
  - [1, 0, 1]  # valid pulse A and not B and C
 
-# require signals only in B for noise level
-#acceptPattern:     
-# - [0, 1, 0]  # valid pulse in B and not A and not B
+# for noise level: require signals only in trigger panel B 
+#NminCoincidence: 1  # set number of Coincidences 
+# alternatively fir noise level: apply veto already at selection level
+##acceptPattern:     
+## - [0, 1, 0]  # valid pulse only in B, but not A and not C
 
 modules: [RMeter, Display, Hists]
 
