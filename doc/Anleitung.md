@@ -632,7 +632,7 @@ Mit Hilfe des Scripts *PanelEfficiency.py* kann eine detaillierte
 Auswertung vorgenommen werden. Als Beispiel können die im Verzeichnis
 *output/Efficiency_2409* hinterlegten Dateien verwendet werden:
 
-> `python PanelEfficiency.py -f Efficiency_2409/pFilt_2409.csv` 
+> `python PanelEfficiency.py pFilt.csv` 
 
 Die grafische Ausgabe zeigt die Pulshöhen im Probe-Detektor für alle
 Ereignisse: 
@@ -951,10 +951,10 @@ und kann das Ergebnis verfälschen.
   - `output/RateAnalysis.py`  
     Python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger
     Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat );Anzeigen der Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie die Verteilung der Zeiten zwischen zwei Ereignissen  
-  - `output/PanelEfficiency.py`  
+  - `output/Efficiency_2409/PanelEfficiency.py`  
     Python-Skript zur Bestimmung der Nachweiseffizienz eines CosMO-Panels und der Darstellung des Pulshöhenspektrums; nutzt die Dateien *pFilt.csv*  und
     *pFilt_selectProbe.csv* im Verzeichnis *output/Efficiency_2409/*  
-  - `output/PanelSpectrum.py`  
+  - `output/Efficiency_2409/PanelSpectrum.py`  
     Python-Skript zur Darstellung des Pulshöhenspektrums eines CoSMO-Panels;
     nutzt die Datei *pFilt_selectProbe.csv* im Verzeichnis *output/Efficiency_2409/*,
     die Daten von drei Panels enthält, bei denen eines zwischen zwei weiteren als "Tag-Panels" betriebenen wurde.  
