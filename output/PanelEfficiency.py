@@ -79,7 +79,7 @@ if veto:
 else:
     H = Hprobe[(HTaga > ph_cut) & (HTagb > ph_cut)]
     selection_mode = "tag"
-    
+
 N_tot = len(H)
 H_selected = H[H > ph_cut]
 N_selected = len(H_selected)
@@ -87,7 +87,7 @@ T = EvT[-1] - EvT[0]
 rate = N_selected / T
 
 # calculate efficiency and uncertainty
-eff = 0. if N_tot == 0 else N_selected / N_tot
+eff = 0.0 if N_tot == 0 else N_selected / N_tot
 eeff = 0 if N_tot == 0 else np.sqrt(eff * (1.0 - eff) / N_tot)
 
 # print summary
