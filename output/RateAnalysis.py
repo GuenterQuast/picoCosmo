@@ -129,7 +129,7 @@ mx = 5 * meanTw
 nb = 75  # minimum, maximum and number of bins
 bcW, beW, _ = ax_tw.hist(dT, bins=np.linspace(mn, mx, nb), log=True, rwidth=0.8)  # log. Darstellung
 ax_tw.set_ylabel('Anzahl Einträge', size='x-large')
-ax_tw.set_xlabel('$\Delta$t [s]', size='x-large')
+ax_tw.set_xlabel(r'$\Delta$t [s]', size='x-large')
 # Mittelpunkt und Breite der Bins
 bc = (beW[:-1] + beW[1:]) / 2.0
 bw = beW[1] - beW[0]
