@@ -12,7 +12,6 @@ von Daten der CosMO-Detektoren und der Kamiokanne des Netzwerks Teilchenwelt mit
    ![Abb. 1](images/picoCosmo_iconic.jpg)
 
 
-
 ## Übersicht 
 
 Das Netzwerk Teilchenwelt (s. <http://www.Teilchenwelt.de> ) stellt Experimente
@@ -882,7 +881,7 @@ und kann das Ergebnis verfälschen.
     Bilder aufgezeichneter Doppelpulse mit zwei CosMO-Panels  
 
  - `README_de.pdf`  
-    Deutschsprachige Beschreibung
+    Deutschsprachige Kurzanleitung  
 
 
 ### Module im Verzeichnis *picocosmo/*
@@ -928,32 +927,35 @@ und kann das Ergebnis verfälschen.
 
 ### Beispiele
 
-   - `output/CosmoPanels_180514`  
+  - `output/CosmoPanels_180514`  
      Beispielausgabe einer Datennahme mit den Cosmo-Panels  
         - *dpFilt_180514_1806.dat* enthält die Daten von aufgezeichneten
           Doppelpulsen
         - *rawDP_180403.zip* enthält gepackte Rohdaten der Doppelpulse  
-   - `output/Kanne_180403`  
+  - `output/Kanne_180403`  
      Beispielausgabe einer Datennahme mit einer Kanne
         - *pFilt_Kanne.dat* enthält die Daten von aufgezeichneten Pulsen mit einer Kanne
         - *dpKanne2_180403.dat* enthält die Daten von aufgezeichneten Doppelpulsen  
         - *rawDP_180514.zip* enthält gepackte Rohdaten der Doppelpulse  
-   - `output/GammaDetektor`  
+  - `output/GammaDetektor`  
      Beispielausgabe eine Datennahme mit GDK101 Gamma-Detektor und Uranglas
      - pFilt_gamma_Uranglas.dat entält Daten von Gammas aus Uranglas
-   - `output/fit_dpData.py`  
+  - `output/fit_dpData.py`  
      *pyhton*-Skript zur Anpassung einer Exponentialfunktion an Daten in Dateien
      *dpFilt*.dat*
-   - `output/makeFigs.py`  
+  - `output/makeFigs.py`  
      Erzeugen von Grafiken aus Dateien *dpRaw*.dat*
-   - `output/plotDoublePulses.py`  
+  - `output/plotDoublePulses.py`  
      Anzeigen von Doppelpulsen aus Dateien *dpRaw.dat* als Grafiken auf dem
      Bildschirm
-   - `output/RateAnalysis.py`  
-     Python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger
-     Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat ) : 
-     Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie Verteilung der Zeiten
-     zwischen zwei Ereignissen
-   - `output/PanelEfficiency.py`  
-     Pyhton-Skript zur Bestimmung der Nachweiseffizienz eines CosMO-Panels; nutzt die 
-     Dateien *pFilt_2409.csv*  und *pFilt_2409_Noise.csv* im Verzeichnis *output/Efficiency_2409*
+  - `output/RateAnalysis.py`  
+    Python-Skript zur statistischen Auswertung der Eintreffzeiten zufälliger
+    Ereignisse (Zeiten aus log-Datei von *picocosmo.PulseFilter*, Dateien pFilt*.dat );Anzeigen der Anzahl Ereignisse pro Zeitintervall und deren Verteilung sowie die Verteilung der Zeiten zwischen zwei Ereignissen  
+  - `output/PanelEfficiency.py`  
+    Python-Skript zur Bestimmung der Nachweiseffizienz eines CosMO-Panels und der Darstellung des Pulshöhenspektrums; nutzt die Dateien *pFilt.csv*  und
+    *pFilt_selectProbe.csv* im Verzeichnis *output/Efficiency_2409/*  
+  - `output/PanelSpectrum.py`  
+    Python-Skript zur Darstellung des Pulshöhenspektrums eines CoSMO-Panels;
+    nutzt die Datei *pFilt_selectProbe.csv* im Verzeichnis *output/Efficiency_2409/*,
+    die Daten von drei Panels enthält, bei denen eines zwischen zwei weiteren als "Tag-Panels" betriebenen wurde.  
+  
