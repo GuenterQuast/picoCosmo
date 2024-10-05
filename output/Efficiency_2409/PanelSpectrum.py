@@ -34,16 +34,10 @@ import matplotlib.pyplot as plt
 import argparse
 
 parser = argparse.ArgumentParser(description="Efficiency determination of CosMO Panels")
-parser.add_argument(
-    "filename", type=str, default="", help="input file name (CSV format)"
-)
+parser.add_argument("filename", type=str, default="", help="input file name (CSV format)")
 parser.add_argument("--tag", type=str, default=r"", help="info tag")
-parser.add_argument(
-    "-b", "--bins", type=int, default=100, help="bins for Pulse Height Histogram"
-)
-parser.add_argument(
-    "-c", "--cut", type=float, default=0.050, help="cut on minimal pulse height"
-)
+parser.add_argument("-b", "--bins", type=int, default=100, help="number of bins for Pulse Height Histogram")
+parser.add_argument("-c", "--cut", type=float, default=0.050, help="cut on minimal pulse height")
 
 args = parser.parse_args()
 inFileName = args.filename  # input file
@@ -56,7 +50,6 @@ if inFileName == "":
 
 print(f"*==* script {sys.argv[0]} executing, parameters: {sys.argv[1:]}\n")
 
-# -*- Daten einlesen:
 try:
     EvN, EvT, HTaga, TTaga, Hprobe, TProbe, HTagb, TTagb = np.loadtxt(
         inFileName, skiprows=1, delimiter=",", unpack=True
@@ -65,25 +58,27 @@ except Exception as e:
     print(" Problem reading input - ", e)
     sys.exit(1)
 
-# -*- selektiere Daten ohne oder mit muon tag
-H_veto = Hprobe[(HTaga < ph_cut) & (HTagb < ph_cut)]
-H_tag = Hprobe[(HTaga > ph_cut) & (HTagb > ph_cut)]
+# two-fold coincidences to select events with muon in probe panel
+msk_mu = (
+    ((HTaga > ph_cut) & (HTagb > ph_cut))
+    | ((HTaga > ph_cut) & (Hprobe > ph_cut))
+    | ((Hprobe > ph_cut) & (HTagb > ph_cut))
+)
+H_mu = Hprobe[msk_mu]
+H_nomu = Hprobe[np.logical_not(msk_mu)]
 
 N_tot = len(Hprobe)
-N_veto = len(H_veto)
-N_tag = len(H_tag)
+N_nomu = len(H_nomu)
+N_mu = len(H_mu)
 T = EvT[-1] - EvT[0]
 rate = N_tot / T
 
 # print summary
 print("reading ", inFileName)
-print(
-    f"records read {N_tot}, with tag {N_tag},  duration {T:.1f} s, rate {rate:.1f} Hz"
-)
-print(f"  mean pulse height tag {H_tag.mean():.3g} V")
+print(f"read {N_tot}, with mu {N_mu}, duration {T:.1f} s, rate {rate:.1f} Hz")
+print(f"  mean pulse height tag {H_mu.mean():.3g} V")
 
-
-# Grafik für Pulshöhen erzeugen
+# generate figures
 fig = plt.figure("PulseHeight_Spectrum", figsize=(8.0, 5.0))
 fig.suptitle("Pulse-height spectrum")
 ax = fig.add_subplot(1, 1, 1)  # for pulse-height histogram
@@ -91,11 +86,9 @@ ax.set_ylabel("Anzahl Einträge")
 ax.set_xlabel("Pulshöhe (V)")
 ax.grid()
 # plot all pulses
-bc, be, _p = ax.hist(
-    Hprobe, NHbins, rwidth=0.75, color="darkgreen", alpha=0.5, label="muon tag"
-)
+_h = ax.hist(Hprobe, NHbins, rwidth=0.75, color="darkgreen", label="muon tag")
 # plot pulses with muon tag
-_h = ax.hist(H_veto, NHbins, rwidth=0.75, color="darkred", alpha=0.5, label="muon veto")
+_h = ax.hist(H_nomu, NHbins, rwidth=0.75, color="darkred", label="muon veto")
 # set logarithmic scale
 ax.set_yscale("log")
 ax.legend(loc="best")

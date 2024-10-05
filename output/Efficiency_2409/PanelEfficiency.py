@@ -35,7 +35,7 @@ and calculates its efficiency and mean pulse height.
 
 Alternatively, the tag panels can be used as veto-counters to
 study signals not related to muons, i.e. noise and ambient radiation.
-Using the option `--veto` shows the pulse spectrum for signals with 
+Using the option `--veto` shows the pulse spectrum for signals with
 a muon veto in the tag channels A and C.
 
 """
@@ -44,6 +44,8 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import argparse
+
+print(f"*==* script {sys.argv[0]} executing, parameters: {sys.argv[1:]}\n")
 
 parser = argparse.ArgumentParser(description="Efficiency determination of CosMO Panels")
 parser.add_argument('filename', type=str, default='', help="input file name (CSV format)")
@@ -58,13 +60,10 @@ info_tag = args.tag
 NHbins = args.bins  # number of bins for pulse-height histogram
 ph_cut = args.cut  # pulse height for probe panel
 veto = args.veto  # use tagging counters as veto
-
 if inFileName == '':
     inFileName = "pFilt.csv"
 
-print(f"*==* script {sys.argv[0]} executing, parameters: {sys.argv[1:]}\n")
-
-# -*- Daten einlesen:
+# -*- read data
 try:
     EvN, EvT, HTaga, TTaga, Hprobe, TProbe, HTagb, TTagb = np.loadtxt(
         inFileName, skiprows=1, delimiter=",", unpack=True
@@ -73,7 +72,7 @@ except Exception as e:
     print(" Problem reading input - ", e)
     sys.exit(1)
 
-# -*- selektiere Daten mit großer Pulshöhe
+# -*- select large pulse heights
 if veto:
     H = Hprobe[(HTaga < ph_cut) & (HTagb < ph_cut)]
     selection_mode = "veto"
@@ -81,24 +80,23 @@ else:
     H = Hprobe[(HTaga > ph_cut) & (HTagb > ph_cut)]
     selection_mode = "tag"
 
+# -*- calculate efficiency and uncertainty
 N_tot = len(H)
 H_selected = H[H > ph_cut]
 N_selected = len(H_selected)
 T = EvT[-1] - EvT[0]
 rate = N_selected / T
-
-# calculate efficiency and uncertainty
 eff = 0.0 if N_tot == 0 else N_selected / N_tot
 eeff = 0 if N_tot == 0 else np.sqrt(eff * (1.0 - eff) / N_tot)
 
-# print summary
+# -*- print summary
 print("reading ", inFileName)
 print(f"records read {len(Hprobe)}, selected {N_tot},  duration {T:.1f} s, rate {rate:.1f} Hz")
 print(f"  mean pulse height {H_selected.mean():.3g} V")
 txt_eff = f"({eff*100.:.2f} +/- {eeff*100.:.2f})%"
 print(" ==>   efficiency " + txt_eff)
 
-# Grafik für Pulshöhen erzeugen
+# -*- generate figure 
 figH = plt.figure("PulseHeight", figsize=(8.0, 5.0))
 figH.suptitle("Pulse-height spectrum with muon " + selection_mode)
 ax_ph = figH.add_subplot(1, 1, 1)  # for pulse-height histogram
@@ -110,7 +108,6 @@ idx_cut = int((ph_cut - be[0]) / bw + 0.5)
 ax_ph.set_ylabel("Anzahl Einträge")
 ax_ph.set_xlabel("Pulshöhe (V)")
 ax_ph.vlines(ph_cut, 0.9, max(bc), color="orangered", lw=2)
-# set logarithmic scale
 ax_ph.text(0.66, 0.96, info_tag, transform=ax_ph.transAxes)
 ax_ph.text(0.66, 0.90, f" mean pluse height {H_selected.mean():.3g} V", transform=ax_ph.transAxes)
 if not veto:
@@ -119,5 +116,4 @@ for i in range(idx_cut):
     _p[i].set_facecolor("darkred")
 ax_ph.set_yscale("log")
 
-# Grafiken anzeigen
 plt.show()

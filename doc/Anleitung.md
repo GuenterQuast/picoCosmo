@@ -1,12 +1,14 @@
 # Tutorial zu picoCosmo
 
-									  Vers. 0.9.0  		                Günter Quast, Sept. 2024
+									  Vers. 1.0.0  		                
+                            Günter Quast, Oktober 2024
+
 
 ### Auslese und Analyse der Experimente des Netzwerks Teilchenwelt
 
 
 *Kurzfassung:*  
-Die in diesem Projekt bereit gestellten *python*-Skripte dienen zur Aufnahme und Auswertung
+Die in diesem Projekt bereit gestellten *Python*-Skripte dienen zur Aufnahme und Auswertung
 von Daten der CosMO-Detektoren und der Kamiokanne des Netzwerks Teilchenwelt mit einem USB-Oszilloskop.
 
    ![Abb. 1](images/picoCosmo_iconic.jpg)
@@ -20,15 +22,16 @@ Dies sind die Szintillationszähler des CosMO-Experiments und der aus einer
 Kaffeekanne mit aufgesetzter Photoröhre bestehende Wasser-Cherenkov-Zähler
 "Kamiokanne". Typisch für diese und ähnliche Detektoren sind kurze Signalpulse
 von ca. 100 ns Dauer und einigen 10 bis 100 mV Pulshöhe, die zu zufälligen
-Zeitpunkten entstehen.  Auch die Signale von Geigerzählern oder Strahlungsdetektoren
+Zeitpunkten entstehen. Auch die Signale von Geigerzählern oder Strahlungsdetektoren
 mit Analogausgang, wie der PIN-Dioden-Detektor FTLAB GDK 101, können mit dieser
 Software registriert und ausgewertet werden. 
 
 Die Zeitdifferenzen zwischen zwei solchen Zufallsereignissen folgen einer
 Exponentialverteilung, deren Zeitkonstante dem Kehrwert der mittleren
 Ereignisrate entspricht. Mit einem Oszilloskop mit hinreichend hoher Bandbreite
-können die Signalpulse registriert und werden. Dabei ist wegen der zufälligen 
-Natur der Signale die richtige Einstellung des Oszilloskop-Triggers wichtig.
+und Triggerfunktion können die Signalpulse registriert und ausgewertet werden. 
+Dabei ist wegen der zufälligen Natur der Signale die richtige Einstellung des
+Oszilloskop-Triggers wichtig.
 
 Moderne, am  USB-Port eines Rechners betriebene Oszilloskope wie das
 PicoScope der Firma PichoTechnology, siehe <http://www.picotech.com>,
@@ -49,7 +52,7 @@ an sog. Konsumenten wie Echtzeit-Anzeigen oder weitere Prozesse zur Datenauswert
 Datenauswertung erweiterte Variante des Scripts *runDAQ.py* aus dem Projekt
 *picoDAQ*. Insbesondere der *PulseFilter* von *picoCosmo* ist an die Aufgabenstellung
 der Analyse von Pulsformen aus Photomultipliern oder Silizium-Photodioden
-angepasst und erlaubt die Erkennung von echten Myon-Signalen in Echtzeit und
+angepasst und erlaubt die Erkennung von Myon-Signalen in Echtzeit und
 mit hoher Effizienz.
 
 Die Analyse der vom Oszilloskop-Trigger ausgewählten und danach aufgezeichneten
@@ -74,9 +77,9 @@ Pulsformen im PulseFilter verläuft in drei Schritten:
    durch den bzw. die Detektoren gestoppt und das aus dem Zerfall
    entstandene Elektron registriert wird. Die registrierten
    individuellen Lebensdauern folgen einer Exponential-Verteilung mit
-   einer mittleren Lebensdauer von 2,2 µs, die aus der Zeitdifferenz der
+   einer mittleren Lebensdauer von 2,2 µs, die aus der Zeitdifferenz der
    Pulse bestimmt werden kann. Natürlich treten auch Zufallskoinzidenzen
-   auf, wenn ein zweites Myon oder ein Rausch-Pulse sehr kurz nach
+   auf, wenn ein zweites Myon oder ein Rausch-Puls sehr kurz nach
    dem Myon eintrifft, das den Trigger ausgelöst hat. 
 
 Die Software bietet Echtzeit-Anzeigen der aufgenommenen Rohsignale als 
@@ -98,7 +101,8 @@ am einfachsten aber über die grafische Oberfläche, *CosmoGui.py*, erfolgen. Di
 Oberfläche kann auch mit einem *Icon* verknüpft werden, so dass das Programm durch
 einfaches Anklicken gestartet werden kann. 
 
-Die grafische Oberfläche erlaubt das Festlegen und Bearbeiten der Konfiguration und des Arbeitsverzeichnisses, in dem Dateien abgelegt werden, sowie den Start der eigentlichen
+Die grafische Oberfläche erlaubt das Festlegen und Bearbeiten der Konfiguration und des
+Arbeitsverzeichnisses, in dem Dateien abgelegt werden, sowie den Start der eigentlichen
 Datenaufnahme. Hier ein Bild des Begrüßungsbildschirms der grafischen Oberfläche:
 
    ![Grafische Oberfläche CosmoGui](images/CosmoGui.png)
@@ -110,25 +114,33 @@ Daten abgelegt werden. Im Feld *Run Tag* steht ein Name, der der aktuellen Messu
 zugeordnet ist und aus dem die Dateinamen für Konfigurations- und Ausgabedateien
 abgeleitet werden.  
 
-Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen Konfigurationsdateien:
+Bei Klick auf den Reiter *Configuration* öffnet sich die Anzeige der aktuellen 
+Konfigurationsdateien:
 
    ![Reiter "Configuration" von CosmoGui](images/CosmoGui-Config.png)
 
-Ganz unten im Fenster wird die Hauptkonfiguration angezeigt, die lediglich die Namen der Konfigurationsdateien für das USB-Oszilloskops, die Pulsanalyse und die Datennahme enthält.
-Die Reiter *Oscilloscope*, *PulseFilter* und *BuferManager* zeigen die einzelnen
+Ganz unten im Fenster wird die Hauptkonfiguration angezeigt, die lediglich die Namen
+der Konfigurationsdateien für das USB-Oszilloskops, die Pulsanalyse und die Datennahme
+enthält. Die Reiter *Oscilloscope*, *PulseFilter* und *BuferManager* zeigen die einzelnen
 Konfigurationsdateien an. Sie können mittels der grafischen Oberfläche ausgewählt (Klick
 auf das Dateisymbol) oder verändert werden (Knopf *EditMode* aktivieren). Details zu den
 einzelnen Konfigurationen werden weiter unten erklärt. 
 
-Wenn alle Konfigurationsdateien erstellt sind, können sie mit dem Feld `Save all configs` im Arbeitsverzeichnis unter den in der Hauptkonfiguration angegebenen Namen gespeichert werden. 
-Der Name der Hauptkonfigurationsdatei ist dabei der im Feld `Run Tag` gesetzte Text mit der Erweiterung *.daq*.  Vor dem Abspeichern erfolgt eine Überprüfung auf syntaktische Richtigkeit - sollte eine Fehlermeldung angezeigt werden, kann die betroffene Datei vor dem Abspeichern der gesamten Konfiguration korrigiert werden. 
+Wenn alle Konfigurationsdateien erstellt sind, können sie mit dem Feld  `Save all configs` 
+im Arbeitsverzeichnis unter den in der Hauptkonfiguration angegebenen Namen gespeichert
+werden. Der Name der Hauptkonfigurationsdatei ist dabei der im Feld `Run Tag` gesetzte 
+Text mit der Erweiterung *.daq*. Vor dem Abspeichern erfolgt eine Überprüfung auf
+syntaktische Richtigkeit - sollte eine Fehlermeldung angezeigt werden, kann die betroffene
+Datei vor dem Abspeichern der gesamten Konfiguration korrigiert werden. 
 
 Das Starten der Datennahme erfolgt mit dem Knopf `Start Run` im Begrüßungsbildschirm.
 Im gewählten Arbeitsverzeichnis wird ein eigenes Unterverzeichnis erzeugt, dessen Name aus
-dem im Feld `Run Tag` eingetragenen Text und dem aktuelle Datum abgeleitet wird. Auch die komplette Konfiguration wird dort abgespeichert, so dass jederzeit ersichtlich ist, unter 
+dem im Feld `Run Tag` eingetragenen Text und dem aktuelle Datum abgeleitet wird. Auch die
+komplette Konfiguration wird dort abgespeichert, so dass jederzeit ersichtlich ist, unter
 welchen Bedingungen die Daten im Verzeichnis aufgenommen wurden. Danach beendet sich die
 grafische Oberfläche, und die eigentliche Datennahme (engl. "Run") beginnt mit dem  Start
-der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten Echtzeitanzeigen. Die grafische Oberfläche ist hier gezeigt:
+der grafischen Oberfläche des Puffer-Managers und den in dessen Konfiguration festgelegten
+Echtzeitanzeigen. Die grafische Oberfläche ist hier gezeigt:
 
    ![Grafische Oberfläche des Puffermanagers](images/BufferManWindow.png)
 
@@ -139,7 +151,11 @@ Zustand werden die Ausgabedateien geschlossen, aber alle Fenster bleiben noch ge
 so dass Grafiken betrachtet oder gespeichert und statistische Information ausgewertet
 werden können. Wird der Run beendet, verschwinden alle Fenster.
 
-Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Informationen zur Initialisierung, Konfiguration und zum Start einzelner, jeweils als Hintergrundprozesse ausgeführten Programmkomponenten angezeigt werden. Die Kontrolle ist auch über Eingabe einzelner Kommandos mit der Tastatur möglich, wenn das Ausgabefenster vorher durch Anklicken aktiviert wurde: 
+Das Programm wird in einem Konsolenfenster ausgeführt, in dem vielfältige Informationen
+zur Initialisierung, Konfiguration und zum Start einzelner, jeweils als
+Hintergrundprozesse ausgeführten Programmkomponenten angezeigt werden. 
+Die Kontrolle ist auch über Eingabe einzelner Kommandos mit der Tastatur möglich,
+wenn das Ausgabefenster vorher durch Anklicken aktiviert wurde: 
 
     type -> E(nd), P(ause), S(top) or R(esume) + <ret> 
 
@@ -169,10 +185,10 @@ gespeichert werden:
 
      ```Nacc,      Ndble,      Tau,     delT(iChan), ... , V(iChan), ...``` 
 
-    - *Nacc*  : Zahl der akzeptierten Pulse
+    - *Nacc* : Zahl der akzeptierten Pulse
     - *Ndble*: Zahl der akzeptierten Doppelpulse 
     - *Tau*:   Zeitlicher Abstand zwischen Triggerpuls und (erstem) Folgepuls
-       (= gemessene µ-Lebensdauer)
+      (= gemessene µ-Lebensdauer)
     - *delT(iChan)* :  zeitlicher Abstand des Doppelpulses vom Triggerpuls in
        Kanal *iChan*
     - *V(iChan)*: Pulshöhe in mV des Folgepulses in Kanal *iChan*
@@ -193,10 +209,10 @@ Abspeichern als Grafikdateien im *.png*-Format.
 Eine weitere Hilfsanwendung, *fit_dpData.py*, führt die Anpassung einer
 Exponentialfunktion an die in Dateien mit Namensanfang *dpFilt* abgelegten
 individuellen µ-Lebensdauern durch. Zum Start einer Anpassung an die in
-der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15 µs
+der Datei dpFilt<Name>.dat abgelegten Daten im Bereich von 1.0 bis 15 µs
 wird folgender Befehl auf der Kommandozeile eingegeben:
 
-    ./fit_dpData.py dpFilt<Name> 1.0 15.
+    ./fit_dpData.py dpFilt<Name> 1. 15.
 
 Das *Python*-Script *PanelEfficiency.py* dient zur Bestimmung der Nachweiseffizienz 
 der Detektoren, die durchgeführt werden kann, wenn drei davon zur Verfügung stehen. 
@@ -210,12 +226,16 @@ der statistischen Natur der Zeitpunkte registrierter Ereignisse.
 ## Details zu Konfiguration
 
 Die Konfigurationspameter für das USB-Oszilloskop, den Puffer-Manager und die Signalanalyse
-sind in jeweils einer Datei vom  Typ *.yaml* im Unterverzeichnis *config/* festgelegt. DieDateinamen sind in Dateien vom Typ *.daq* enthalten, also *Kanne.daq* für Kamiokanne und
-*Cosmo.daq* für die CosMO-Panels. Sie können entweder mit einem Text-Editor oder auch mit
-Hilfe der oben beschriebenen grafischen Oberfläche bearbeitet werden.
+sind in jeweils einer Datei vom  Typ *.yaml* im Unterverzeichnis *config/* festgelegt. 
+DieDateinamen sind in Dateien vom Typ *.daq* enthalten, also *Kanne.daq* für Kamiokanne
+und *Cosmo.daq* für die CosMO-Panels. Sie können entweder mit einem Text-Editor oder auch
+mit Hilfe der oben beschriebenen grafischen Oberfläche bearbeitet werden.
 
-Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht die in den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*. Insbesondere kennzeichnet
-Text nach einem `#` -Zeichen erklärende Kommentare oder enthält alternative, auskommentierte Konfigurationsoptionen, die durch Löschen des `#` -Zeichens aktiviert werden können. 
+Die folgenden Beispiele gelten für den Kamiokanne-Detektor. Generell entspricht die in
+den Konfigurationsdateien verwendete Syntax der Markup-Sprache *yaml*. Insbesondere
+kennzeichnet Text nach einem `#` -Zeichen erklärende Kommentare oder enthält alternative,
+auskommentierte Konfigurationsoptionen, die durch Löschen des `#` -Zeichens aktiviert
+werden können. 
 
 Diese folgende Datei enthält die Dateinamen der einzelnen Konfigurationsdateien:
 
@@ -227,8 +247,8 @@ Diese folgende Datei enthält die Dateinamen der einzelnen Konfigurationsdateien
   # Konfigurationsdateien für den Kamiokanne-Detektor
   
   DeviceFile: config/PMpulse.yaml   # Konfiguration des Oszilloskops
-  BMfile:     config/BMconfig.yaml  # Konfiguration des Puffer-Managers
   PFfile:     config/PFconfig.yaml  # Konfiguration des Pulsfilters
+  BMfile:     config/BMconfig.yaml  # Konfiguration des Puffer-Managers
   ```
 
 **Konfiguration des Oszilloskops**
@@ -246,9 +266,14 @@ erlauben die Auswahl des Triggerkanals, die Triggerschwelle und die Richtung des
 also steigend (*Rising*) oder fallend (*Falling*). Es ist auch möglich, die Signalausgabe
 vor dem eigentlichen Triggerzeitpunkt zu starten; dazu dient der Eintrag *pretrig*, der den
 prozentualen Anteil der vor dem Triggerzeitpunkt ausgegebenen Werte angibt.  
-Es ist an dieser Stelle wichtig anzumerken, dass die vorgegebenen Werte nicht unbedingt denen entsprechen, die vom Oszilloskop unterstützt werden. Bei der Initialisierung werden die vorgegebenen Werte durch solche ersetzt, die unterstützt werden und den Vorgaben am nächsten kommen. Die tatsächlich eingestellten Werte werden nach Initialisierung des Oszilloskops in der Textkonsole angezeigt.
+Es ist an dieser Stelle wichtig anzumerken, dass die vorgegebenen Werte nicht unbedingt
+denen entsprechen, die vom Oszilloskop unterstützt werden. Bei der Initialisierung werden
+die vorgegebenen Werte durch solche ersetzt, die unterstützt werden und den Vorgaben am
+nächsten kommen. Die tatsächlich eingestellten Werte werden nach Initialisierung des
+Oszilloskops in der Textkonsole angezeigt.
 
-Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrieb an einer Photoröhre ist hier gezeigt (Datei PMpulse.yaml) :
+Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrieb an
+einer Photoröhre ist hier gezeigt (Datei PMpulse.yaml) :
 
   ``` yaml
   # file PMpulse.yaml
@@ -275,23 +300,31 @@ Ein typisches Beispiel einer Konfigurationsdatei für einen Kanal und den Betrie
 
 **Konfiguration des Pulsfilters**
 
-Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die
+Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt die
 Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Im ersten
 Teil des unten gezeigten Beispiels werden die gewünschten Ausgabedateien angegeben, also die
 Ausgabe aller Pulsparamter nach der Validierung der Triggerbedingung, Ausgabe der Pulsparameter
 oder der kompletten Rohdaten der Signalformen für gefundene Doppelpulse oder auch die
 Abspeicherung der Signalformen als Grafiken.  
-Im zweiten Teil der Datei werden die Pulsparameter für die Pulssuche angegeben, und zwar für die Näherung als trapezförmiges Signal mit Anstiegszeit (*taur*), Haltezeit (*tauon*) und Abfallzeit (*tauf*) sowie der Pulshöhe am Maximum (*pheight*) als Parameter. Ein solcher Eintrag kann für jeden aktiven Kanal angegeben werden; wird nur einer angegeben, gilt er für alle Kanäle.   
+Im zweiten Teil der Datei werden die Pulsparameter für die Pulssuche angegeben, und zwar für
+die Näherung als trapezförmiges Signal mit Anstiegszeit (*taur*), Haltezeit (*tauon*) und 
+Abfallzeit (*tauf*) sowie der Pulshöhe am Maximum (*pheight*) als Parameter. Ein solcher 
+Eintrag kann für jeden aktiven Kanal angegeben werden; wird nur einer angegeben, gilt er
+für alle Kanäle.   
 Oft ist es notwendig, für den Triggerpuls andere Pulsparameter auszuwählen. Dazu kann optional
 mit dem Schlüsselwort *trgPulseShape* eine eigene Pulsdefinition für den Triggerpuls auf dem
 Triggerkanal gewählt werden.  
-Über das Schlüsselwort *modules* werden die gewünschten Echtzeit-Anzeigen angegeben. Möglich sind eine Darstellung der Rate akzeptierter Ereignisse in Abhängigkeit von der Zeit, eine einfache Anzeige der Signalhöhen für jedes akzeptierte Ereignis als Balkendiagramm und die Anzeige von
-Häufigkeitsverteilungen (Histogramme) von Pulsparametern . Die Konfigurationsparameter der
-gewünschten Histogramme werden im letzten Teil der Datei angegeben. Dies sind der Wertebereich,
-die Zahl der Intervalle, der Maximalwert der Häufigkeit, ein Name für die angezeigte Größe und
-die Wahl einer linearen oder logarithmischen Skala. In der gegenwärtigen Version der Software
-sind nur die vier unten gezeigten Histogramme in genau dieser Reihenfolge implementiert.  
-Über den Schlüssel *doublePulse* kann die Doppelpussuche ggf. abgeschaltet werden, wenn man den Wert auf *false* setzt. 
+Über das Schlüsselwort *modules* werden die gewünschten Echtzeit-Anzeigen angegeben. Möglich
+sind zur Zeitn eine Darstellung der Rate akzeptierter Ereignisse in Abhängigkeit von der Zeit,
+eine einfache Anzeige der Signalhöhen für jedes akzeptierte Ereignis als Balkendiagramm und
+die Anzeige von Häufigkeitsverteilungen (Histogramme) von Pulsparametern . Die 
+Konfigurationsparameter der gewünschten Histogramme werden im letzten Teil der Datei angegeben.
+Dies sind der Wertebereich, die Zahl der Intervalle, der Maximalwert der Häufigkeit, ein Name
+für die angezeigte Größe und die Wahl einer linearen oder logarithmischen Skala.
+In der gegenwärtigen Version der Software sind nur die vier unten gezeigten Histogramme in 
+genau dieser Reihenfolge implementiert.  
+Über den Schlüssel *doublePulse* kann die Doppelpussuche ggf. abgeschaltet werden, wenn
+man den Wert auf *false* setzt. 
 
 Eine Vorlage zur Pulsanalyse mit allen verfügbaren Optionen (Datei PFconfig.yaml)
 ist heir gezeigt:  
@@ -397,8 +430,8 @@ NBuffers: 16         # Anzahl der Puffer für aufgezeichnete Pulsformen
 BMmodules: [mpOsci]  # BufferMan- Module, die gestartet werden sollen
 verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2) 
 LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
-
 ``` 
+
 
 **Wahl der Konfigurationsparameter**
 
@@ -409,10 +442,10 @@ Größe die Pulshöhe, die für den Trigger des Oszilloskops und im Pulsfilter
 angegeben wird. Ist die Schwelle zu hoch, verliert man Signalpulse, wenn
 sie zu niedrig gewählt wird, werden zu viele Rauschpulse akzeptiert.
 
-Die Triggerschwelle des Oszilloskops sollte niedriger als die Schwelle
-für den entsprechenden Kanal im Pulsfilter gewählt werden. Dadurch
-wird sichergestellt, dass praktisch alle Signale, die der Pulsfilter akzeptiert,
-auch den Trigger ausgelöst haben. 
+Die Triggerschwelle des Oszilloskops sollte niedriger als die Schwelle für den
+entsprechenden Kanal im Pulsfilter gewählt werden. Dadurch wird sichergestellt, 
+dass praktisch alle Signale, die der Pulsfilter akzeptiert, auch den Trigger
+ausgelöst haben. 
 
 Als Einstellungshilfe bietet der *PulseFilter* Häufigkeitsverteilungen der 
 Pulshöhen für Signale, die
@@ -452,7 +485,7 @@ gepackten Datei und die grafische Darstellung der Doppelpulse bzw.
 die Speicherung als Grafikdateien im *.png*-Format. Die aus den
 Doppelpulsen bestimmten Lebensdauern sind in der Datei
 *dpKanne2_180403.dat* enthalten. Eine Anpassung einer Exponentialfunktion
-an gemessene Lebensdauern zwischen 1.5 µs and 15. µs kann mit dem Skript
+an gemessene Lebensdauern zwischen 1.5 µs and 15 µs kann mit dem Skript
 *fit_dpData.py* ausgeführt werden; das Ergebnis zeigt die Grafikdatei
 *life-ofMU_180403.png*.
 
@@ -475,18 +508,25 @@ acceptPattern:
 ```
 und können mit dem script *PanelAnalysis.py* ausgewertet werden. 
 
+Die erste Konfiguration dient der vom zu prüfenden Panel unabhängigen Auswahl an
+Ereignissen, bei denen sichergestellt ist, dass ein Myondurchgang vorhanden war.
+
+Die zweite Konfiguration dient der Auswahl von Ereignissen, die das zu prüfende Panel
+ausgelöst haben, bei denen aber keine Pulse in einem der beiden anderen Detektoren 
+vorhanden waren.
 
 
 ## Experimentieren mit *picoCosmo* 
 
-Wichtig für das Verständnis der Messung der Eigenschaften der Myonen
+Wichtig für das Verständnis der Messung der Eigenschaften von Myonen
 aus der kosmischen Strahlung ist eine gewisse Vertrautheit mit der 
 Verwendung von Oszilloskopen, insbesondere die Notwenigkeit des
 Triggers und der Speicherfunktion zur Darstellung von kurzen, zufällig
 auftretenden Signalen. 
 Zur Einführung kann dazu die Oszilloskop-Software *Picoscope*  verwendet
 werden, die mit dem Oszilloskop auf CD ausgeliefert bzw. heruntergeladen
-werden kann. Als Download ist auch die Linux-Version der Software erhältlich.
+werden kann. 
+
 
 **Registrierung zufälliger Pulse mit einem Oszilloskop**
 
@@ -508,12 +548,12 @@ die Einstellungen notiert werden, um sie später in die Konfiguration der
 **Koinzidenzen**
 
 Um sicher zu stellen, dass es sich bei den beobachteten Signalen nicht
-um Rauschen oder im Sensor selber erzeugte Pulse handelt, ist eine
-Koinzidenz-Messung mit zwei Sensoren notwendig. Dazu kann man zwei
-gleiche Detektoren oder auch eine Kanne und eines der CosMO-Panels
-verwenden. Wenn man auf den einen Kanal triggert und gleichzeitig
-beide Kanäle beobachtet, wird man Koinzidenzen sehen, wenn die
-Detektoren geometrisch so angeordnet sind, dass sie gleichzeitig von
+um Rauschen, Untergrundstrahlung oder im Sensor selber erzeugte Pulse 
+handelt, ist eine Koinzidenz-Messung mit zwei Sensoren notwendig. 
+Dazu kann man zwei gleiche Detektoren oder auch eine Kanne und eines der
+CosMO-Panels verwenden. Wenn man auf den einen Kanal triggert und 
+gleichzeitig beide Kanäle beobachtet, wird man Koinzidenzen sehen, wenn
+die Detektoren geometrisch so angeordnet sind, dass sie gleichzeitig von
 Spuren durchdrungen werden. Stellt man die Detektoren nebeneinander
 in weiter Entfernung auf, so werden keine Koinzidenzen beobachtet. 
 Mit dieser einfachen Vorgehensweise kann so der Nachweis geführt werden,
@@ -527,7 +567,7 @@ Nach diesen Vorversuchen sollten nun mit Hilfe von picoCosmo Messungen
 der Koinzidenzrate unter verschiedenen Bedingungen durchgeführt werden.
 Dazu sollten mindestens zwei Panels verwendet werden, um Rauschsignale
 zu unterdrücken. Am besten stellt man in der Oszilloskop-Konfiguration
-eine Samplingzeit von 2 µs mit 500 Samples ein. Dazu gibt es eine
+eine Samplingzeit von 2 µs mit 500 Samples ein. Dazu gibt es eine
 vorbereitete Konfiguration, *CosmoRate.daq*. 
 
 Nach dem Start der Datennahme wir im Fenster "RateDisplay" der zeitliche
@@ -570,7 +610,7 @@ Fragen:
   eine Unsicherheit, die durch die Poisson-Verteilung beschreiben ist.
   Die Unsicherheit auf die gesamte gemessene Anzahl N ist gegeben durch
   Wurzel aus N, also ΔN = √N, die relative Unsicherheit auf die Rate
-  also ΔN/N = 1/√N . Signifikant sind nur Ratenunterschiede, die deutlich
+  also ΔN/N = 1/√N. Signifikant sind nur Ratenunterschiede, die deutlich
   größer als die statistische Unsicherheit sind. 
 
 
@@ -640,15 +680,15 @@ Ereignisse:
 > ![Signalpulse von Myonen in einem der neuen (Serie III)
 CosMO-Panles(Sept. 2024)](images/PanelEfficiency.png)
 
-Man sieht, das echte Myonen mit einer Effizienz von  ε = 99,5 % erkannt werden,
-wenn die Schwelle oberhalb von 50 mV gewählt wird. 
+Man sieht, das echte Myonen mit einer Effizienz von ε = 99,5 % erkannt werden,
+wenn die Schwelle oberhalb von 50 mV gewählt wird. 
 
 Eine zweite Datei zur Bestimmung der Untergrundpulse wurde erzeugt, 
 indem sowohl der Trigger als auch die Pulsanalyse nur auf das Probe-Panel 
 angewandt wurden. Mit Hilfe der ebenfalls ausgelesenen Tag-Panels kann
 zwischen Signalpulsen von Myon-Spuren und Rauschen bzw. Signalen von 
-Untergrundstrahlung unterschieden werden. Die Grafik unten wrude 
-erzeugt durch Eingabe von
+Untergrundstrahlung unterschieden werden. Die Grafik unten wurde 
+erzeugt durch Eingabe von 
 
 > `python PanelSpectrum.py pFilt_selectProbe.csv`
 
@@ -660,7 +700,7 @@ Die Verteilung der Pulshöhen der (roten) Untergrund-Pulse zeigt zwei Komponente
 
   - eine, die von Rauschpulsen der Elektronik bzw. im optischen Sensor herrührt 
   und von Null ausgehend steil abfällt und   
-  - eine zweite, die von radioaktiver Umgebungsstrahlung verursacht wird die
+  - eine zweite, die von radioaktiver Umgebungsstrahlung verursacht wird und die
   ebenfalls große Pulsehöhen im Signalbereich enthält.
 
 Damit ist klar, dass Myon-Ereignisse zuverlässig nur durch Koinzidenzen in mindestens
@@ -668,9 +708,9 @@ zwei der Detektoren nachgewiesen werden können. Die Myon-Rate ergibt sich durch
 der gemessenen Koinzidenzraten auf die Ansprechwahrscheinlichkeit. Verwendet man zwei 
 Panels mit gleicher Ansprechwahrscheinlichkeit ε, so ist die Rauschrate
 praktisch Null, die Zahl der Myonen ergibt sich also aus der Zahl der Zweifachkoinzidenzen
-als N_µ = N_2/ε². Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei davon
-angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik
-aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu  N_µ = (N_2 + N_3) / (2·ε² - ε³) 
+als N_µ = N_2/ε². Bei Verwendung von drei Panels und der Bedingung, dass mindestens zwei
+davon angesprochen haben, ergibt sich die Zahl der Myonen nach etwas Kombinatorik
+aus der Zahl der Zweifach- und Dreifachkoinzidenzen zu  N_µ = (N_2 + N_3) / (2·ε² - ε³) 
 
 
 *Anmerkung*:  
@@ -697,8 +737,7 @@ Damit lässt sich direkt die um die Totzeit korrigierte Rate berechnen:
 
      R = N / T_life.
 
-Da die Effizienzen der Panels
-
+**Bestimmung der Myon-Rate**
 
 Betrachten wir zum Abschluss ein typisches **Beispiel** mit 3 CosMO-Panels, 
 Triggerschwelle 27.5 mV,  PulseFilter 30 mV:
@@ -714,10 +753,6 @@ Auf Effizienz und Totzeit korrigierte Myon-Rate:
 ​Fläche der Panels: 20 x 20 cm²
 
 ​  →  Myon-Rate  **Rµ = 0.013 / cm² / s**
-
-
-
-
 
 
 
@@ -747,7 +782,7 @@ den Detektor treffen, werden auch sie nachgewiesen, und zwar zu einem um
 die individuelle Lebensdauer des zerfallenen Myons verzögerten Zeitpunkt.
 Die Signatur des Zerfalls eines gestoppten Myons ist also ein Doppelpuls. 
 Ein Oszilloskop-Bild eines solchen Ereignisses in der Kamiokanne mit einem
-nach ca. 3 µs  zerfallenden Myon ist hier gezeigt: 
+nach ca. 3 µs  zerfallenden Myon ist hier gezeigt: 
 
    ![Beispiel eines Doppelpulses](images/DPfig_Kanne.png)
 
@@ -805,7 +840,7 @@ Mit Hilfe des *python*-Skritps *fit_dpData.py* wurde in der Grafik oben
 eine Exponentialfunktion an die Daten angepasst. Die Fehlerbalken
 entsprechen der statistischen Unsicherheit im jeweiligen Intervall.
 Die Grafik enthält ca. 700 mit den CosMO-Panels aufgezeichnete
-Doppelpulse im Bereich von 1µs - 15µs. 
+Doppelpulse im Bereich von 1 µs - 15 µs. 
 
 Neben echten Myon-Zerfällen sind im Datensatz auch zufällige verzögerte
 Koinzidenzen enthalten, die entstehen, wenn zwei Myonen oder auch
@@ -827,12 +862,11 @@ konstanter Anteil aus Zufallskoinzidenzen berücksichtigt.
 Neben den Zufallskoinzidenzen ist ein weiterer physikalischer Effekt relevant:
 negativ geladene, gestoppte Myonen werden von Atomkernen angezogen
 und lösen dort Kernreaktionen aus. Bei schweren Kernen wie Blei ist die damit
-assoziierte Lebensdauer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
+assoziierte Lebensdauer kurz.  Zeiten unterhalb von 1 µs sollten deshalb nicht
 in der Anpassung berücksichtigt werden. Bei leichteren Kernen (z.B. Kohlenstoff
 im organischen Material der Szintillator-Panels) liegt die Lebensdauer für
 Myon-Einfang allerdings in der gleichen Größenordnung wie die Myon-Lebensdauer
 und kann das Ergebnis verfälschen. 
-
 
 
 ## Liste der Dateien im Projekt *picoCosmo*
