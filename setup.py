@@ -23,7 +23,7 @@ setup(
     install_requires = [],
     scripts=['CosmoGui.py', 'runCosmo.py'],
     classifiers=[
-    'Development Status :: 5 - Stable',
+    'Development Status :: 5 - Production/Stable',
     #'Development Status :: 4 - Beta',
     # Specify the Python versions you support here. In particular, ensure
     # that you indicate whether you support Python 2, Python 3 or both.
