@@ -55,7 +55,7 @@ if __name__ == "__main__":  # -----------------------------
             zipmode = False
             f = open(fname, 'r')
     except Ecxeption as e:
-        print(' !!! failed to open input file ' + fname + " : " + e)
+        print(' !!! failed to open input file ' + fname + " : " + str(e))
         exit(1)
 
     # read first block from file
@@ -64,7 +64,7 @@ if __name__ == "__main__":  # -----------------------------
         obj = yaml.load(txt, Loader=yaml.Loader)
         conf = obj['OscConf']
     except Exception as e:
-        print('     failed read oscillocope configuration : ' + e)
+        print('     failed read oscillocope configuration : ' + str(e))
         exit(1)
 
     print(" ** start animation")

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''create pictures in .png format from raw wave forms saved by picoCosmo.py'''
 
 import sys
@@ -24,7 +24,7 @@ def readblock():
             _l = f.readline().decode('utf-8')
         else:
             _l = f.readline()
-        if not l:  # end of file
+        if not _l:  # end of file
             # print('   end of file')
             return ''
         txt += _l
@@ -54,7 +54,7 @@ if __name__ == "__main__":  # -----------------------------
             zipmode = False
             f = open(fname, 'r')
     except Exception as e:
-        print(' !!! failed to open input file ' + fname + ": " + e)
+        print(' !!! failed to open input file ' + fname + ": " + str(e))
         exit(1)
 
     # read first block from file
@@ -63,7 +63,7 @@ if __name__ == "__main__":  # -----------------------------
         obj = yaml.load(txt, Loader=yaml.Loader)
         conf = obj['OscConf']
     except Exception as e:
-        print('     failed read oscillocope configuration : ' + e)
+        print('     failed read oscillocope configuration : ' + str(e))
         exit(1)
 
     dirname = 'dpFigs'
