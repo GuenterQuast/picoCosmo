@@ -39,6 +39,7 @@ setup(
     license='GNU Public Licence',
     description=' Analysis of waveforms from cosmic ray detectors',
     long_description=open('README').read(),
+    long_description_content_type='text/x-rst',
     setup_requires=[\
         "picodaqa",
         "NumPy >= 1.17.0",
