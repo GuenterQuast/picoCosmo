@@ -12,10 +12,9 @@ Die **deutsche Version** dieses Dokuments findet sich unter dem Link  [README_de
 
 The software is tailored to identify short pulses from muon detectors (the scintillator panels of the *CosMO*-experiment by "Netzwerk Teilchenwelt", <http://www.teilchenwelt.de>, or the *Kamiokanne*-Experiment (a water-Cherenkov detector with photomultiplier readout) with a PicoScope USB oscilloscope with two or four channels.
 
-Reading out Geiger Counters or detectors for gamma rays, e. g. the GDK 101 PIN diode counter, is also
-possible with the this software. 
+Reading out Geiger Counters or detectors for gamma rays, e. g. the GDK 101 PIN diode counter, is also possible with the this software. 
 
-Data is read from the PicoScope device via a Buffer Manager, see project *picoDAQ* (<https://github.com/GuenterQuast/picoDAQ>), which records waveforms and distributes them to consumer processes. The consumers either provide real-time displays of a sub-set of the data or perform data analysis. *PiocoCosmo* is a specialised and extended version of the script *runDAQ.py* from project *picoDAQ*.
+Data is read from the PicoScope device via a Buffer Manager, see project *picoDAQ* (<https://github.com/GuenterQuast/picoDAQ>), which records waveforms and distributes them to consumer processes. The consumers either provide real-time displays of a sub-set of the data or perform data analysis. *PiocoCosmo* is a specialized and extended version of the script *runDAQ.py* from project *picoDAQ*.
 
 The analysis proceeds in three steps. First, the trigger is validated by cross-correlation with a signal template located around the trigger time. Next, coincidences near a validated triggering pulse are searched for in all connected channels. The optional third step performs a search for additional pulses after the triggering event, indicating the decay of a stopped muon in or near the detector.
 
@@ -55,8 +54,8 @@ in the directory *libs/RasPi/picoscopelibs*. Execute the script
 
 On other systems, the installation of the *picoCosmo* package with its start-up scripts
 *CosmoGui.py* and *runCosmo.py* can be installed by executing the shell script 
-*installibs.sh*. Note that a virtual Python environment must be activated on modern
-Linux versions. 
+*installibs.sh*. Note that a virtual *Python* environment must be activated on modern
+Linux versions in order to install additional *Python* packages.
 
 By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. 
 Initially, this directory contains examples of configuration files for different detectors
@@ -64,13 +63,13 @@ Initially, this directory contains examples of configuration files for different
 - the Phywe version of Kamiokanne (*PhyweKanne.daq*)
 - Kamiokanne with a fast signal from a photomultiplier or a silicon photomultiplier (SiPM)  (*Kanne.daq*)
 - the CosMO panels (*Cosmo.daq* or *Cosmo2000.daq* for a PicoScope A series)
-- for one CosMo-panel with Kamikanne (*Kanne-plusPanel.daq*)
+- for one CosMo-panel with Kamiokanne (*Kanne-plusPanel.daq*)
 - for the GDK 101 gamma ray detector (*GammaCounter.daq* or GammaCounter2000.daq for the A-series)
 
 
 ## Program Execution
 
-To run *picoCosmo* from the graphical interface, create the subdirecotry *picoCosmo* in your home directory, where modified configurations and output are stored: 
+To run *picoCosmo* from the graphical interface, create the subdirectory *picoCosmo* in your home directory, where modified configurations and output are stored: 
 
      cd 
      mkdir picoCosmo
@@ -125,7 +124,7 @@ The oscilloscope configuration specifies the oscilloscope model, the active chan
 ```yaml
 # file PSconfig.yaml
 # ------------------   
-# PicoScope configuration for two channles (~150ns pulses, <300mV)
+# PicoScope configuration for two channels (~150ns pulses, <300mV)
 
 PSmodel: '2000a'                  # model type (2000a is default, for PS 220xB and 240xB)
 
@@ -163,7 +162,7 @@ The configuration for the Buffer manager allows to specify the number of buffers
 NBuffers: 16         # number of buffers to store raw waveforms
 BMmodules: [mpOsci]  # BufferMan modules to start
 verbose: 1           # set verbosity level
-LogFile: BMsum       # name of log-file, null to disabl
+LogFile: BMsum       # name of log-file, null to disable
 ```
 
 
@@ -232,7 +231,7 @@ timingPrecision: 2 # in units of sampling interval, default is 2
 # remove '#' to enable one of the keys below
 #NminCoincidence: 2 # min nbr of coincidences to accept event, default is 2
 #    alternatively: 
-#    pattern of pulses required near trigger pulse (overwrites NminCoincience)
+#    pattern of pulses required near trigger pulse (overwrites NminCoincidence)
 #acceptPattern:     
 # - [1, 1]  # valid pulse chanA and ChanB
 # - [0, 1]  # not ChanA and ChanB
@@ -240,7 +239,7 @@ timingPrecision: 2 # in units of sampling interval, default is 2
 
 ## display modules to start and options
 modules: [RMeter, Display, Hists]
-#    rate meter, display of signal size, historgrams
+#    rate meter, display of signal size, histograms
 # --- for rate meter
 RMeterInterval:  2.5  # update interval in sec.
 RMeterRate:  12.      # max rate in Hz
@@ -259,7 +258,6 @@ doublePulse: true  # switch to control double-pulse search
 ```
 
 
-
 ## Example output
 
 The directory *./output* contains the results from a long run of almost 20 days with the Kamiokanne detector and a one-day run with the CosMO panels. The compressed file *rawDP_<date>.dat.zip* contains the raw wave forms of identified double-pulses in *yaml*-format. The scripts *plotDoublePulses.py* and *makeFigs.py* can be used to read the zipped file and to produce graphical displays or images in *.png* 
@@ -272,10 +270,6 @@ Input is the  *PulseFilter* logfile. The file
  *Kanne_180403/pFilt_Kanne.dat*
 contains the results for a short run; the command 
 *./RateAnalysis.py Kanne_180403/pFilt_Kanne.dat* displays the graphs.
-
-
-
-
 
 
 
@@ -309,7 +303,7 @@ cd git
 git pull https://github.com/GuenterQuast/picoCosmo
 cd picoCosmo/libs/whl
 sudo pip3 install *.whl
-# put current user in group pico to grant acces to USB ports
+# put current user in group pico to grant access to USB ports
 sudo useradd -G pico $USER
 ```
 

@@ -26,10 +26,10 @@ gemacht werden können.
 Auch Geigerzähler oder Detektoren für Gammastrahlung, wie der GDK 101
 mit PIN-Dioden können mit dieser Software verwendet werden. 
 
-Moderne USB-Oszilloskope wie das PicoScope der Firma PichoTechnology,
+USB-Oszilloskope wie das PicoScope der Firma PichoTechnology,
 siehe <http://www.picotech.com>, erlauben es, die Pulsformen nicht nur
-anzuzeigen, sondern auch in Echtzeit an einen Commputer zu exportieren, mit
-dem sie dann aufgezeichnet, angezeigt und analysiert werden können.
+anzuzeigen, sondern auch in Echtzeit an einen Commputer zu exportieren, 
+mit dem sie dann aufgezeichnet, angezeigt und analysiert werden können.
 Diesem Zweck dient das hier beschriebene Projekt "*picoCosmo*". Es ist auf
 Linux-Systemen und auch auf dem Raspberry Pi lauffähig und unterstützt
 PicoScope-Geräte mit zwei oder vier Kanälen.
@@ -51,7 +51,7 @@ Die Analyse der aufgezeichneten Pulsformen verläuft in drei Schritten:
 
 2. #### Suche nach Koinzidenzen
    Als nächstes werden Pulse auf allen aktiven Kanälen in der Nähe
-   des Triggerzeitpunkts gesucht. Bei mehr als einem
+   des Trigger-Zeitpunkts gesucht. Bei mehr als einem
    angeschlossenen Detektor wird ein aufgezeichnetes Ereignis
    akzeptiert, wenn mindestens zwei in zeitlicher Koinzidenz
    auftreten.
@@ -120,18 +120,18 @@ werden alle für *picoCosmo* notwendigen Komponenten auf der Rasbperry Pi instal
 Auf anderen Systemen kann as Shell-Script *installlibs.sh* verwendet werden, um das 
 Paket *picoCosmo* mit den Python-Scripts *CosmoGui.py* und *runCosmo.py* zu installieren.
 Dabei bitte beachten, dass auf modernen Linux-Systemen eine virtuelle *Python*-Umgebung
-aktiv sein muss. 
+aktiv sein muss, um zusätzliche *Python*-Pakete installiert werden sollen. 
 
-Durch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis ~/picoCosmo erzeugt,
-das ausführbare Dateien und Konfiguarionsbeispiele enthält für verschiedene Detektoren oder Kombinationen davon enthält:
+Durch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis
+~/picoCosmo erzeugt, das ausführbare Dateien und Konfigurationsbeispiele für 
+verschiedene Detektoren oder Kombinationen davon enthält:
 
 - für die the Phywe-Version der Kamiokanne (*PhyweKanne.daq*)
-- für Kamiokanne mit schnellem signal von einer Fotoröhre oder einem Silizium-Photomultiplier (SiPM)  (*Kanne.daq*)
+- für Kamiokanne mit schnellem Signal von einer Fotoröhre oder einem Silizium-Photomultiplier 
+  (SiPM)  (*Kanne.daq*)
 - für die CosMO-Panels (*Cosmo.daq* oder *Cosmo2000.daq* für ein PicoScope der A-Serie)
-- für ein CosMo-Panel mit einer  Kamikanne (*Kanne-plusPanel.daq*)
+- für ein CosMo-Panel mit einer  Kamiokanne (*Kanne-plusPanel.daq*)
 - für den Gammadetektor GDK 10 (*GammaCounter.daq* oder GammaCounter2000.daq für die A-Serie)
-
-
 
 
 ## Programmausführung
@@ -140,7 +140,7 @@ Der Code kann entweder auf der Linux-Kommandozeile über das
 Script *runCosmo.py* oder über eine grafische Oberfläche,
 *CosmoGui.py*, gestartet werden.
 
-Um die grafische Öberfläche zu nutzen, wird das Verzeichnis *picoCosmo*
+Um die grafische Oberfläche zu nutzen, wird das Verzeichnis *picoCosmo*
 benötigt:
 
      cd 
@@ -170,7 +170,7 @@ einer Datei im *.yaml*-Format mit der Endung *.daq* enthalten.
 Beide Programme benötigen eine Konfigurationsdatei
 
   - *Cosmo.daq* : Konfiguration für die Cosmo-Panels
-  - *Kanne.daq* : Konfiguration für die  Kamiokanne.
+  - *Kanne.daq* : Konfiguration für die Kamiokanne.
 
 Diese Dateien enthalten die Namen weiterer Konfigurationsdateien, die für das
 PicoScope, den Puffer-Manager und die Pulsanalyse verwendet werden.
@@ -192,7 +192,7 @@ Datennahme und dem Startzeitpunkt abgeleitet wird.
 
 ## Details zu Konfiguration
 
-Wie oben beschrieben, wir die Datanaufnahme und Analyse entweder
+Wie oben beschrieben, wir die Datenaufnahme und Analyse entweder
 über die grafische Oberfläche (*./CosmoGui.py xxx.daq*) oder
 über die Kommandozeile (*./runCosmo xxxx.daq* gestartet.
 Ohne Angabe einer Konfigurationsdatei wird die Datei *default.daq* 
@@ -216,9 +216,6 @@ die Signalanalyse sind in jeweils einer  Datei vom  Typ *.yaml* im
 Unterverzeichnis *./config/* festgelegt. Die Dateinamen sind in Dateien vom
 Typ *.daq* enthalten, also `Kanne.daq` für Kamiokanne and *Cosmo.daq* für
 die CosMO-Panels.
-
-
-
 
 
 Die folgenden Beispiele für Konfigurationsdateien gelten für eine Datennahme mit
@@ -245,7 +242,7 @@ PFfile:     config/PFconfig.yaml   #     Pulsfilter
 
 
 Die  Oszilloskop-Konfiguration enthält Informationen zum Typ des Oszilloskops und legt die
-aktiven Kanäle und die Triggerbedingung für die Auslese fest. 
+aktiven Kanäle und die Trigger-Bedingung für die Auslese fest. 
 
 **Inhalt der Datei PSconfig.yaml:**
 
@@ -254,11 +251,11 @@ aktiven Kanäle und die Triggerbedingung für die Auslese fest.
 # ------------------   
 # Konfiguration für zwei Kanäle (~150ns Pulsdauer, <300mV Pulshöhe)
 
-PSmodel: '2000a'           # model type (2000a ist Vorgabe, für Moedlle PS 220xB and 240xB)
+PSmodel: '2000a'           # model type (2000a ist Vorgabe, für Modelle PS 220xB and 240xB)
 
 # Konfiguration der Kanäle
 picoChannels: [A, B]              # aktive Kanäle
-## picoChannels: [A, B, C]        # optional für Osciloskop mit >2 Kanälen
+## picoChannels: [A, B, C]        # optional für Oszilloskop mit >2 Kanälen
 ChanModes:     [AC, AC, AC]       # AC- oder DC-Kopplung
 ChanRanges: [0.2, 0.2, 0.2]       # Eingangsbereich 
 ChanOffsets: [0.14, 0.16, 0.15]   # Offset (nicht für Modell 2204x)
@@ -268,7 +265,7 @@ ChanColors: [darkblue, sienna, indigo]  # optional: Kanalfarben für Anzeige
 trgChan: A          # Kanalname
 trgThr: -40.E-3     # Schwelle
 trgTyp: Falling     # Typ: Falling, Rising, Above, Below
-pretrig: 0.05       # % der vor Trigger gewpeicherten Samples (nicht für Model 2204x)
+pretrig: 0.05       # % der vor Trigger gespeicherten Samples (nicht für Model 2204x)
 
 ## Datenaufnahme
 Nsamples: 4000                    # Zahl der Datenpunkte pro Auslese
@@ -280,8 +277,9 @@ sampleTime: 16.E-6                # Zeitdauer; Zeitabstand zwischen zwei Datenpu
 
 
 
-Die Konfigurationsdatei für den Puffer-Manager gibt an, wie viele Puffer verwendet werden, welche Anzeige-Module gestartet werden und ob ein Log-File erstellt werden soll. Hier sind meist keine
-Änderungen notwendig.
+Die Konfigurationsdatei für den Puffer-Manager gibt an, wie viele Puffer verwendet werden, 
+welche Anzeige-Module gestartet werden und ob ein Log-File erstellt werden soll. Hier sind 
+meist keine Änderungen notwendig.
 
 **Inhalt der Datei BMconfig.yaml:**
 
@@ -296,14 +294,17 @@ verbose: 1           # setze Niveau der ausgegebenen Nachrichten (0, 1, 2)
 LogFile: BMsum       # Schreibe log-Datei mit laufenden Angaben 
 ```
 
-Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt  die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. Sie enthält auch die Spezifikation der Echtzeit-Histogramme für Pulshöhen, Myon-Rate und Lebensdauer, sowie einge optionale Eintäge. Ein Beispiel ist hier gezeigt:
+Die Konfiguration der Pulsanalyse spezifiziert die gewünschten Ausgabedateien und gibt
+die Pulsform und die Pulshöhe für jeden Kanal sowie die zu startenden Anzeige-Module an. 
+Sie enthält auch die Spezifikation der Echtzeit-Histogramme für Pulshöhen, Myon-Rate und
+Lebensdauer, sowie einige optionale Einträge. Ein Beispiel ist hier gezeigt:
 
 **Inhalt der Datei PFconfig.yaml:**
 
 ```yaml
 # file PFconfig.yaml
 # -------------------
-# Konfiguration des Pulsfilters und der Echtzweit-Auswertung
+# Konfiguration des Pulsfilters und der Echtzeit-Auswertung
 #           dokumentiert alle z. Zt. verfügbaren Optionen
 
 ## Ausgabedateien  (null setzen falls keine Ausgab erwünscht)
@@ -380,9 +381,6 @@ doublePulse: true  # Suche nach Doppelpulsen ein- (Vorgabe) bzw. ausschalten
 ```
 
 
-
-
-
 ## Beispielausgaben
 
 Das Verzeichnis *./output* enthält Ergebnisse einer Langzeitmessung
@@ -409,9 +407,6 @@ eintreffenden Ereignissen (die sog. "Wartezeit").  Die Datei
 enthält eine Beispieldatei für eine kurze Datennahme; der Befehl 
 *./RateAnalysis.py Kanne_180403/pFilt_Kanne.dat* zeigt die entsprechenden
 Grafiken an. 
-
-
-
 
 
 ## Ausführen auf dem  Raspberry Pi
