@@ -216,7 +216,7 @@ wird folgender Befehl auf der Kommandozeile eingegeben:
 
 Das *Python*-Script *PanelEfficiency.py* dient zur Bestimmung der Nachweiseffizienz 
 der Detektoren, die durchgeführt werden kann, wenn drei davon zur Verfügung stehen. 
-Der zu prüfende Detektor muss ich dazu bei der Datennahmen genau zwischen den beiden
+Der zu prüfende Detektor muss sich dazu bei der Datennahmen genau zwischen den beiden
 anderen befinden. 
 
 Ein weiteres *Python*-Script*, *RateAnalysis.py*, erzeugt Grafiken zur Überprüfung
