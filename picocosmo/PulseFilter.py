@@ -355,6 +355,16 @@ class PulseFilter(object):
             else:
                 rawFile = None
 
+            if "rawFile1" in self.confDict:
+                rawFile1 = self.confDict['rawFile1']
+            else:
+                rawFile1 = None
+
+            if "Nraw1" in self.confDict:
+                Nraw1 = self.confDict['Nraw1']
+            else:
+                Nraw1 = 100
+
             if "pictFile" in self.confDict:
                 pictDir = self.confDict['pictFile']
             else:
@@ -438,6 +448,16 @@ class PulseFilter(object):
             print('data: ', file=self.rawf)  # data tag
         else:
             self.rawf = None
+
+        if rawFile1 is not None:
+            self.rawf1 = open(rawFile1 + '_' + datetime + '.dat', 'w', 1)
+            print("--- #raw waveforms", file=self.rawf1)  # header line
+            yaml.dump({'OscConf': self.BM.DevConf.OscConfDict}, self.rawf1)
+            yaml.dump({'pFConf': self.confDict}, self.rawf1)
+            print('data: ', file=self.rawf1)  # data tag
+            self.Nraw1 = Nraw1
+        else:
+            self.rawf1 = None
 
         if pictDir is not None:  # create a directory to store pictures
             self.pDir = pictDir + '_' + datetime
@@ -754,7 +774,10 @@ class PulseFilter(object):
                         file=self.logfDP,
                     )
 
-            if self.rawf is not None and doublePulse:  # write raw waveforms
+            if self.rawf1 is not None:  # write raw waveforms
+                print(' - ' + yaml.dump(np.around(evData, 5).tolist(), default_flow_style=True), file=self.rawf1)
+
+            if self.rawf is not None and doublePulse:  # write raw waveforms for double pulses
                 print(' - ' + yaml.dump(np.around(evData, 5).tolist(), default_flow_style=True), file=self.rawf)
 
             if self.pDir is not None and doublePulse:
@@ -769,7 +792,8 @@ class PulseFilter(object):
                     self.prlog('*==* PF: %i, %i, %.3g, %.3g' % (evcnt, Nacc, tevt, VSig[0][0]))
                 elif NChan == 2:
                     self.prlog(
-                        '*==* PF: %i, %i, %i, %.3g, %.3g, %.3g' % (evcnt, Nval, Nacc, tevt, VSig[0][0], VSig[1][0]))
+                        '*==* PF: %i, %i, %i, %.3g, %.3g, %.3g' % (evcnt, Nval, Nacc, tevt, VSig[0][0], VSig[1][0])
+                    )
                 elif NChan == 3:
                     self.prlog('*==* PF: %i, %i, %i, %i, %i, %.3g' % (evcnt, Nval, Nacc, Nacc2, Nacc3, tevt))
                 elif NChan == 4:
@@ -779,7 +803,7 @@ class PulseFilter(object):
                 if NChan == 1:
                     self.prlog("*==* PF: evt %i, Nval: %i" % (evcnt, Nval))
                 elif NChan == 2:
-                    self.prlog("*==* PF: evt %i, Nval, Nacc: %i, %i" (evcnt, Nval, Nacc))
+                    self.prlog("*==* PF: evt %i, Nval, Nacc: %i, %i"(evcnt, Nval, Nacc))
                 elif NChan == 3:
                     self.prlog(
                         "*==* PF: evt %i, Nval, Nacc, Nacc2, Nacc3: %i, %i, %i, %i" % (evcnt, Nval, Nacc, Nacc2, Nacc3)
@@ -834,6 +858,10 @@ class PulseFilter(object):
             print("\n#                       %i double pulses" % (Ndble), file=self.logfDP)
             print("#      active time %.1f s (from BufferMan)" % (self.BM.Tlife.value), file=self.logfDP)
             self.logfDP.close()
+
+        if self.rawf1 is not None:
+            print("--- ", file=self.rawf1)
+            self.rawf1.close()
 
         if self.rawf is not None:
             print("--- ", file=self.rawf)
