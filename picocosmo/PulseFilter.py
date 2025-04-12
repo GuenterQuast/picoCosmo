@@ -20,10 +20,10 @@ from picodaqa.Oscilloscope import *
 class PulseFilter(object):
     '''
     Analyse data read from CosMO detectors of Netzwerk Teilchenwelt
-    with a PicoScope USB oscilloscpe
+    with a PicoScope USB oscilloscope
 
     Method:
-      Find a pulse similar to a template pulse by cross-correlatation with
+      Find a pulse similar to a template pulse by cross-correlation with
       template pulse
 
         - implemented as an obligatory consumer of BufferMan,
@@ -38,16 +38,16 @@ class PulseFilter(object):
 
             1. validation of pulse on trigger channel
             2. coincidences on other channels near validated trigger pulse
-            3. seach for addtional pulses on any channel
+            3. search for additional pulses on any channel
 
-    Results are viszalised as on-line displays (rate information and
+    Results are visualized as on-line displays (rate information and
     histograms of pulse properties) or dumped as raw wave-form
     information to a .yaml file or as "event pictures", i.e.
     oscilloscope displays, of wave-forms with delayed pulses
     '''
 
     ## Changelog:
-    # GQ, 27-Aug-19: option for critera to accept events
+    # GQ, 27-Aug-19: option for criteria to accept events
     # GQ, 25-Aug-19: added optional time delay of channels w.r.t trigger channel
     # GQ: 11-May-19: off-set subtraction as option
     # GQ: 30-Apr-19: support of bipolar pulses, added gamma counter GDK101
@@ -775,7 +775,8 @@ class PulseFilter(object):
                     )
 
             if self.rawf1 is not None:  # write raw waveforms
-                print(' - ' + yaml.dump(np.around(evData, 5).tolist(), default_flow_style=True), file=self.rawf1)
+                if Nacc <= self.Nraw1:
+                    print(' - ' + yaml.dump(np.around(evData, 5).tolist(), default_flow_style=True), file=self.rawf1)
 
             if self.rawf is not None and doublePulse:  # write raw waveforms for double pulses
                 print(' - ' + yaml.dump(np.around(evData, 5).tolist(), default_flow_style=True), file=self.rawf)

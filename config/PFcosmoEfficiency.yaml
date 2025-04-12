@@ -7,6 +7,8 @@
 logFile: pFilt   # store all pulses, Null to disable
 # logFile2: dpFilt  # store double-pulse parameters
 
+#rawFile1:  pRaw    # store raw wave-forms
+#Nraw1: 100         # number of raw wave-forms to store
 #rawFile:  dpRaw    # store raw wave-forms
 #pictFile: dpFigs   # save pictures of double pulses
 
