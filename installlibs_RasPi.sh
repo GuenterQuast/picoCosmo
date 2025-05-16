@@ -10,11 +10,12 @@ sudo apt-get install python3-matplotlib
 sudo apt-get install python3-pyqt5
 sudo apt-get install libatlas-base-dev # needed to build nupmy
 
+python -m install libs/whl/*.whl # python wheels
+#sudo pip3 install libs/tgz/*.tar.gz # python packages 
+
 # install this package (picoCosmo) 
 ## sudo pip3 install .
-
-sudo pip3 install libs/whl/*.whl # python wheels
-#sudo pip3 install libs/tgz/*.tar.gz # python packages 
+python -m pip install --no-build-isolation .
 
 # install PicoScope C libraries for USB oscilloscope
 sudo dpkg -i libs/RasPi/picoscopelibs/*.deb # picoscope 

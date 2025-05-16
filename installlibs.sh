@@ -22,5 +22,5 @@ python -m pip install libs/whl/*.whl # python wheels
 
 # finally, install this package (picoCosmo)
 # and the scripts CosmoGui.py and runCosmo.py
-python -m pip install .
+python -m pip install --no-build-isolation .
 
