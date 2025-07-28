@@ -37,12 +37,15 @@ The code also runs on a Raspberry Pi.
 
   - Install the PicoTech Software Development Kit from
     <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - Install the *pico-pyhton* package from
+  - Install the *pico-python* package from
     <https://github.com/colinoflynn/pico-python>.
   - Install the picoDAQ package, vers. >= 0.7.2 from
     <https://github.com/GuenterQuast/picoDAQ>.
   - Download all files from this project
     <https://github.com/GuenterQuast/picoCosmo>.
+
+Note that a virtual *Python* environment must be activated on modern
+Linux versions in order to install additional *Python* packages.
 
 For your convenience, the sub-directory *libs/whl/* contains compatible versions of
 *picoscope* from package *pico-python* and  *picodaqa* from package *picoDAQ* as
@@ -54,8 +57,7 @@ in the directory *libs/RasPi/picoscopelibs*. Execute the script
 
 On other systems, the installation of the *picoCosmo* package with its start-up scripts
 *CosmoGui.py* and *runCosmo.py* can be installed by executing the shell script 
-*installibs.sh*. Note that a virtual *Python* environment must be activated on modern
-Linux versions in order to install additional *Python* packages.
+*installibs.sh*. 
 
 By executing the script *install_user.sh* a working directory ~/picoCosmo is set up. 
 Initially, this directory contains examples of configuration files for different detectors

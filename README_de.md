@@ -102,10 +102,15 @@ müssen die folgenden Pakete installiert werden:
 
   - PicoTech Software Development Kit:  
     <https://www.picotech.com/library/oscilloscopes/picoscope-software-development-kit-sdk>.
-  - das *pico-pyhton* Paket:  
+  - das *pico-python* Paket:  
     <https://github.com/colinoflynn/pico-python>.
   - das picoDAQ Paket, vers. >= 0.7.2:  
     <https://github.com/GuenterQuast/picoDAQ>. 
+
+
+Bitte beachten, dass auf modernen Linux-Systemen eine virtuelle *Python*-Umgebung
+aktiv sein muss, um zusätzliche *Python*-Pakete installiert werden sollen. 
+
 
 Zur Vereinfachung der Installation sind im Unterverzeichnis *libs/whl/* kompatible
 Versionen der Module *picoscope* aus dem Paket *pico-python* und *picodaqa* aus dem
@@ -119,10 +124,8 @@ werden alle für *picoCosmo* notwendigen Komponenten auf der Rasbperry Pi instal
 
 Auf anderen Systemen kann as Shell-Script *installlibs.sh* verwendet werden, um das 
 Paket *picoCosmo* mit den Python-Scripts *CosmoGui.py* und *runCosmo.py* zu installieren.
-Dabei bitte beachten, dass auf modernen Linux-Systemen eine virtuelle *Python*-Umgebung
-aktiv sein muss, um zusätzliche *Python*-Pakete installiert werden sollen. 
 
-Durch einmaliges Ausführen des Skrips *install_user.sh* wir ein Arbeitsverzeichnis
+Durch einmaliges Ausführen des Skripts *install_user.sh* wir ein Arbeitsverzeichnis
 ~/picoCosmo erzeugt, das ausführbare Dateien und Konfigurationsbeispiele für 
 verschiedene Detektoren oder Kombinationen davon enthält:
 
