@@ -88,7 +88,7 @@ class PulseFilter(object):
             )  # name
         #                   Queue  rate  update interval
 
-        #  pulse shape and livetime histograms
+        #  pulse shape and life-time histograms
         self.histQ = None
         if 'Hists' in modules:
             self.histQ = Queue(1)  # information queue for Filter

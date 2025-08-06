@@ -4,6 +4,6 @@ Encoding=UTF-8
 Name=PicoKanne
 Comment=PicoCosmo Configuration
 Icon=/home/pi/picoCosmo/images/CosmoKanne_icon.png
-Exec=lxterminal -t "CosmoGui" -e CosmoGui.py picoCosmo/Kanne.daq
+Exec=lxterminal -t "CosmoGui" -e "source activate_phypy.sh; CosmoGui.py picoCosmo/Kanne.daq"
 Terminal=false
 
