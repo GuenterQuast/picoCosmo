@@ -54,6 +54,9 @@ python-wheels.
 The *PicoTech* driver libraries for the #Raspberry Pi# are located
 in the directory *libs/RasPi/picoscopelibs*. Execute the script
 *installlibs_RasPi.sh* to install all necessary components on a Raspberry Pi.
+*Note* that the latest operating system, OS 13 (trixie) and 64bit versions
+are not (yet) supported by the picoscope drivers. It is recommended to use
+32-bit OS 12 (bookworm). 
 
 On other systems, the installation of the *picoCosmo* package with its start-up scripts
 *CosmoGui.py* and *runCosmo.py* can be installed by executing the shell script 

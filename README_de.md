@@ -109,7 +109,9 @@ müssen die folgenden Pakete installiert werden:
 
 
 Bitte beachten, dass auf modernen Linux-Systemen eine virtuelle *Python*-Umgebung
-aktiv sein muss, um zusätzliche *Python*-Pakete installiert werden sollen. 
+aktiv sein muss, um zusätzliche *Python*-Pakete installiert werden sollen. Zur Zeit werden 64-Bit Versionen des Betriebssystems und
+die neuster Version OS 13 (trixie) von den Treibern noch nicht
+unterstützt wird. Empfohlen wird die 32-Bit-Version OS12 (bookworm).
 
 
 Zur Vereinfachung der Installation sind im Unterverzeichnis *libs/whl/* kompatible
