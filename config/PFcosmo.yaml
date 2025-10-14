@@ -14,13 +14,24 @@ pictFile: dpFigs   # save pictures of double pulses
 #                 
 #      r   on  f 
 #                 
+# typical values of pulse-shape parameters:
+# - series I and II panels:
+#   taur   : 20.E-9
+#   tauon  : 10.E-9 
+#   tauf   : 150.E-9
+# - series III panels:
+#   taur   : 20.E-9
+#   tauon  : 200.E-9 
+#   tauf   : 1.E-6
+# tauf may be set to 0 to increase precision of life-time measurement
+
 
 # shape for all pulses
 pulseShape:
  - pheight: -0.040
    taur   : 20.E-9
-   tauon  : 12.E-9 
-   tauf   : 128.E-9 
+   tauon  : 10.E-9 
+   tauf   : 150.E-9 
 
 modules: [RMeter, Display, Hists]
 
