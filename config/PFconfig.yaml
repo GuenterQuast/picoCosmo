@@ -19,20 +19,31 @@ pictFile: dpFigs   # save pictures of double pulses
 #                 
 #       d is optional, as well as f2, off and r2 for bipolar pulses
 #
+# typical values of pulse-shape parameters:
+# - Kamikanne & series I and II panels:
+#   taur   : 20.E-9
+#   tauon  : 10.E-9 
+#   tauf   : 150.E-9
+# - series III panels:
+#   taur   : 20.E-9
+#   tauon  : 200.E-9 
+#   tauf   : 1.E-6
+
+
 # list of dictionaries for pulse shapes per channel
 pulseShape:
 # channel A:
  - pheight: -0.040
    taur   : 20.E-9
-   tauon  : 12.E-9 
-   tauf   : 128.E-9
+   tauon  : 10.E-9 
+   tauf   : 150.E-9
    OffsetSubtraction: true # opt., subtract dc offset for uni-polar pulse (default)
 
 # channel B: 
  - pheight: -0.040
    taur   : 20.E-9
-   tauon  : 12.E-9 
-   tauf   : 128.E-9 
+   tauon  : 10.E-9 
+   tauf   : 150.E-9 
    delay  : 0.000       # optional: delay w.r.t. trigger channel
    OffsetSubtraction: true # subtract dc offset for uni-polar pulse (default)
 
@@ -41,8 +52,8 @@ trgPulseShape:
 # trigger pulse
  - pheight: -0.040
    taur   : 20.E-9
-   tauon  : 12.E-9 
-   tauf   : 128.E-9 
+   tauon  : 10.E-9 
+   tauf   : 150.E-9 
 
 # precision of timing between channels (optional)
 timingPrecision: 2 # in units of sampling interval, default is 2

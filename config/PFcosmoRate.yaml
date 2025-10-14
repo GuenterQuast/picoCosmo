@@ -19,8 +19,13 @@ logFile: pFilt   # store all pulses, Null to disable
 pulseShape:
  - pheight: -0.030
    taur   : 20.E-9
-   tauon  : 12.E-9 
-   tauf   : 128.E-9 
+   tauon  : 10.E-9 
+   tauf   : 150.E-9
+
+# for panels series III:
+#   taur   : 20.E-9
+#   tauon  : 100.E-9 
+#   tauf   : 1.E-6 
 
 NminCoincidence: 2  # set number of Coincidences 
 

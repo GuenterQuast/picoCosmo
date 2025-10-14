@@ -22,9 +22,14 @@ logFile: pFilt   # store all pulses, Null to disable
 # shape for all pulses
 pulseShape:   # for new (Series III) CosMO panels
  - pheight: -0.010
-   taur   : 40.E-9
-   tauon  : 50.E-9 
-   tauf   : 750.E-9 
+   taur   : 20.E-9
+   tauon  : 200.E-9 
+   tauf   : 1.E-6 
+
+# for old panels:
+#   tauon  : 100.E-9 
+#   tauf   : 150.E-9 
+
 
 # for efficincy: require signals in A and C (trigger on A or C)
 acceptPattern:     
