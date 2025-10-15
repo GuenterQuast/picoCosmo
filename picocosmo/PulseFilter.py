@@ -804,7 +804,7 @@ class PulseFilter(object):
                 if NChan == 1:
                     self.prlog("*==* PF: evt %i, Nval: %i" % (evcnt, Nval))
                 elif NChan == 2:
-                    self.prlog("*==* PF: evt %i, Nval, Nacc: %i, %i"(evcnt, Nval, Nacc))
+                    self.prlog("*==* PF: evt %i, Nval, Nacc: %i, %i" % (evcnt, Nval, Nacc))
                 elif NChan == 3:
                     self.prlog(
                         "*==* PF: evt %i, Nval, Nacc, Nacc2, Nacc3: %i, %i, %i, %i" % (evcnt, Nval, Nacc, Nacc2, Nacc3)
