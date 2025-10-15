@@ -141,23 +141,22 @@ class PulseFilter(object):
 
     # helper functions to generate Reference Pulse for PulseFilter
     def trapezoidPulse(self, t, tr, ton, tf, tf2=0, toff=0.0, tr2=0.0, mode=0):
-        '''
-    create a single or double trapezoidal plulse, 
-      normalised to pulse height one
-         ______
-        /      \  
-     _ /_ _ _ _ \_ _ _ _ _ _ _   
-                 \__________/
-      r    on  f f2   off  r2 
+        '''create a single or double trapezoidal plulse, normalised to pulse height one
 
-    Args: 
-     rise time, 
-     on time, 
-     fall time
-     off-time  for bipolar pulse
-     fall time for bipolar pulse
-     mode: 0 single unipolar, 1: double bipolar
-    '''
+            ______
+           /      \  
+        _ /_ _ _ _ \_ _ _ _ _ _ _   
+                    \__________/
+          r  on  f f2   off  r2 
+
+        Args: 
+          rise time, 
+          on time, 
+          fall time
+          off-time  for bipolar pulse
+          fall time for bipolar pulse
+          mode: 0 single unipolar, 1: double bipolar
+        '''
 
         from scipy.interpolate import interp1d
 
