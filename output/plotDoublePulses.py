@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """visual display of raw wave forms saved by picoCosmo.py"""
 
 import sys
