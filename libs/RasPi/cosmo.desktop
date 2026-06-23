@@ -3,7 +3,7 @@ Type=Application
 Encoding=UTF-8
 Name=PicoCosmo
 Comment=PicoCosmo Configuration
-Icon=/home/pi/picoCosmo/images/CosmoPanels_icon.png
+Icon=/home/phypi/picoCosmo/images/CosmoPanels_icon.png
 Exec=lxterminal -t "CosmoGui" -e "source ~/activate_phypy.sh; CosmoGui.py"
 Terminal=false
 
